@@ -9,3 +9,7 @@ Simple variation of ember-power-select that allows you a new entry based on the 
   {{country.name}}
 {{/power-select-with-create}}
 ```
+
+### Demo
+
+[https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
