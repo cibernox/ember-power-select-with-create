@@ -1,0 +1,30 @@
+{{#power-select options=optionsArray
+  selected=selected
+  search=(action "searchAndSuggest")
+  onchange=(action "selectOrCreate")
+  onkeydown=onkeydown
+  onfocus=onfocus
+  disabled=disabled
+  placeholder=placeholder
+  searchPlaceholder=searchPlaceholder
+  loadingMessage=loadingMessage
+  noMatchesMessage=noMatchesMessage
+  searchMessage=searchMessage
+  selectedComponent=selectedComponent
+  optionsComponent=optionsComponent
+  matcher=matcher
+  searchField=searchField
+  renderInPlace=renderInPlace
+  allowClear=allowClear
+  dropdownPosition=dropdownPosition
+  closeOnSelect=closeOnSelect
+  opened=opened
+  tabindex=tabindex
+  dir=dir
+  class=class
+  triggerClass=triggerClass
+  dropdownClass=dropdownClass
+  extra=extra
+  as |option term|}}
+  {{yield option term}}
+{{/power-select}}

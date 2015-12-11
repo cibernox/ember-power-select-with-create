@@ -1,3 +1,14 @@
 <h2 id="title">Welcome to Ember</h2>
 
-{{outlet}}
+<h3>Default behaviour</h3>
+{{#power-select-with-create options=countries selected=selectedCountry onchange=(action (mut selectedCountry)) oncreate=(action "createCountry") as |country term|}}
+  {{country.name}}
+{{/power-select-with-create}}
+
+<br>
+<br>
+<br>
+<h3>With custom Add message</h3>
+{{#power-select-with-create options=countries selected=selectedCountry onchange=(action (mut selectedCountry)) oncreate=(action "createCountry") buildSuggestion=capitalizeSuggestion as |country term|}}
+  {{country.name}}
+{{/power-select-with-create}}
