@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-with-create';
-import { defaultOptions } from 'ember-power-select/components/power-select';
 const { computed, isBlank } = Ember;
 
-export default Ember.Component.extend(defaultOptions, {
+export default Ember.Component.extend({
   tagName: '',
   layout: layout,
 
