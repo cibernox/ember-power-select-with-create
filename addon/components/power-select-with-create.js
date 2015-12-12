@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-with-create';
-const { computed, isBlank } = Ember;
+const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
@@ -9,21 +9,12 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    this.suggestion = { __id__: '__suggestion__', value: '' };
-    Ember.assert('{{power-select}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
+    Ember.assert('{{power-select-with-create}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
   },
 
   // CPs
-  optionsArray: computed('options.[]', 'searchTerm', 'labelPath', function() {
-    const { searchTerm, suggestion, labelPath } = this.getProperties('searchTerm', 'suggestion', 'labelPath');
-    const optionsAry = Ember.A(this.get('options')).toArray();
-    if (isBlank) {
-      return optionsAry;
-    }
-    suggestion.value = searchTerm;
-    suggestion[labelPath] = `Add "${searchTerm}"`;
-    optionsAry.unshift(suggestion);
-    return optionsAry;
+  optionsArray: computed('options.[]', function() {
+    return Ember.A(this.get('options')).toArray();
   }),
 
   // Actions
