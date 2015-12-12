@@ -1,25 +1,95 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+import typeInSearch from '../../helpers/type-in-search';
 
 moduleForComponent('power-select-with-create', 'Integration | Component | power select with create', {
-  integration: true
+  integration: true,
+
+  beforeEach: function() {
+    this.set('countries', Ember.A([
+      { name: 'United States',  code: 'US', population: 321853000 },
+      { name: 'Spain',          code: 'ES', population: 46439864 },
+      { name: 'Portugal',       code: 'PT', population: 10374822 },
+      { name: 'Russia',         code: 'RU', population: 146588880 },
+      { name: 'Latvia',         code: 'LV', population: 1978300 },
+      { name: 'Brazil',         code: 'BR', population: 204921000 },
+      { name: 'United Kingdom', code: 'GB', population: 64596752 },
+    ]));
+    this.on('createCountry', (countryName) => {
+      let newCountry = {name: countryName, code: 'XX', population: 'unknown'};
+      this.get('countries').pushObject(newCountry);
+    });
+  },
 });
 
-test('it renders', function(assert) {
-  
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
+test('it displays option to add item with default text', function(assert) {
+  assert.expect(1);
 
-  this.render(hbs`{{power-select-with-create}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:" + EOL +
   this.render(hbs`
-    {{#power-select-with-create}}
-      template block text
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
     {{/power-select-with-create}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => typeInSearch('Foo Bar'));
+
+  assert.equal(
+    this.$('.ember-power-select-option:eq(0)').text().trim(),
+    'Add "Foo Bar"...'
+  );
+});
+
+test('it displays option to add item with custom text', function(assert) {
+  assert.expect(1);
+
+  this.on('customSuggestion', (term) => {
+    return `Create ${term}`;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        buildSuggestion=(action "customSuggestion")
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => typeInSearch('Foo Bar'));
+
+  assert.equal(
+    this.$('.ember-power-select-option:eq(0)').text().trim(),
+    'Create Foo Bar'
+  );
+});
+
+test('it executes the oncreate callback', function(assert) {
+  assert.expect(1);
+
+  this.on('createCountry', (countryName) => {
+    assert.equal(countryName, 'Foo Bar');
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        renderInPlace=false as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => typeInSearch('Foo Bar'));
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
