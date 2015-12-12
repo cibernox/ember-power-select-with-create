@@ -23,7 +23,7 @@ export default Ember.Component.extend({
       let newOptions;
       if (term.length > 0) {
         newOptions = this.get('optionsArray').filter(e => e.name.indexOf(term) > -1);
-        newOptions.unshift({ __id__: '__suggestion__', __value__: term, name: this.buildSuggestionLabel(term) });
+        newOptions.unshift(this.buildSuggestionForTerm(term));
       } else {
         newOptions = this.get('optionsArray');
       }
@@ -31,7 +31,7 @@ export default Ember.Component.extend({
     },
 
     selectOrCreate(option) {
-      if (option && option.__id__ === '__suggestion__') {
+      if (option && option.__isSuggestion__) {
         this.get('oncreate')(option.__value__);
       } else {
         this.get('onchange')(option);
@@ -40,6 +40,14 @@ export default Ember.Component.extend({
   },
 
   // Methods
+  buildSuggestionForTerm(term) {
+    return {
+      __isSuggestion__: true,
+      __value__: term,
+      text: this.buildSuggestionLabel(term),
+    };
+  },
+
   buildSuggestionLabel(term) {
     let buildSuggestion = this.get('buildSuggestion');
     if (buildSuggestion) {
