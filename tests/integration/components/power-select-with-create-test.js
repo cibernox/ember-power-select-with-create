@@ -83,7 +83,7 @@ test('it executes the oncreate callback', function(assert) {
     {{#power-select-with-create
         options=countries
         oncreate=(action "createCountry")
-        renderInPlace=false as |country|
+        renderInPlace=true as |country|
     }}
       {{country.name}}
     {{/power-select-with-create}}
@@ -92,4 +92,35 @@ test('it executes the oncreate callback', function(assert) {
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('Foo Bar'));
   Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+});
+
+test('it lets the user specify a custom search action', function(assert) {
+  assert.expect(5);
+
+  this.on('customSearch', function(term) {
+    assert.equal(term, 'Foo Bar');
+    return [
+      {name: 'Foo'},
+      {name: 'Bar'},
+    ];
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        search=(action "customSearch")
+        oncreate=(action "createCountry")
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => typeInSearch('Foo Bar'));
+
+  const options = this.$('.ember-power-select-option');
+  assert.equal(options.length, 3);
+  assert.equal(options.eq(0).text().trim(), 'Add "Foo Bar"...');
+  assert.equal(options.eq(1).text().trim(), 'Foo');
+  assert.equal(options.eq(2).text().trim(), 'Bar');
 });

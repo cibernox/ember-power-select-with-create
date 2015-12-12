@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-with-create';
-const { computed } = Ember;
+import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-utils';
+const { computed, get } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
   layout: layout,
+  matcher: defaultMatcher,
 
   // Lifecycle hooks
   init() {
@@ -20,13 +22,21 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     searchAndSuggest(term) {
-      let newOptions;
-      if (term.length > 0) {
-        newOptions = this.get('optionsArray').filter(e => e.name.indexOf(term) > -1);
-        newOptions.unshift(this.buildSuggestionForTerm(term));
-      } else {
-        newOptions = this.get('optionsArray');
+      let newOptions = this.get('optionsArray');
+
+      if (term.length === 0) {
+        return newOptions;
       }
+
+      if (this.get('search')) {
+        return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
+          results.unshift(this.buildSuggestionForTerm(term));
+          return results;
+        });
+      }
+
+      newOptions = this.filter(Ember.A(newOptions), term);
+      newOptions.unshift(this.buildSuggestionForTerm(term));
       return newOptions;
     },
 
@@ -40,6 +50,16 @@ export default Ember.Component.extend({
   },
 
   // Methods
+  filter(options, searchText) {
+    let matcher;
+    if (this.get('searchField')) {
+      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
+    } else {
+      matcher = (option, text) => this.matcher(option, text);
+    }
+    return filterOptions(options || [], searchText, matcher);
+  },
+
   buildSuggestionForTerm(term) {
     return {
       __isSuggestion__: true,
