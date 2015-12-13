@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import typeInSearch from '../../helpers/type-in-search';
+import { typeInSearch } from '../../helpers/ember-power-select';
 
 moduleForComponent('power-select-with-create', 'Integration | Component | power select with create', {
   integration: true,
