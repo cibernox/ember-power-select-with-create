@@ -2,6 +2,12 @@
 
 Simple variation of ember-power-select that allows you a new entry based on the search text
 
+### Installation
+
+```
+ember install ember-power-select-with-create
+```
+
 ### Usage
 
 ```hbs
