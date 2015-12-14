@@ -26,5 +26,9 @@
   dropdownClass=dropdownClass
   extra=extra
   as |option term|}}
-  {{yield option term}}
+  {{#if option.__isSuggestion__}}
+    {{option.text}}
+  {{else}}
+    {{yield option term}}
+  {{/if}}
 {{/power-select}}

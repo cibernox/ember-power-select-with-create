@@ -1,46 +1,47 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-with-create';
-const { computed, isBlank } = Ember;
+import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-utils';
+const { computed, get } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
   layout: layout,
+  matcher: defaultMatcher,
 
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    this.suggestion = { __id__: '__suggestion__', value: '' };
-    Ember.assert('{{power-select}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
+    Ember.assert('{{power-select-with-create}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
   },
 
   // CPs
-  optionsArray: computed('options.[]', 'searchTerm', 'labelPath', function() {
-    const { searchTerm, suggestion, labelPath } = this.getProperties('searchTerm', 'suggestion', 'labelPath');
-    const optionsAry = Ember.A(this.get('options')).toArray();
-    if (isBlank) {
-      return optionsAry;
-    }
-    suggestion.value = searchTerm;
-    suggestion[labelPath] = `Add "${searchTerm}"`;
-    optionsAry.unshift(suggestion);
-    return optionsAry;
+  optionsArray: computed('options.[]', function() {
+    return Ember.A(this.get('options')).toArray();
   }),
 
   // Actions
   actions: {
     searchAndSuggest(term) {
-      let newOptions;
-      if (term.length > 0) {
-        newOptions = this.get('optionsArray').filter(e => e.name.indexOf(term) > -1);
-        newOptions.unshift({ __id__: '__suggestion__', __value__: term, name: this.buildSuggestionLabel(term) });
-      } else {
-        newOptions = this.get('optionsArray');
+      let newOptions = this.get('optionsArray');
+
+      if (term.length === 0) {
+        return newOptions;
       }
+
+      if (this.get('search')) {
+        return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
+          results.unshift(this.buildSuggestionForTerm(term));
+          return results;
+        });
+      }
+
+      newOptions = this.filter(Ember.A(newOptions), term);
+      newOptions.unshift(this.buildSuggestionForTerm(term));
       return newOptions;
     },
 
     selectOrCreate(option) {
-      if (option && option.__id__ === '__suggestion__') {
+      if (option && option.__isSuggestion__) {
         this.get('oncreate')(option.__value__);
       } else {
         this.get('onchange')(option);
@@ -49,6 +50,24 @@ export default Ember.Component.extend({
   },
 
   // Methods
+  filter(options, searchText) {
+    let matcher;
+    if (this.get('searchField')) {
+      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
+    } else {
+      matcher = (option, text) => this.matcher(option, text);
+    }
+    return filterOptions(options || [], searchText, matcher);
+  },
+
+  buildSuggestionForTerm(term) {
+    return {
+      __isSuggestion__: true,
+      __value__: term,
+      text: this.buildSuggestionLabel(term),
+    };
+  },
+
   buildSuggestionLabel(term) {
     let buildSuggestion = this.get('buildSuggestion');
     if (buildSuggestion) {
