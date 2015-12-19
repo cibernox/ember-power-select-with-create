@@ -16,6 +16,9 @@ export default Ember.Component.extend({
 
   // CPs
   optionsArray: computed('options.[]', function() {
+    if (!this.get('options')) {
+      return [];
+    }
     return Ember.A(this.get('options')).toArray();
   }),
 
