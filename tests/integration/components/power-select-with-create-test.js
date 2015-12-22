@@ -124,3 +124,82 @@ test('it lets the user specify a custom search action', function(assert) {
   assert.equal(options.eq(1).text().trim(), 'Foo');
   assert.equal(options.eq(2).text().trim(), 'Bar');
 });
+
+test('it displays multiple selections correctly', function(assert) {
+  assert.expect(2);
+
+  const initialSelection = [this.get('countries.firstObject')];
+  this.set('selectedCountries', initialSelection);
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        selected=selectedCountries
+        onchange=(action (mut selectedCountries))
+        oncreate=(action "createCountry")
+        multiple=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  const selectedOptions = this.$('.ember-power-select-multiple-option');
+  assert.equal(selectedOptions.length, initialSelection.length);
+  assert.ok(selectedOptions.text().indexOf(initialSelection[0].name) !== -1);
+});
+
+test('it passes an array to onchange in multiple mode', function(assert) {
+  assert.expect(4);
+
+  this.set('selectedCountries', []);
+  this.on('selectCountries', function(countries) {
+    assert.ok(countries instanceof Array);
+    this.set('selectedCountries', countries);
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        selected=selectedCountries
+        onchange=(action "selectCountries")
+        oncreate=(action "createCountry")
+        multiple=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+
+  assert.equal(this.get('selectedCountries.length'), 1);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
+
+  assert.equal(this.get('selectedCountries.length'), 2);
+});
+
+test('it calls oncreate correctly in multiple mode', function(assert) {
+  assert.expect(1);
+
+  this.set('selectedCountries', []);
+  this.on('createCountry', function(country) {
+    assert.equal(country, 'Foo Bar');
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        selected=selectedCountries
+        oncreate=(action "createCountry")
+        multiple=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => typeInSearch('Foo Bar'));
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+});

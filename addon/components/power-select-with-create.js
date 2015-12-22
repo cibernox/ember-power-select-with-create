@@ -16,6 +16,9 @@ export default Ember.Component.extend({
 
   // CPs
   optionsArray: computed('options.[]', function() {
+    if (!this.get('options')) {
+      return [];
+    }
     return Ember.A(this.get('options')).toArray();
   }),
 
@@ -40,11 +43,20 @@ export default Ember.Component.extend({
       return newOptions;
     },
 
-    selectOrCreate(option) {
-      if (option && option.__isSuggestion__) {
-        this.get('oncreate')(option.__value__);
+    selectOrCreate(selection) {
+      let suggestion;
+      if (this.get('multiple')) {
+        suggestion = selection.filter((option) => {
+          return option.__isSuggestion__;
+        })[0];
+      } else if (selection.__isSuggestion__) {
+        suggestion = selection;
+      }
+
+      if (suggestion) {
+        this.get('oncreate')(suggestion.__value__);
       } else {
-        this.get('onchange')(option);
+        this.get('onchange')(selection);
       }
     }
   },
