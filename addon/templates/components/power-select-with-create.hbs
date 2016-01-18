@@ -1,35 +1,85 @@
-{{#power-select options=optionsArray
-  multiple=multiple
-  selected=selected
-  search=(action "searchAndSuggest")
-  onchange=(action "selectOrCreate")
-  onkeydown=onkeydown
-  onfocus=onfocus
-  disabled=disabled
-  placeholder=placeholder
-  searchPlaceholder=searchPlaceholder
-  loadingMessage=loadingMessage
-  noMatchesMessage=noMatchesMessage
-  searchMessage=searchMessage
-  selectedComponent=selectedComponent
-  optionsComponent=optionsComponent
-  matcher=matcher
-  searchField=searchField
-  renderInPlace=renderInPlace
-  allowClear=allowClear
-  dropdownPosition=dropdownPosition
-  closeOnSelect=closeOnSelect
-  opened=opened
-  tabindex=tabindex
-  dir=dir
-  class=class
-  triggerClass=triggerClass
-  dropdownClass=dropdownClass
-  extra=extra
-  as |option term|}}
-  {{#if option.__isSuggestion__}}
-    {{option.text}}
-  {{else}}
-    {{yield option term}}
-  {{/if}}
-{{/power-select}}
+{{#if multiple}}
+  {{#power-select-multiple
+    options=optionsArray
+    selected=selected
+    search=(action "searchAndSuggest")
+    onchange=(action "selectOrCreate")
+    onkeydown=onkeydown
+    onfocus=onfocus
+    onopen=onopen
+    onclose=onclose
+    disabled=disabled
+    placeholder=placeholder
+    searchEnabled=searchEnabled
+    searchPlaceholder=searchPlaceholder
+    loadingMessage=loadingMessage
+    noMatchesMessage=noMatchesMessage
+    searchMessage=searchMessage
+    triggerComponent=triggerComponent
+    selectedItemComponent=selectedItemComponent
+    beforeOptionsComponent=beforeOptionsComponent
+    optionsComponent=optionsComponent
+    afterOptionsComponent=afterOptionsComponent
+    matcher=matcher
+    searchField=searchField
+    renderInPlace=renderInPlace
+    allowClear=allowClear
+    verticalPosition=verticalPosition
+    closeOnSelect=closeOnSelect
+    opened=opened
+    tabindex=tabindex
+    dir=dir
+    class=class
+    triggerClass=triggerClass
+    dropdownClass=dropdownClass
+    extra=extra
+    as |option term|}}
+    {{#if option.__isSuggestion__}}
+      {{option.text}}
+    {{else}}
+      {{yield option term}}
+    {{/if}}
+  {{/power-select-multiple}}
+{{else}}
+  {{#power-select
+    options=optionsArray
+    selected=selected
+    search=(action "searchAndSuggest")
+    onchange=(action "selectOrCreate")
+    onkeydown=onkeydown
+    onfocus=onfocus
+    onopen=onopen
+    onclose=onclose
+    disabled=disabled
+    placeholder=placeholder
+    searchEnabled=searchEnabled
+    searchPlaceholder=searchPlaceholder
+    loadingMessage=loadingMessage
+    noMatchesMessage=noMatchesMessage
+    searchMessage=searchMessage
+    triggerComponent=triggerComponent
+    selectedItemComponent=selectedItemComponent
+    beforeOptionsComponent=beforeOptionsComponent
+    optionsComponent=optionsComponent
+    afterOptionsComponent=afterOptionsComponent
+    matcher=matcher
+    searchField=searchField
+    renderInPlace=renderInPlace
+    allowClear=allowClear
+    verticalPosition=verticalPosition
+    closeOnSelect=closeOnSelect
+    opened=opened
+    tabindex=tabindex
+    dir=dir
+    class=class
+    triggerClass=triggerClass
+    dropdownClass=dropdownClass
+    extra=extra
+    as |option term|}}
+    {{#if option.__isSuggestion__}}
+      {{option.text}}
+    {{else}}
+      {{yield option term}}
+    {{/if}}
+  {{/power-select}}
+{{/if}}
