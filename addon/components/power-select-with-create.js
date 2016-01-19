@@ -49,7 +49,7 @@ export default Ember.Component.extend({
         suggestion = selection.filter((option) => {
           return option.__isSuggestion__;
         })[0];
-      } else if (selection.__isSuggestion__) {
+      } else if (selection && selection.__isSuggestion__) {
         suggestion = selection;
       }
 
