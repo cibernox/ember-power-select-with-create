@@ -26,6 +26,7 @@ export default Ember.Component.extend({
   actions: {
     searchAndSuggest(term) {
       let newOptions = this.get('optionsArray');
+      let lowerCaseTerm = term.toLowerCase();
 
       if (term.length === 0) {
         return newOptions;
@@ -33,8 +34,14 @@ export default Ember.Component.extend({
 
       if (this.get('search')) {
         return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
-          results.unshift(this.buildSuggestionForTerm(term));
-          return results;
+          let match = results.some(result => result.get(this.get('searchField')).toLowerCase() === lowerCaseTerm);
+
+          if (match) {
+            return results;
+          } else {
+            results.unshift(this.buildSuggestionForTerm(term));
+            return results;
+          }
         });
       }
 
