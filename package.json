@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select-with-create",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "The default blueprint for ember-cli addons.",
   "directories": {
     "doc": "doc",
@@ -47,7 +47,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-power-select": "^0.8.0-beta.12"
+    "ember-power-select": "^0.9.0-beta.1"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
