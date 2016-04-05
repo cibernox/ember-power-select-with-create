@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import { typeInSearch } from '../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger, nativeMouseUp } from '../../helpers/ember-power-select';
 
 moduleForComponent('power-select-with-create', 'Integration | Component | power select with create', {
   integration: true,
@@ -36,7 +36,7 @@ test('it displays option to add item with default text', function(assert) {
     {{/power-select-with-create}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
 
   assert.equal(
@@ -63,7 +63,7 @@ test('it displays option to add item with custom text', function(assert) {
     {{/power-select-with-create}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
 
   assert.equal(
@@ -89,9 +89,9 @@ test('it executes the oncreate callback', function(assert) {
     {{/power-select-with-create}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
-  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+  nativeMouseUp('.ember-power-select-option:eq(0)');
 });
 
 test('it lets the user specify a custom search action', function(assert) {
@@ -115,7 +115,7 @@ test('it lets the user specify a custom search action', function(assert) {
     {{/power-select-with-create}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
 
   const options = this.$('.ember-power-select-option');
@@ -169,13 +169,13 @@ test('it passes an array to onchange in multiple mode', function(assert) {
     {{/power-select-with-create}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+  clickTrigger();
+  nativeMouseUp('.ember-power-select-option:eq(0)');
 
   assert.equal(this.get('selectedCountries.length'), 1);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
+  clickTrigger();
+  nativeMouseUp('.ember-power-select-option:eq(1)');
 
   assert.equal(this.get('selectedCountries.length'), 2);
 });
@@ -199,7 +199,7 @@ test('it calls oncreate correctly in multiple mode', function(assert) {
     {{/power-select-with-create}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
-  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+  nativeMouseUp('.ember-power-select-option:eq(0)');
 });
