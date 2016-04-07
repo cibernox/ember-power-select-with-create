@@ -16,10 +16,13 @@ export default Ember.Component.extend({
 
   // CPs
   optionsArray: computed('options.[]', function() {
-    if (!this.get('options')) {
-      return [];
+    let options = this.get('options');
+    if (!options) { return Ember.A(); }
+    if (options.then) {
+      return options.then(value => Ember.A(value).toArray());
+    } else {
+      return Ember.A(options).toArray();
     }
-    return Ember.A(this.get('options')).toArray();
   }),
 
   // Actions

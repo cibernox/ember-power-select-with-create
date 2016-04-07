@@ -12,6 +12,9 @@ const countries = [
 
 export default Ember.Controller.extend({
   countries,
+  slowPromise: new Ember.RSVP.Promise(function(resolve) {
+    Ember.run.later(() => resolve(countries), 5000); // 5s
+  }),
 
   // Actions
   actions: {
