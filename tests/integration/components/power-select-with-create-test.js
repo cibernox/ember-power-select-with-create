@@ -206,7 +206,7 @@ test('it calls oncreate correctly in multiple mode', function(assert) {
 
 test('it supports async search function', function(assert) {
   this.set('selectedCountries', []);
-  this.on('searchCountries', function(term) {
+  this.on('searchCountries', () => {
     return new Ember.RSVP.Promise((resolve) => {
       resolve([{name: 'Foo'}, {name: 'Bar'}]);
     });
