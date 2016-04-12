@@ -1,85 +1,49 @@
-{{#if multiple}}
-  {{#power-select-multiple
+{{#component powerSelectComponentName
+    ariaDescribedBy=ariaDescribedBy
+    ariaInvalid=ariaInvalid
+    ariaLabel=ariaLabel
+    ariaLabelledBy=ariaLabelledBy
     options=optionsArray
     selected=selected
-    search=(action "searchAndSuggest")
     onchange=(action "selectOrCreate")
     onkeydown=onkeydown
     onfocus=onfocus
     onopen=onopen
     onclose=onclose
-    disabled=disabled
-    placeholder=placeholder
-    searchEnabled=searchEnabled
-    searchPlaceholder=searchPlaceholder
-    loadingMessage=loadingMessage
-    noMatchesMessage=noMatchesMessage
-    searchMessage=searchMessage
-    triggerComponent=triggerComponent
-    selectedItemComponent=selectedItemComponent
-    beforeOptionsComponent=beforeOptionsComponent
-    optionsComponent=optionsComponent
-    afterOptionsComponent=afterOptionsComponent
-    matcher=matcher
-    searchField=searchField
-    renderInPlace=renderInPlace
-    allowClear=allowClear
-    verticalPosition=verticalPosition
-    closeOnSelect=closeOnSelect
-    opened=opened
-    tabindex=tabindex
-    dir=dir
-    class=class
-    triggerClass=triggerClass
-    dropdownClass=dropdownClass
-    extra=extra
-    as |option term|}}
-    {{#if option.__isSuggestion__}}
-      {{option.text}}
-    {{else}}
-      {{yield option term}}
-    {{/if}}
-  {{/power-select-multiple}}
-{{else}}
-  {{#power-select
-    options=optionsArray
-    selected=selected
     search=(action "searchAndSuggest")
-    onchange=(action "selectOrCreate")
-    onkeydown=onkeydown
-    onfocus=onfocus
-    onopen=onopen
-    onclose=onclose
     disabled=disabled
     placeholder=placeholder
     searchEnabled=searchEnabled
     searchPlaceholder=searchPlaceholder
+    searchField=searchField
+    matcher=matcher
     loadingMessage=loadingMessage
     noMatchesMessage=noMatchesMessage
     searchMessage=searchMessage
     triggerComponent=triggerComponent
     selectedItemComponent=selectedItemComponent
+    afterOptionsComponent=afterOptionsComponent
     beforeOptionsComponent=beforeOptionsComponent
     optionsComponent=optionsComponent
-    afterOptionsComponent=afterOptionsComponent
-    matcher=matcher
-    searchField=searchField
     renderInPlace=renderInPlace
+    closeOnSelect=closeOnSelect
     allowClear=allowClear
     verticalPosition=verticalPosition
-    closeOnSelect=closeOnSelect
-    opened=opened
-    tabindex=tabindex
-    dir=dir
+    horizontalPosition=horizontalPosition
     class=class
     triggerClass=triggerClass
     dropdownClass=dropdownClass
     extra=extra
-    as |option term|}}
-    {{#if option.__isSuggestion__}}
-      {{option.text}}
-    {{else}}
-      {{yield option term}}
-    {{/if}}
-  {{/power-select}}
-{{/if}}
+    initiallyOpened=initiallyOpened
+    matchTriggerWidth=matchTriggerWidth
+    destination=destination
+    tabindex=tabindex
+    dir=dir
+    as |option term|
+}}
+  {{#if option.__isSuggestion__}}
+    {{option.text}}
+  {{else}}
+    {{yield option term}}
+  {{/if}}
+{{/component}}
