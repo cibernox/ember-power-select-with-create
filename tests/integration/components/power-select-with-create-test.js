@@ -203,3 +203,35 @@ test('it calls oncreate correctly in multiple mode', function(assert) {
   Ember.run(() => typeInSearch('Foo Bar'));
   nativeMouseUp('.ember-power-select-option:eq(0)');
 });
+
+test('it supports async search function', function(assert) {
+  this.set('selectedCountries', []);
+  this.on('searchCountries', () => {
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve([{name: 'Foo'}, {name: 'Bar'}]);
+    });
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        search=(action "searchCountries")
+        selected=selectedCountries
+        onchange=(action (mut selectedCountries))
+        oncreate=(action "createCountry")
+        multiple=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  typeInSearch('foo');
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+
+  clickTrigger();
+  typeInSearch('foo');
+  nativeMouseUp('.ember-power-select-option:eq(2)');
+
+  assert.equal(this.get('selectedCountries')[0].name, 'Foo');
+  assert.equal(this.get('selectedCountries')[1].name, 'Bar');
+});
