@@ -1,16 +1,22 @@
 {{#component powerSelectComponentName
+    ariaDescribedBy=ariaDescribedBy
+    ariaInvalid=ariaInvalid
+    ariaLabel=ariaLabel
+    ariaLabelledBy=ariaLabelledBy
     options=optionsArray
     selected=selected
-    search=(action "searchAndSuggest")
     onchange=(action "selectOrCreate")
     onkeydown=onkeydown
     onfocus=onfocus
     onopen=onopen
     onclose=onclose
+    search=(action "searchAndSuggest")
     disabled=disabled
     placeholder=placeholder
     searchEnabled=searchEnabled
     searchPlaceholder=searchPlaceholder
+    searchField=searchField
+    matcher=matcher
     loadingMessage=loadingMessage
     noMatchesMessage=noMatchesMessage
     searchMessage=searchMessage
@@ -19,8 +25,6 @@
     beforeOptionsComponent=beforeOptionsComponent
     optionsComponent=optionsComponent
     afterOptionsComponent=afterOptionsComponent
-    matcher=matcher
-    searchField=searchField
     renderInPlace=renderInPlace
     allowClear=allowClear
     verticalPosition=verticalPosition
@@ -28,10 +32,14 @@
     opened=opened
     tabindex=tabindex
     dir=dir
+    horizontalPosition=horizontalPosition
     class=class
     triggerClass=triggerClass
     dropdownClass=dropdownClass
     extra=extra
+    initiallyOpened=initiallyOpened
+    matchTriggerWidth=matchTriggerWidth
+    destination=destination
     as |option term|
 }}
   {{#if option.__isSuggestion__}}
