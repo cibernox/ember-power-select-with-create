@@ -35,6 +35,10 @@ export default Ember.Controller.extend({
         }, reject);
       });
     },
+    hideCreateOptionOnSameName(term) {
+      let existingOption = this.get('countries').findBy('name', term);
+      return !existingOption;
+    },
   },
 
   // Methods
