@@ -25,6 +25,10 @@ export default Ember.Component.extend({
     }
   }),
 
+  powerSelectComponentName: computed('multiple', function() {
+    return this.get('multiple') ? 'power-select-multiple' : 'power-select';
+  }),
+
   // Actions
   actions: {
     searchAndSuggest(term) {
