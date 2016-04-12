@@ -50,3 +50,16 @@
 }}
   {{country.name}}
 {{/power-select-with-create}}
+<br>
+<br>
+<br>
+<h3>With callback to hide/show create option</h3>
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
+}}
+  {{country.name}}
+{{/power-select-with-create}}

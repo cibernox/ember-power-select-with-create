@@ -235,3 +235,36 @@ test('it supports async search function', function(assert) {
   assert.equal(this.get('selectedCountries')[0].name, 'Foo');
   assert.equal(this.get('selectedCountries')[1].name, 'Bar');
 });
+
+test('it lets the user decide if the create option should be shown', function(assert) {
+  assert.expect(5);
+
+  this.set('countries', [{name: 'Canada'}]);
+  this.set('show', false);
+  this.on('shouldShowCreate', (term) => {
+    assert.equal(term, 'can');
+    return this.get('show');
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        searchField="name"
+        oncreate=(action "createCountry")
+        showCreateWhen=(action "shouldShowCreate")
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  typeInSearch('can');
+  assert.equal(this.$('.ember-power-select-option').length, 1);
+  assert.equal(this.$('.ember-power-select-option:eq(0)').text().trim(), 'Canada');
+
+  this.set('show', true);
+
+  typeInSearch('can');
+  assert.equal(this.$('.ember-power-select-option').length, 2);
+});

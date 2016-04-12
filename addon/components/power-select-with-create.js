@@ -42,7 +42,12 @@ export default Ember.Component.extend({
       }
 
       newOptions = this.filter(Ember.A(newOptions), term);
-      newOptions.unshift(this.buildSuggestionForTerm(term));
+
+      let shouldShowCreateOption = this.get('showCreateWhen') ? this.get('showCreateWhen')(term) : true;
+      if (shouldShowCreateOption) {
+        newOptions.unshift(this.buildSuggestionForTerm(term));
+      }
+
       return newOptions;
     },
 
