@@ -1,15 +1,5 @@
 <h2 id="title">Welcome to Ember</h2>
 
-<h3>Regular select</h3>
-{{#power-select
-    options=slowPromise
-    searchField="name"
-    selected=selectedCountry
-    onchange=(action (mut selectedCountry)) as |country term|}}
-  {{country.name}}
-{{/power-select}}
-
-
 <h3>Default behaviour</h3>
 {{#power-select-with-create
     options=countries
@@ -42,6 +32,18 @@
 {{#power-select-with-create
     options=slowPromise
     searchField="name"
+    selected=selectedCountry
+    onchange=(action (mut selectedCountry))
+    oncreate=(action "createCountry") as |country term|
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+<br>
+<br>
+<br>
+<h3>With async search</h3>
+{{#power-select-with-create
+    search=(action "searchCountries")
     selected=selectedCountry
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|

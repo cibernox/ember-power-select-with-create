@@ -12,9 +12,12 @@ const countries = [
 
 export default Ember.Controller.extend({
   countries,
-  slowPromise: new Ember.RSVP.Promise(function(resolve) {
-    Ember.run.later(() => resolve(countries), 5000); // 5s
-  }),
+  slowPromise: null,
+
+  init() {
+    this._super(...arguments);
+    this.set('slowPromise', this.createSlowPromise());
+  },
 
   // Actions
   actions: {
@@ -22,11 +25,26 @@ export default Ember.Controller.extend({
       let newCountry = { name: countryName, code: 'XX', population: 'unknown' };
       this.get('countries').pushObject(newCountry);
       this.set('selectedCountry', newCountry);
-    }
+    },
+    searchCountries(term) {
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        this.createSlowPromise(2000).then((countries) => {
+          resolve(countries.filter((country) => {
+            return country.name.toLowerCase().match(term.toLowerCase());
+          }));
+        }, reject);
+      });
+    },
   },
 
   // Methods
   capitalizeSuggestion(term) {
     return `Hey! Perhaps you want to create ${term.toUpperCase()}??`;
-  }
+  },
+
+  createSlowPromise(time = 5000) {
+    return new Ember.RSVP.Promise(function(resolve) {
+      Ember.run.later(() => resolve(countries), time);
+    });
+  },
 });
