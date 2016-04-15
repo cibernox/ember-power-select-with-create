@@ -268,3 +268,42 @@ test('it lets the user decide if the create option should be shown', function(as
   typeInSearch('can');
   assert.equal(this.$('.ember-power-select-option').length, 2);
 });
+
+test('it supports async search function and lets the user decide if the create option should be shown', function(assert) {
+  assert.expect(5);
+  this.set('selectedCountries', []);
+  this.set('show', true);
+  this.on('searchCountries', () => {
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve([{name: 'Foo'}, {name: 'Bar'}]);
+    });
+  });
+
+  this.on('shouldShowCreate', (term) => {
+    assert.equal(term, 'can');
+    return this.get('show');
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        search=(action "searchCountries")
+        selected=selectedCountries
+        onchange=(action (mut selectedCountries))
+        oncreate=(action "createCountry")
+        showCreateWhen=(action "shouldShowCreate")
+        renderInPlace=true
+         as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  typeInSearch('can');
+
+  const options = this.$('.ember-power-select-option');
+  assert.equal(options.length, 3);
+  assert.equal(options.eq(0).text().trim(), 'Add "can"...');
+  assert.equal(options.eq(1).text().trim(), 'Foo');
+  assert.equal(options.eq(2).text().trim(), 'Bar');
+});
