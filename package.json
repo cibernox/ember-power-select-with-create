@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select-with-create",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Ember Power Select addon that allows creation of items.",
   "directories": {
     "doc": "doc",
