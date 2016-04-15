@@ -29,6 +29,10 @@ export default Ember.Component.extend({
     return this.get('multiple') ? 'power-select-multiple' : 'power-select';
   }),
 
+  shouldShowCreateOption(term) {
+    return this.get('showCreateWhen') ? this.get('showCreateWhen')(term) : true;
+  },
+
   // Actions
   actions: {
     searchAndSuggest(term) {
@@ -40,15 +44,15 @@ export default Ember.Component.extend({
 
       if (this.get('search')) {
         return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
-          results.unshift(this.buildSuggestionForTerm(term));
+          if (this.shouldShowCreateOption(term)) {
+            results.unshift(this.buildSuggestionForTerm(term));
+          }
           return results;
         });
       }
 
       newOptions = this.filter(Ember.A(newOptions), term);
-
-      let shouldShowCreateOption = this.get('showCreateWhen') ? this.get('showCreateWhen')(term) : true;
-      if (shouldShowCreateOption) {
+      if (this.shouldShowCreateOption(term)) {
         newOptions.unshift(this.buildSuggestionForTerm(term));
       }
 
