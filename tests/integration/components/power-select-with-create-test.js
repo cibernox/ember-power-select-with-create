@@ -302,8 +302,9 @@ test('it lets the user decide if the create option should be shown', function(as
   assert.equal(this.$('.ember-power-select-option').length, 2);
 });
 
-test('it supports async search function and lets the user decide if the create option should be shown', function(assert) {
+test('shouldShowCreate works with async search', function(assert) {
   assert.expect(5);
+
   this.set('selectedCountries', []);
   this.set('show', true);
   this.on('searchCountries', () => {
