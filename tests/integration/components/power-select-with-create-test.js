@@ -125,6 +125,39 @@ test('it lets the user specify a custom search action', function(assert) {
   assert.equal(options.eq(2).text().trim(), 'Bar');
 });
 
+test('async search works with an ArrayProxy', function(assert) {
+  assert.expect(5);
+
+  this.on('customSearch', function(term) {
+    assert.equal(term, 'Foo Bar');
+    return Ember.ArrayProxy.create({
+      content: Ember.A([
+        {name: 'Foo'},
+        {name: 'Bar'},
+      ])
+    });
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        search=(action "customSearch")
+        oncreate=(action "createCountry")
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Foo Bar'));
+
+  const options = this.$('.ember-power-select-option');
+  assert.equal(options.length, 3);
+  assert.equal(options.eq(0).text().trim(), 'Add "Foo Bar"...');
+  assert.equal(options.eq(1).text().trim(), 'Foo');
+  assert.equal(options.eq(2).text().trim(), 'Bar');
+});
+
 test('it displays multiple selections correctly', function(assert) {
   assert.expect(2);
 
@@ -269,8 +302,9 @@ test('it lets the user decide if the create option should be shown', function(as
   assert.equal(this.$('.ember-power-select-option').length, 2);
 });
 
-test('it supports async search function and lets the user decide if the create option should be shown', function(assert) {
+test('shouldShowCreate works with async search', function(assert) {
   assert.expect(5);
+
   this.set('selectedCountries', []);
   this.set('show', true);
   this.on('searchCountries', () => {

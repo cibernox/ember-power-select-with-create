@@ -44,9 +44,14 @@ export default Ember.Component.extend({
 
       if (this.get('search')) {
         return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
+          if (results.toArray) {
+            results = results.toArray();
+          }
+
           if (this.shouldShowCreateOption(term)) {
             results.unshift(this.buildSuggestionForTerm(term));
           }
+
           return results;
         });
       }
