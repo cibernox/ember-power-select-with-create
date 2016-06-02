@@ -65,7 +65,7 @@ export default Ember.Component.extend({
       return newOptions;
     },
 
-    selectOrCreate(selection) {
+    selectOrCreate(selection, select) {
       let suggestion;
       if (this.get('multiple')) {
         suggestion = selection.filter((option) => {
@@ -76,9 +76,9 @@ export default Ember.Component.extend({
       }
 
       if (suggestion) {
-        this.get('oncreate')(suggestion.__value__);
+        this.get('oncreate')(suggestion.__value__, select);
       } else {
-        this.get('onchange')(selection);
+        this.get('onchange')(selection, select);
       }
     }
   },
