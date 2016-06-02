@@ -35,15 +35,16 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    searchAndSuggest(term) {
+    searchAndSuggest(term, select) {
       let newOptions = this.get('optionsArray');
 
       if (term.length === 0) {
         return newOptions;
       }
 
-      if (this.get('search')) {
-        return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
+      let searchAction = this.get('search');
+      if (searchAction) {
+        return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
           if (results.toArray) {
             results = results.toArray();
           }
