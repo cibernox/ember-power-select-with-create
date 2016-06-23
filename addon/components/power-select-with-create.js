@@ -29,8 +29,8 @@ export default Ember.Component.extend({
     return this.get('multiple') ? 'power-select-multiple' : 'power-select';
   }),
 
-  shouldShowCreateOption(term) {
-    return this.get('showCreateWhen') ? this.get('showCreateWhen')(term) : true;
+  shouldShowCreateOption(term, options) {
+    return this.get('showCreateWhen') ? this.get('showCreateWhen')(term, options) : true;
   },
 
   // Actions
@@ -48,7 +48,7 @@ export default Ember.Component.extend({
             results = results.toArray();
           }
 
-          if (this.shouldShowCreateOption(term)) {
+          if (this.shouldShowCreateOption(term, results)) {
             results.unshift(this.buildSuggestionForTerm(term));
           }
 
@@ -57,7 +57,7 @@ export default Ember.Component.extend({
       }
 
       newOptions = this.filter(Ember.A(newOptions), term);
-      if (this.shouldShowCreateOption(term)) {
+      if (this.shouldShowCreateOption(term, newOptions)) {
         newOptions.unshift(this.buildSuggestionForTerm(term));
       }
 

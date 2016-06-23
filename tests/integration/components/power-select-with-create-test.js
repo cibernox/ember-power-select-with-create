@@ -302,6 +302,64 @@ test('it lets the user decide if the create option should be shown', function(as
   assert.equal(this.$('.ember-power-select-option').length, 2);
 });
 
+test('shouldShowCreate called with options when backed by static array', function(assert) {
+  assert.expect(1);
+
+  const countries = [{name: 'Canada'}];
+  this.set('countries', countries);
+  this.on('shouldShowCreate', (term, options) => {
+    assert.deepEqual(options, countries);
+    return true;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        searchField="name"
+        oncreate=(action "createCountry")
+        showCreateWhen=(action "shouldShowCreate")
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  typeInSearch('can');
+});
+
+test('shouldShowCreate called with options when backed by async search', function(assert) {
+  assert.expect(1);
+
+  const countries = [{name: 'Canada'}];
+  this.on('searchCountries', () => {
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve(countries);
+    });
+  });
+
+  this.on('shouldShowCreate', (term, options) => {
+    assert.deepEqual(options, countries);
+    return true;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        search=(action "searchCountries")
+        onchange=(action (mut selectedCountries))
+        oncreate=(action "createCountry")
+        showCreateWhen=(action "shouldShowCreate")
+        renderInPlace=true
+         as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  typeInSearch('can');
+});
+
 test('shouldShowCreate works with async search', function(assert) {
   assert.expect(5);
 
