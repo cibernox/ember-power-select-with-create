@@ -1,4 +1,5 @@
-{{#component powerSelectComponentName
+{{#if multiple}}
+  {{#power-select-multiple
     ariaDescribedBy=ariaDescribedBy
     ariaInvalid=ariaInvalid
     ariaLabel=ariaLabel
@@ -39,11 +40,60 @@
     destination=destination
     tabindex=tabindex
     dir=dir
-    as |option term|
-}}
-  {{#if option.__isSuggestion__}}
-    {{option.text}}
-  {{else}}
-    {{yield option term}}
-  {{/if}}
-{{/component}}
+    as |option term|}}
+    {{#if option.__isSuggestion__}}
+      {{option.text}}
+    {{else}}
+      {{yield option term}}
+    {{/if}}
+  {{/power-select-multiple}}
+{{else}}
+  {{#power-select
+    ariaDescribedBy=ariaDescribedBy
+    ariaInvalid=ariaInvalid
+    ariaLabel=ariaLabel
+    ariaLabelledBy=ariaLabelledBy
+    options=optionsArray
+    selected=selected
+    onchange=(action "selectOrCreate")
+    onkeydown=onkeydown
+    onfocus=onfocus
+    onopen=onopen
+    onclose=onclose
+    search=(action "searchAndSuggest")
+    disabled=disabled
+    placeholder=placeholder
+    searchEnabled=searchEnabled
+    searchPlaceholder=searchPlaceholder
+    searchField=searchField
+    matcher=matcher
+    loadingMessage=loadingMessage
+    noMatchesMessage=noMatchesMessage
+    searchMessage=searchMessage
+    triggerComponent=triggerComponent
+    selectedItemComponent=selectedItemComponent
+    afterOptionsComponent=afterOptionsComponent
+    beforeOptionsComponent=beforeOptionsComponent
+    optionsComponent=optionsComponent
+    renderInPlace=renderInPlace
+    closeOnSelect=closeOnSelect
+    allowClear=allowClear
+    verticalPosition=verticalPosition
+    horizontalPosition=horizontalPosition
+    class=class
+    triggerClass=triggerClass
+    dropdownClass=dropdownClass
+    extra=extra
+    initiallyOpened=initiallyOpened
+    matchTriggerWidth=matchTriggerWidth
+    destination=destination
+    tabindex=tabindex
+    dir=dir
+    as |option term|}}
+    {{#if option.__isSuggestion__}}
+      {{option.text}}
+    {{else}}
+      {{yield option term}}
+    {{/if}}
+  {{/power-select}}
+{{/if}}
