@@ -8,13 +8,16 @@ Simple variation of ember-power-select that allows you to create a new entry bas
 ember install ember-power-select-with-create
 ```
 
+Versions 0.1.X worked with EPS < 1.0
+Version 0.2.X requires EPS 1.0.0-beta.14 or greater.
+
 ### Usage
 
 ```hbs
-{{#power-select-with-create 
-    options=countries 
-    selected=selectedCountry 
-    onchange=(action (mut selectedCountry)) 
+{{#power-select-with-create
+    options=countries
+    selected=selectedCountry
+    onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
   {{country.name}}
