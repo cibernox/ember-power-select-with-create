@@ -35,15 +35,16 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    searchAndSuggest(term) {
+    searchAndSuggest(term, select) {
       let newOptions = this.get('optionsArray');
 
       if (term.length === 0) {
         return newOptions;
       }
 
-      if (this.get('search')) {
-        return Ember.RSVP.resolve(this.get('search')(term)).then((results) =>  {
+      let searchAction = this.get('search');
+      if (searchAction) {
+        return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
           if (results.toArray) {
             results = results.toArray();
           }
@@ -64,7 +65,7 @@ export default Ember.Component.extend({
       return newOptions;
     },
 
-    selectOrCreate(selection) {
+    selectOrCreate(selection, select) {
       let suggestion;
       if (this.get('multiple')) {
         suggestion = selection.filter((option) => {
@@ -75,9 +76,9 @@ export default Ember.Component.extend({
       }
 
       if (suggestion) {
-        this.get('oncreate')(suggestion.__value__);
+        this.get('oncreate')(suggestion.__value__, select);
       } else {
-        this.get('onchange')(selection);
+        this.get('onchange')(selection, select);
       }
     }
   },
