@@ -52,6 +52,23 @@ actions: {
 },
 ```
 
+
+#### Control create option position - Default TOP
+
+You can provide `showCreatePosition` property to control the position(bottom|top) of create option. Default - top
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    showCreatePosition='bottom'
+    showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+```
 ### Demo
 
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)

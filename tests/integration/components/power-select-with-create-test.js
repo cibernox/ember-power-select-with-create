@@ -45,6 +45,30 @@ test('it displays option to add item with default text', function(assert) {
   );
 });
 
+test('it displays option to add item with default text at bottom', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        showCreatePosition="bottom"
+        searchField="name"
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Russ'));
+
+  assert.equal(
+    this.$('.ember-power-select-option:eq(1)').text().trim(),
+    'Add "Russ"...'
+  );
+});
+
 test('it displays option to add item with custom text', function(assert) {
   assert.expect(1);
 
@@ -69,6 +93,36 @@ test('it displays option to add item with custom text', function(assert) {
   assert.equal(
     this.$('.ember-power-select-option:eq(0)').text().trim(),
     'Create Foo Bar'
+  );
+});
+
+
+test('it displays option to add item with custom text at bottom', function(assert) {
+  assert.expect(1);
+
+  this.on('customSuggestion', (term) => {
+    return `Create ${term}`;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        buildSuggestion=(action "customSuggestion")
+        searchField='name'
+        showCreatePosition="bottom"
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Russ'));
+
+  assert.equal(
+    this.$('.ember-power-select-option:eq(1)').text().trim(),
+    'Create Russ'
   );
 });
 
@@ -398,4 +452,46 @@ test('shouldShowCreate works with async search', function(assert) {
   assert.equal(options.eq(0).text().trim(), 'Add "can"...');
   assert.equal(options.eq(1).text().trim(), 'Foo');
   assert.equal(options.eq(2).text().trim(), 'Bar');
+});
+
+
+test('showCreatePosition works with async search', function(assert) {
+  assert.expect(5);
+
+  this.set('selectedCountries', []);
+  this.set('show', true);
+  this.on('searchCountries', () => {
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve([{name: 'Foo'}, {name: 'Bar'}]);
+    });
+  });
+
+  this.on('shouldShowCreate', (term) => {
+    assert.equal(term, 'can');
+    return this.get('show');
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        search=(action "searchCountries")
+        selected=selectedCountries
+        onchange=(action (mut selectedCountries))
+        oncreate=(action "createCountry")
+        showCreateWhen=(action "shouldShowCreate")
+        showCreatePosition='bottom'
+        renderInPlace=true
+         as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  typeInSearch('can');
+
+  const options = this.$('.ember-power-select-option');
+  assert.equal(options.length, 3);
+  assert.equal(options.eq(2).text().trim(), 'Add "can"...');
+  assert.equal(options.eq(0).text().trim(), 'Foo');
+  assert.equal(options.eq(1).text().trim(), 'Bar');
 });
