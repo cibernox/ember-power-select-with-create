@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   tagName: '',
   layout: layout,
   matcher: defaultMatcher,
+  yieldCreateOption: false,
 
   // Lifecycle hooks
   init() {
@@ -73,9 +74,9 @@ export default Ember.Component.extend({
       let suggestion;
       if (this.get('multiple')) {
         suggestion = selection.filter((option) => {
-          return option.__isSuggestion__;
+          return option.isSuggestion;
         })[0];
-      } else if (selection && selection.__isSuggestion__) {
+      } else if (selection && selection.isSuggestion) {
         suggestion = selection;
       }
 
@@ -100,7 +101,7 @@ export default Ember.Component.extend({
 
   buildSuggestionForTerm(term) {
     return {
-      __isSuggestion__: true,
+      isSuggestion: true,
       __value__: term,
       text: this.buildSuggestionLabel(term),
     };

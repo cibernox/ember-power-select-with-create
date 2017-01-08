@@ -126,6 +126,63 @@ test('it displays option to add item with custom text at bottom', function(asser
   );
 });
 
+test('it does not yield the create option by default', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        searchField='name'
+        showCreatePosition="bottom"
+        renderInPlace=true as |country|
+    }}
+      {{#if country.isSuggestion}}
+        <span class="is-suggested">{{country.text}}</span>
+      {{else}}
+        {{country.name}}
+      {{/if}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Russ'));
+
+  assert.equal(
+    this.$('.is-suggested').length,
+    0
+  );
+});
+
+test('is yields the create option if set', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        searchField='name'
+        showCreatePosition="bottom"
+        yieldCreateOption=true
+        renderInPlace=true as |country|
+    }}
+      {{#if country.isSuggestion}}
+        <span class="is-suggested">{{country.text}}</span>
+      {{else}}
+        {{country.name}}
+      {{/if}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Russ'));
+
+  assert.equal(
+    this.$('.is-suggested').length,
+    1
+  );
+});
+
 test('it executes the oncreate callback', function(assert) {
   assert.expect(1);
 

@@ -69,6 +69,30 @@ You can provide `showCreatePosition` property to control the position(bottom|top
   {{country.name}}
 {{/power-select-with-create}}
 ```
+
+#### Yield create option
+
+You can provide `yieldCreateOption` property to control whether or not the create option will be yielded like any other option. Default - `false`.
+
+```hbs
+{{#power-select-with-create
+    options=tags
+    searchField="name"
+    selected=selectedTag
+    selected=selectedCountry
+    oncreate=(action "createTag")
+    yieldCreateOption=true as |tag|
+}}
+  {{#if tag.isSuggestion}}
+    <span class="suggested-tag">{{tag.text}}</span>
+  {{else}}
+    <span class="tag">{{tag.name}}</span>
+  {{/if}}
+{{/power-select-with-create}}
+```
+
+*note, the `text` property on the create option is the result of the `buildSuggestionLabel` action. Default: `Add "${term}"...`.
+
 ### Demo
 
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)

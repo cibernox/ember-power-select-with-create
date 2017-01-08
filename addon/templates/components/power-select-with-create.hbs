@@ -41,8 +41,12 @@
     tabindex=tabindex
     dir=dir
     as |option term|}}
-    {{#if option.__isSuggestion__}}
-      {{option.text}}
+    {{#if option.isSuggestion}}
+      {{#if yieldCreateOption}}
+        {{yield option}}
+      {{else}}
+        {{option.text}}
+      {{/if}}
     {{else}}
       {{yield option term}}
     {{/if}}
@@ -90,8 +94,12 @@
     tabindex=tabindex
     dir=dir
     as |option term|}}
-    {{#if option.__isSuggestion__}}
-      {{option.text}}
+    {{#if option.isSuggestion}}
+      {{#if yieldCreateOption}}
+        {{yield option}}
+      {{else}}
+        {{option.text}}
+      {{/if}}
     {{else}}
       {{yield option term}}
     {{/if}}
