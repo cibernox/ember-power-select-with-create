@@ -90,7 +90,7 @@ You can provide `yieldCreateOption` property to control whether or not the creat
 {{/power-select-with-create}}
 ```
 
-*note, the `text` property on the create option is the result of the `buildSuggestionLabel` action. Default: `Add "${term}"...`.
+*note, the `text` property on the create option is the result of the `buildSuggestion` action. Default: `Add "${term}"...`.*
 
 ### Demo
 
