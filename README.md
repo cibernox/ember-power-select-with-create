@@ -76,17 +76,16 @@ You can provide `yieldCreateOption` property to control whether or not the creat
 
 ```hbs
 {{#power-select-with-create
-    options=tags
+    options=countries
     searchField="name"
-    selected=selectedTag
     selected=selectedCountry
-    oncreate=(action "createTag")
-    yieldCreateOption=true as |tag|
+    oncreate=(action "createCountry")
+    yieldCreateOption=true as |country|
 }}
-  {{#if tag.isSuggestion}}
-    <span class="suggested-tag">{{tag.text}}</span>
+  {{#if country.isSuggestion}}
+    <span class="suggested-country">{{country.text}}</span>
   {{else}}
-    <span class="tag">{{tag.name}}</span>
+    <span class="country">{{country.name}}</span>
   {{/if}}
 {{/power-select-with-create}}
 ```
