@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   layout: layout,
   matcher: defaultMatcher,
   yieldCreateOption: false,
+  isSuggestionField: '__isSuggestion__',
 
   // Lifecycle hooks
   init() {
@@ -72,11 +73,13 @@ export default Ember.Component.extend({
 
     selectOrCreate(selection, select) {
       let suggestion;
+      let isSuggestionField = this.get('isSuggestionField');
+
       if (this.get('multiple')) {
         suggestion = selection.filter((option) => {
-          return option.isSuggestion;
+          return option[isSuggestionField];
         })[0];
-      } else if (selection && selection.isSuggestion) {
+      } else if (selection && selection[isSuggestionField]) {
         suggestion = selection;
       }
 
@@ -100,11 +103,14 @@ export default Ember.Component.extend({
   },
 
   buildSuggestionForTerm(term) {
-    return {
-      isSuggestion: true,
+    let suggestion = {
       __value__: term,
       text: this.buildSuggestionLabel(term),
     };
+
+    suggestion[this.get('isSuggestionField')] = true;
+
+    return suggestion;
   },
 
   buildSuggestionLabel(term) {

@@ -137,7 +137,7 @@ test('it does not yield the create option by default', function(assert) {
         showCreatePosition="bottom"
         renderInPlace=true as |country|
     }}
-      {{#if country.isSuggestion}}
+      {{#if country.__isSuggestion__}}
         <span class="is-suggested">{{country.text}}</span>
       {{else}}
         {{country.name}}
@@ -166,7 +166,7 @@ test('is yields the create option if set', function(assert) {
         yieldCreateOption=true
         renderInPlace=true as |country|
     }}
-      {{#if country.isSuggestion}}
+      {{#if country.__isSuggestion__}}
         <span class="is-suggested">{{country.text}}</span>
       {{else}}
         {{country.name}}
@@ -228,6 +228,7 @@ test('it lets the user specify a custom search action', function(assert) {
 
   clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
+  debugger;
 
   const options = this.$('.ember-power-select-option');
   assert.equal(options.length, 3);
