@@ -69,6 +69,31 @@ You can provide `showCreatePosition` property to control the position(bottom|top
   {{country.name}}
 {{/power-select-with-create}}
 ```
+
+#### Control the create option's label - Default `Add "{{option}}"...`
+
+You can provide the `buildSuggestion` action to control the label of the create option. Default - `Add "{{option}}"...`
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    buildSuggestion=(action "customSuggestion")
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+```
+
+```js
+actions: {
+  customSuggestion(term) {
+    return `Create ${term}`;
+  },
+},
+```
+
 ### Demo
 
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
