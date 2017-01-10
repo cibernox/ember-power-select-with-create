@@ -94,8 +94,6 @@ actions: {
 },
 ```
 
-####
-
 #### Pass the creation option to a component for more control
 
 Beyond building the suggestion label, you can pass the `suggestedOptionComponent` property the name of your component.
@@ -122,6 +120,5 @@ This component will receive the suggestedOption itself as `option` and the curre
 <!-- {{/suggested-option}} -->
 ```
 
-
-
+### Demo
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
