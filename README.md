@@ -70,6 +70,30 @@ You can provide `showCreatePosition` property to control the position(bottom|top
 {{/power-select-with-create}}
 ```
 
+#### Control the create option's label - Default `Add "{{option}}"...`
+
+You can provide the `buildSuggestion` action to control the label of the create option. Default - `Add "{{option}}"...`
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    buildSuggestion=(action "customSuggestion")
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+```
+
+```js
+actions: {
+  customSuggestion(term) {
+    return `Create ${term}`;
+  },
+},
+```
+
 #### Yield create option
 
 You can provide `yieldCreateOption` property to control whether or not the create option will be yielded like any other option. Default - `false`.
@@ -82,7 +106,7 @@ You can provide `yieldCreateOption` property to control whether or not the creat
     oncreate=(action "createCountry")
     yieldCreateOption=true as |country|
 }}
-  {{#if country.isSuggestion}}
+  {{#if country.__isSuggestion__}}
     <span class="suggested-country">{{country.text}}</span>
   {{else}}
     <span class="country">{{country.name}}</span>
@@ -91,6 +115,30 @@ You can provide `yieldCreateOption` property to control whether or not the creat
 ```
 
 *note, the `text` property on the create option is the result of the `buildSuggestion` action. Default: `Add "${term}"...`.*
+
+#### Customize the isSuggestionField property
+
+You can customize the property that determines whether an option `isSuggestion`. By default it is `__isSuggestion__`, however if this conflicts with your
+data model for some reason you can specify it using the `isSuggestionField` setting.
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    isSuggestionField="customSuggestedProperty"
+    yieldCreateOption=true as |country|
+}}
+  {{#if country.customSuggestedProperty}}
+    <span class="suggested-country">{{country.text}}</span>
+  {{else}}
+    <span class="country">{{country.name}}</span>
+  {{/if}}
+{{/power-select-with-create}}
+```
+
+* note, we show it with the `yieldCreateOption` for illustration purposes, you do not have to specify this property to customize the setting.
 
 ### Demo
 

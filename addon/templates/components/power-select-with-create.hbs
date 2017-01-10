@@ -20,6 +20,7 @@
     matcher=matcher
     loadingMessage=loadingMessage
     noMatchesMessage=noMatchesMessage
+    onblur=onblur
     searchMessage=searchMessage
     triggerComponent=triggerComponent
     selectedItemComponent=selectedItemComponent
@@ -41,7 +42,7 @@
     tabindex=tabindex
     dir=dir
     as |option term|}}
-    {{#if get option isSuggestionField}}
+    {{#if (get option isSuggestionField)}}
       {{#if yieldCreateOption}}
         {{yield option}}
       {{else}}
@@ -73,6 +74,7 @@
     matcher=matcher
     loadingMessage=loadingMessage
     noMatchesMessage=noMatchesMessage
+    onblur=onblur
     searchMessage=searchMessage
     triggerComponent=triggerComponent
     selectedItemComponent=selectedItemComponent
@@ -94,7 +96,7 @@
     tabindex=tabindex
     dir=dir
     as |option term|}}
-    {{#if get option isSuggestionField}}
+    {{#if (get option isSuggestionField)}}
       {{#if yieldCreateOption}}
         {{yield option}}
       {{else}}
