@@ -19,7 +19,11 @@ export default Ember.Component.extend({
     let options = this.get('options');
     if (!options) { return Ember.A(); }
     if (options.then) {
-      return options.then(value => Ember.A(value).toArray());
+      return options.then(value => {
+        const resolvedOptionsArray = Ember.A(value).toArray();
+        this.set('resolvedOptionsArray', resolvedOptionsArray);
+        return resolvedOptionsArray;
+      });
     } else {
       return Ember.A(options).toArray();
     }
@@ -46,7 +50,7 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     searchAndSuggest(term, select) {
-      let newOptions = this.get('optionsArray');
+      let newOptions = this.get('resolvedOptionsArray') || this.get('optionsArray');
 
       if (term.length === 0) {
         return newOptions;
