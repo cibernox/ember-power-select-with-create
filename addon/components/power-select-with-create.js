@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-with-create';
 import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-utils';
-const { computed, get } = Ember;
+const { computed, get, RSVP } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
@@ -46,27 +46,28 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     searchAndSuggest(term, select) {
-      let newOptions = this.get('optionsArray');
+      return RSVP.resolve(this.get('optionsArray')).then(newOptions => {
 
-      if (term.length === 0) {
+        if (term.length === 0) {
+          return newOptions;
+        }
+
+        let searchAction = this.get('search');
+        if (searchAction) {
+          return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
+            if (results.toArray) {
+              results = results.toArray();
+            }
+            this.addCreateOption(term, results);
+            return results;
+          });
+        }
+
+        newOptions = this.filter(Ember.A(newOptions), term);
+        this.addCreateOption(term, newOptions);
+
         return newOptions;
-      }
-
-      let searchAction = this.get('search');
-      if (searchAction) {
-        return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
-          if (results.toArray) {
-            results = results.toArray();
-          }
-          this.addCreateOption(term, results);
-          return results;
-        });
-      }
-
-      newOptions = this.filter(Ember.A(newOptions), term);
-      this.addCreateOption(term, newOptions);
-
-      return newOptions;
+      });
     },
 
     selectOrCreate(selection, select) {
