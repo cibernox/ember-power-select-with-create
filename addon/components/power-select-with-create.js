@@ -19,9 +19,7 @@ export default Ember.Component.extend({
     let options = this.get('options');
     if (!options) { return Ember.A(); }
     if (options.then) {
-      return options.then(value => {
-        return Ember.A(value).toArray();
-      });
+      return options.then(value => Ember.A(value).toArray());
     } else {
       return Ember.A(options).toArray();
     }
