@@ -94,6 +94,52 @@ actions: {
 },
 ```
 
+#### Yield create option
+
+You can provide `yieldCreateOption` property to control whether or not the create option will be yielded like any other option. Default - `false`.
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    yieldCreateOption=true as |country|
+}}
+  {{#if country.__isSuggestion__}}
+    <span class="suggested-country">{{country.text}}</span>
+  {{else}}
+    <span class="country">{{country.name}}</span>
+  {{/if}}
+{{/power-select-with-create}}
+```
+
+*note, the `text` property on the create option is the result of the `buildSuggestion` action. Default: `Add "${term}"...`.*
+
+#### Customize the isSuggestionField property
+
+You can customize the property that determines whether an option `isSuggestion`. By default it is `__isSuggestion__`, however if this conflicts with your
+data model for some reason you can specify it using the `isSuggestionField` setting.
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    isSuggestionField="customSuggestedProperty"
+    yieldCreateOption=true as |country|
+}}
+  {{#if country.customSuggestedProperty}}
+    <span class="suggested-country">{{country.text}}</span>
+  {{else}}
+    <span class="country">{{country.name}}</span>
+  {{/if}}
+{{/power-select-with-create}}
+```
+
+* note, we show it with the `yieldCreateOption` for illustration purposes, you do not have to specify this property to customize the setting.
+
 ### Demo
 
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
