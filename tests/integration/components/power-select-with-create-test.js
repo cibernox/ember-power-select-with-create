@@ -2,6 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import { typeInSearch, clickTrigger, nativeMouseUp } from '../../helpers/ember-power-select';
+import { find } from 'ember-native-dom-helpers/test-support/helpers';
 
 moduleForComponent('power-select-with-create', 'Integration | Component | power select with create', {
   integration: true,
@@ -120,6 +121,121 @@ test('it displays option to add item with custom text at bottom', function(asser
   clickTrigger();
   Ember.run(() => typeInSearch('Russ'));
 
+  assert.equal(
+    this.$('.ember-power-select-option:eq(1)').text().trim(),
+    'Create Russ'
+  );
+});
+
+test('it displays option to add item with custom component', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        createItemComponent='create-item'
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Foo Bar'));
+
+  assert.ok(find('.create-item', '.ember-power-select-option:eq(0)'), 'The custom component is rendered.');
+  assert.equal(
+    this.$('.ember-power-select-option:eq(0)').text().trim(),
+    'Add "Foo Bar"...'
+  );
+});
+
+test('it displays option to add item with custom text inside a custom component', function(assert) {
+  assert.expect(2);
+
+  this.on('customSuggestion', (term) => {
+    return `Create ${term}`;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        buildSuggestion=(action "customSuggestion")
+        createItemComponent='create-item'
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Foo Bar'));
+
+  assert.ok(find('.create-item', '.ember-power-select-option:eq(0)'), 'The custom component is rendered.');
+  assert.equal(
+    this.$('.ember-power-select-option:eq(0)').text().trim(),
+    'Create Foo Bar'
+  );
+});
+
+test('it displays option to add item with custom component at bottom', function(assert) {
+  assert.expect(2);
+
+  this.on('customSuggestion', (term) => {
+    return `Create ${term}`;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        buildSuggestion=(action "customSuggestion")
+        searchField='name'
+        showCreatePosition="bottom"
+        createItemComponent='create-item'
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Russ'));
+
+  assert.ok(find('.create-item', '.ember-power-select-option:eq(1)'), 'The custom component is rendered.');
+  assert.equal(
+    this.$('.ember-power-select-option:eq(1)').text().trim(),
+    'Create Russ'
+  );
+});
+
+test('it displays option to add item with custom text inside a custom component at bottom', function(assert) {
+  assert.expect(2);
+
+  this.on('customSuggestion', (term) => {
+    return `Create ${term}`;
+  });
+
+  this.render(hbs`
+    {{#power-select-with-create
+        options=countries
+        oncreate=(action "createCountry")
+        buildSuggestion=(action "customSuggestion")
+        searchField='name'
+        showCreatePosition="bottom"
+        createItemComponent='create-item'
+        renderInPlace=true as |country|
+    }}
+      {{country.name}}
+    {{/power-select-with-create}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => typeInSearch('Russ'));
+
+  assert.ok(find('.create-item', '.ember-power-select-option:eq(1)'), 'The custom component is rendered.');
   assert.equal(
     this.$('.ember-power-select-option:eq(1)').text().trim(),
     'Create Russ'

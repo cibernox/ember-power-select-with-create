@@ -43,7 +43,11 @@
     dir=dir
     as |option term|}}
     {{#if option.__isSuggestion__}}
-      {{option.text}}
+      {{#if createItemComponent}}
+        {{component createItemComponent option=option}}
+      {{else}}
+        {{option.text}}
+      {{/if}}
     {{else}}
       {{yield option term}}
     {{/if}}
@@ -94,7 +98,11 @@
     dir=dir
     as |option term|}}
     {{#if option.__isSuggestion__}}
-      {{option.text}}
+      {{#if createItemComponent}}
+        {{component createItemComponent option=option.text}}
+      {{else}}
+        {{option.text}}
+      {{/if}}
     {{else}}
       {{yield option term}}
     {{/if}}
