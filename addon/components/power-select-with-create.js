@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   tagName: '',
   layout: layout,
   matcher: defaultMatcher,
+  suggestedOptionComponent: 'power-select-with-create/suggested-option',
 
   // Lifecycle hooks
   init() {

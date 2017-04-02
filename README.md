@@ -94,6 +94,31 @@ actions: {
 },
 ```
 
-### Demo
+#### Pass the creation option to a component for more control
 
+Beyond building the suggestion label, you can pass the `suggestedOptionComponent` property the name of your component.
+
+This component will receive the suggestedOption itself as `option` and the current `term` as `term`.
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    suggestedOptionComponent="suggested-option"
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+```
+
+```hbs
+<!-- {{suggested-option option=option term=term}} -->
+<span class="is-suggested">
+  Add "{{term}}"...
+</span>
+<!-- {{/suggested-option}} -->
+```
+
+### Demo
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
