@@ -24,6 +24,8 @@ Version 0.2.X requires EPS 1.0.0-beta.14 or greater.
 {{/power-select-with-create}}
 ```
 
+If you want to be able to select multiple options, use the `power-select-multiple-with-create` component instead. It has the same API as the normal `power-select-with-create`.
+
 For more options please refer to the [ember-power-select docs](http://www.ember-power-select.com/docs)
 
 #### Control if create option should be shown

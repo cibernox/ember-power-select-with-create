@@ -17,6 +17,7 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
     this.set('slowPromise', this.createSlowPromise());
+    this.set('selectedCountries', []);
   },
 
   // Actions
@@ -25,6 +26,7 @@ export default Ember.Controller.extend({
       let newCountry = { name: countryName, code: 'XX', population: 'unknown' };
       this.get('countries').pushObject(newCountry);
       this.set('selectedCountry', newCountry);
+      this.get('selectedCountries').push(newCountry);
     },
     searchCountries(term) {
       return new Ember.RSVP.Promise((resolve, reject) => {
