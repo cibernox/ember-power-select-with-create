@@ -1,7 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import { typeInSearch, clickTrigger, nativeMouseUp } from '../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger } from '../../helpers/ember-power-select';
+import { find, findAll, click } from 'ember-native-dom-helpers';
 
 moduleForComponent('power-select-with-create', 'Integration | Component | power select with create', {
   integration: true,
@@ -40,7 +41,7 @@ test('it displays option to add item with default text', function(assert) {
   Ember.run(() => typeInSearch('Foo Bar'));
 
   assert.equal(
-    this.$('.ember-power-select-option:eq(0)').text().trim(),
+    find('.ember-power-select-option').textContent.trim(),
     'Add "Foo Bar"...'
   );
 });
@@ -63,8 +64,9 @@ test('it displays option to add item with default text at bottom', function(asse
   clickTrigger();
   Ember.run(() => typeInSearch('Russ'));
 
+  const options = findAll('.ember-power-select-option');
   assert.equal(
-    this.$('.ember-power-select-option:eq(1)').text().trim(),
+    options[1].textContent.trim(),
     'Add "Russ"...'
   );
 });
@@ -91,7 +93,7 @@ test('it displays option to add item with custom text', function(assert) {
   Ember.run(() => typeInSearch('Foo Bar'));
 
   assert.equal(
-    this.$('.ember-power-select-option:eq(0)').text().trim(),
+    find('.ember-power-select-option').textContent.trim(),
     'Create Foo Bar'
   );
 });
@@ -120,8 +122,9 @@ test('it displays option to add item with custom text at bottom', function(asser
   clickTrigger();
   Ember.run(() => typeInSearch('Russ'));
 
+  const options = findAll('.ember-power-select-option');
   assert.equal(
-    this.$('.ember-power-select-option:eq(1)').text().trim(),
+    options[1].textContent.trim(),
     'Create Russ'
   );
 });
@@ -145,7 +148,7 @@ test('it executes the oncreate callback', function(assert) {
 
   clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
-  nativeMouseUp('.ember-power-select-option:eq(0)');
+  click(findAll('.ember-power-select-option')[0]);
 });
 
 test('it lets the user specify a custom search action', function(assert) {
@@ -172,11 +175,11 @@ test('it lets the user specify a custom search action', function(assert) {
   clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
 
-  const options = this.$('.ember-power-select-option');
+  const options = findAll('.ember-power-select-option');
   assert.equal(options.length, 3);
-  assert.equal(options.eq(0).text().trim(), 'Add "Foo Bar"...');
-  assert.equal(options.eq(1).text().trim(), 'Foo');
-  assert.equal(options.eq(2).text().trim(), 'Bar');
+  assert.equal(options[0].textContent.trim(), 'Add "Foo Bar"...');
+  assert.equal(options[1].textContent.trim(), 'Foo');
+  assert.equal(options[2].textContent.trim(), 'Bar');
 });
 
 test('async search works with an ArrayProxy', function(assert) {
@@ -205,11 +208,11 @@ test('async search works with an ArrayProxy', function(assert) {
   clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
 
-  const options = this.$('.ember-power-select-option');
+  const options = findAll('.ember-power-select-option');
   assert.equal(options.length, 3);
-  assert.equal(options.eq(0).text().trim(), 'Add "Foo Bar"...');
-  assert.equal(options.eq(1).text().trim(), 'Foo');
-  assert.equal(options.eq(2).text().trim(), 'Bar');
+  assert.equal(options[0].textContent.trim(), 'Add "Foo Bar"...');
+  assert.equal(options[1].textContent.trim(), 'Foo');
+  assert.equal(options[2].textContent.trim(), 'Bar');
 });
 
 test('it lets the user decide if the create option should be shown', function(assert) {
@@ -236,13 +239,13 @@ test('it lets the user decide if the create option should be shown', function(as
 
   clickTrigger();
   typeInSearch('can');
-  assert.equal(this.$('.ember-power-select-option').length, 1);
-  assert.equal(this.$('.ember-power-select-option:eq(0)').text().trim(), 'Canada');
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Canada');
 
   this.set('show', true);
 
   typeInSearch('can');
-  assert.equal(this.$('.ember-power-select-option').length, 2);
+  assert.equal(findAll('.ember-power-select-option').length, 2);
 });
 
 test('shouldShowCreate called with options when backed by static array', function(assert) {
@@ -336,11 +339,11 @@ test('shouldShowCreate works with async search', function(assert) {
   clickTrigger();
   typeInSearch('can');
 
-  const options = this.$('.ember-power-select-option');
+  const options = findAll('.ember-power-select-option');
   assert.equal(options.length, 3);
-  assert.equal(options.eq(0).text().trim(), 'Add "can"...');
-  assert.equal(options.eq(1).text().trim(), 'Foo');
-  assert.equal(options.eq(2).text().trim(), 'Bar');
+  assert.equal(options[0].textContent.trim(), 'Add "can"...');
+  assert.equal(options[1].textContent.trim(), 'Foo');
+  assert.equal(options[2].textContent.trim(), 'Bar');
 });
 
 
@@ -378,9 +381,9 @@ test('showCreatePosition works with async search', function(assert) {
   clickTrigger();
   typeInSearch('can');
 
-  const options = this.$('.ember-power-select-option');
+  const options = findAll('.ember-power-select-option');
   assert.equal(options.length, 3);
-  assert.equal(options.eq(2).text().trim(), 'Add "can"...');
-  assert.equal(options.eq(0).text().trim(), 'Foo');
-  assert.equal(options.eq(1).text().trim(), 'Bar');
+  assert.equal(options[2].textContent.trim(), 'Add "can"...');
+  assert.equal(options[0].textContent.trim(), 'Foo');
+  assert.equal(options[1].textContent.trim(), 'Bar');
 });
