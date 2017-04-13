@@ -55,6 +55,12 @@ module.exports = {
           'ember': 'canary'
         }
       }
+    },
+    {
+      name: 'ember-default',
+      npm: {
+        devDependencies: {}
+      }
     }
   ]
 };

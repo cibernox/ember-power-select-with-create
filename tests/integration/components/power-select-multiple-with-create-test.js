@@ -1,7 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import { typeInSearch, clickTrigger, nativeMouseUp } from '../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger } from '../../helpers/ember-power-select';
+import { findAll, click } from 'ember-native-dom-helpers';
 
 moduleForComponent('power-select-multiple-with-create', 'Integration | Component | power select with create', {
   integration: true,
@@ -40,9 +41,9 @@ test('it displays multiple selections correctly', function(assert) {
     {{/power-select-multiple-with-create}}
   `);
 
-  const selectedOptions = this.$('.ember-power-select-multiple-option');
+  const selectedOptions = findAll('.ember-power-select-multiple-option');
   assert.equal(selectedOptions.length, initialSelection.length);
-  assert.ok(selectedOptions.text().indexOf(initialSelection[0].name) !== -1);
+  assert.ok(selectedOptions[0].textContent.trim().indexOf(initialSelection[0].name) !== -1);
 });
 
 test('it passes an array to onchange in multiple mode', function(assert) {
@@ -66,12 +67,12 @@ test('it passes an array to onchange in multiple mode', function(assert) {
   `);
 
   clickTrigger();
-  nativeMouseUp('.ember-power-select-option:eq(0)');
+  click(findAll('.ember-power-select-option')[0]);
 
   assert.equal(this.get('selectedCountries.length'), 1);
 
   clickTrigger();
-  nativeMouseUp('.ember-power-select-option:eq(1)');
+  click(findAll('.ember-power-select-option')[1]);
 
   assert.equal(this.get('selectedCountries.length'), 2);
 });
@@ -96,7 +97,7 @@ test('it calls oncreate correctly in multiple mode', function(assert) {
 
   clickTrigger();
   Ember.run(() => typeInSearch('Foo Bar'));
-  nativeMouseUp('.ember-power-select-option:eq(0)');
+  click(findAll('.ember-power-select-option')[0]);
 });
 
 test('it supports async search function', function(assert) {
@@ -120,11 +121,11 @@ test('it supports async search function', function(assert) {
 
   clickTrigger();
   typeInSearch('foo');
-  nativeMouseUp('.ember-power-select-option:eq(1)');
+  click(findAll('.ember-power-select-option')[1]);
 
   clickTrigger();
   typeInSearch('foo');
-  nativeMouseUp('.ember-power-select-option:eq(2)');
+  click(findAll('.ember-power-select-option')[2]);
 
   assert.equal(this.get('selectedCountries')[0].name, 'Foo');
   assert.equal(this.get('selectedCountries')[1].name, 'Bar');
