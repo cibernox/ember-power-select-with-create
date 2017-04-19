@@ -5,6 +5,7 @@
     options=countries
     searchField="name"
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
@@ -33,6 +34,7 @@
     options=countries
     searchField="name"
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry")
     buildSuggestion=capitalizeSuggestion as |country term|
@@ -47,6 +49,7 @@
     options=slowPromise
     searchField="name"
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
@@ -59,6 +62,7 @@
 {{#power-select-with-create
     search=(action "searchCountries")
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
@@ -72,6 +76,8 @@
     options=countries
     searchField="name"
     selected=selectedCountry
+    allowClear=true
+    onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry")
     showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
 }}
