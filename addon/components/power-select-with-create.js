@@ -68,7 +68,7 @@ export default Ember.Component.extend({
   },
 
   selectOrCreate(selection, select) {
-    if (selection.__isSuggestion__) {
+    if (selection && selection.__isSuggestion__) {
       this.get('oncreate')(selection.__value__, select);
     } else {
       this.get('onchange')(selection, select);
