@@ -7,6 +7,8 @@ export default Ember.Component.extend({
   tagName: '',
   layout: layout,
   matcher: defaultMatcher,
+  suggestedOptionComponent: 'power-select-with-create/suggested-option',
+  powerSelectComponentName: 'power-select',
 
   // Lifecycle hooks
   init() {
@@ -25,10 +27,6 @@ export default Ember.Component.extend({
     }
   }),
 
-  powerSelectComponentName: computed('multiple', function() {
-    return this.get('multiple') ? 'power-select-multiple' : 'power-select';
-  }),
-
   shouldShowCreateOption(term, options) {
     return this.get('showCreateWhen') ? this.get('showCreateWhen')(term, options) : true;
   },
@@ -43,48 +41,37 @@ export default Ember.Component.extend({
       }
     }
   },
-  // Actions
-  actions: {
-    searchAndSuggest(term, select) {
-      return RSVP.resolve(this.get('optionsArray')).then(newOptions => {
 
-        if (term.length === 0) {
-          return newOptions;
-        }
+  searchAndSuggest(term, select) {
+    return RSVP.resolve(this.get('optionsArray')).then(newOptions => {
 
-        let searchAction = this.get('search');
-        if (searchAction) {
-          return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
-            if (results.toArray) {
-              results = results.toArray();
-            }
-            this.addCreateOption(term, results);
-            return results;
-          });
-        }
-
-        newOptions = this.filter(Ember.A(newOptions), term);
-        this.addCreateOption(term, newOptions);
-
+      if (term.length === 0) {
         return newOptions;
-      });
-    },
-
-    selectOrCreate(selection, select) {
-      let suggestion;
-      if (this.get('multiple')) {
-        suggestion = selection.filter((option) => {
-          return option.__isSuggestion__;
-        })[0];
-      } else if (selection && selection.__isSuggestion__) {
-        suggestion = selection;
       }
 
-      if (suggestion) {
-        this.get('oncreate')(suggestion.__value__, select);
-      } else {
-        this.get('onchange')(selection, select);
+      let searchAction = this.get('search');
+      if (searchAction) {
+        return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
+          if (results.toArray) {
+            results = results.toArray();
+          }
+          this.addCreateOption(term, results);
+          return results;
+        });
       }
+
+      newOptions = this.filter(Ember.A(newOptions), term);
+      this.addCreateOption(term, newOptions);
+
+      return newOptions;
+    });
+  },
+
+  selectOrCreate(selection, select) {
+    if (selection && selection.__isSuggestion__) {
+      this.get('oncreate')(selection.__value__, select);
+    } else {
+      this.get('onchange')(selection, select);
     }
   },
 

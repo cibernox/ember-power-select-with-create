@@ -5,6 +5,7 @@
     options=countries
     searchField="name"
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
@@ -14,11 +15,26 @@
 <br>
 <br>
 <br>
+<h3>Multiple selections via <code>power-select-multiple-with-create</code></h3>
+{{#power-select-multiple-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountries
+    onchange=(action (mut selectedCountries))
+    oncreate=(action "createCountry") as |country term|
+}}
+  {{country.name}}
+{{/power-select-multiple-with-create}}
+
+<br>
+<br>
+<br>
 <h3>With custom Add message</h3>
 {{#power-select-with-create
     options=countries
     searchField="name"
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry")
     buildSuggestion=capitalizeSuggestion as |country term|
@@ -33,6 +49,7 @@
     options=slowPromise
     searchField="name"
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
@@ -45,6 +62,7 @@
 {{#power-select-with-create
     search=(action "searchCountries")
     selected=selectedCountry
+    allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry") as |country term|
 }}
@@ -58,6 +76,8 @@
     options=countries
     searchField="name"
     selected=selectedCountry
+    allowClear=true
+    onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry")
     showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
 }}

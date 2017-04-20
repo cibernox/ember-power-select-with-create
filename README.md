@@ -24,6 +24,8 @@ Version 0.2.X requires EPS 1.0.0-beta.14 or greater.
 {{/power-select-with-create}}
 ```
 
+If you want to be able to select multiple options, use the `power-select-multiple-with-create` component instead. It has the same API as the normal `power-select-with-create`.
+
 For more options please refer to the [ember-power-select docs](http://www.ember-power-select.com/docs)
 
 #### Control if create option should be shown
@@ -94,6 +96,31 @@ actions: {
 },
 ```
 
-### Demo
+#### Pass the creation option to a component for more control
 
+Beyond building the suggestion label, you can pass the `suggestedOptionComponent` property the name of your component.
+
+This component will receive the suggestedOption itself as `option` and the current `term` as `term`.
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    suggestedOptionComponent="suggested-option"
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+```
+
+```hbs
+<!-- {{suggested-option option=option term=term}} -->
+<span class="is-suggested">
+  Add "{{term}}"...
+</span>
+<!-- {{/suggested-option}} -->
+```
+
+### Demo
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
