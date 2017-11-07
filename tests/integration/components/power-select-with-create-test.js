@@ -1,6 +1,9 @@
+import { Promise as EmberPromise } from 'rsvp';
+import ArrayProxy from '@ember/array/proxy';
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import { typeInSearch, clickTrigger } from '../../helpers/ember-power-select';
 import { find, findAll, click } from 'ember-native-dom-helpers';
 
@@ -8,7 +11,7 @@ moduleForComponent('power-select-with-create', 'Integration | Component | power 
   integration: true,
 
   beforeEach: function() {
-    this.set('countries', Ember.A([
+    this.set('countries', A([
       { name: 'United States',  code: 'US', population: 321853000 },
       { name: 'Spain',          code: 'ES', population: 46439864 },
       { name: 'Portugal',       code: 'PT', population: 10374822 },
@@ -38,7 +41,7 @@ test('it displays option to add item with default text', function(assert) {
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Foo Bar'));
+  run(() => typeInSearch('Foo Bar'));
 
   assert.equal(
     find('.ember-power-select-option').textContent.trim(),
@@ -62,7 +65,7 @@ test('it displays option to add item with default text at bottom', function(asse
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Russ'));
+  run(() => typeInSearch('Russ'));
 
   const options = findAll('.ember-power-select-option');
   assert.equal(
@@ -90,7 +93,7 @@ test('it displays option to add item with custom text', function(assert) {
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Foo Bar'));
+  run(() => typeInSearch('Foo Bar'));
 
   assert.equal(
     find('.ember-power-select-option').textContent.trim(),
@@ -120,7 +123,7 @@ test('it displays option to add item with custom text at bottom', function(asser
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Russ'));
+  run(() => typeInSearch('Russ'));
 
   const options = findAll('.ember-power-select-option');
   assert.equal(
@@ -147,7 +150,7 @@ test('it executes the oncreate callback', function(assert) {
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Foo Bar'));
+  run(() => typeInSearch('Foo Bar'));
   click(findAll('.ember-power-select-option')[0]);
 });
 
@@ -173,7 +176,7 @@ test('it lets the user specify a custom search action', function(assert) {
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Foo Bar'));
+  run(() => typeInSearch('Foo Bar'));
 
   const options = findAll('.ember-power-select-option');
   assert.equal(options.length, 3);
@@ -187,8 +190,8 @@ test('async search works with an ArrayProxy', function(assert) {
 
   this.on('customSearch', function(term) {
     assert.equal(term, 'Foo Bar');
-    return Ember.ArrayProxy.create({
-      content: Ember.A([
+    return ArrayProxy.create({
+      content: A([
         {name: 'Foo'},
         {name: 'Bar'},
       ])
@@ -206,7 +209,7 @@ test('async search works with an ArrayProxy', function(assert) {
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Foo Bar'));
+  run(() => typeInSearch('Foo Bar'));
 
   const options = findAll('.ember-power-select-option');
   assert.equal(options.length, 3);
@@ -279,7 +282,7 @@ test('shouldShowCreate called with options when backed by async search', functio
 
   const countries = [{name: 'Canada'}];
   this.on('searchCountries', () => {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new EmberPromise((resolve) => {
       resolve(countries);
     });
   });
@@ -312,7 +315,7 @@ test('shouldShowCreate works with async search', function(assert) {
   this.set('selectedCountries', []);
   this.set('show', true);
   this.on('searchCountries', () => {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new EmberPromise((resolve) => {
       resolve([{name: 'Foo'}, {name: 'Bar'}]);
     });
   });
@@ -353,7 +356,7 @@ test('showCreatePosition works with async search', function(assert) {
   this.set('selectedCountries', []);
   this.set('show', true);
   this.on('searchCountries', () => {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new EmberPromise((resolve) => {
       resolve([{name: 'Foo'}, {name: 'Bar'}]);
     });
   });

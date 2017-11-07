@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { later } from '@ember/runloop';
+import { Promise as EmberPromise } from 'rsvp';
+import Controller from '@ember/controller';
 
 const countries = [
   { name: 'United States',  code: 'US', population: 321853000 },
@@ -10,7 +12,7 @@ const countries = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   countries,
   slowPromise: null,
 
@@ -29,7 +31,7 @@ export default Ember.Controller.extend({
       this.get('selectedCountries').push(newCountry);
     },
     searchCountries(term) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new EmberPromise((resolve, reject) => {
         this.createSlowPromise(2000).then((countries) => {
           resolve(countries.filter((country) => {
             return country.name.toLowerCase().match(term.toLowerCase());
@@ -49,8 +51,8 @@ export default Ember.Controller.extend({
   },
 
   createSlowPromise(time = 5000) {
-    return new Ember.RSVP.Promise(function(resolve) {
-      Ember.run.later(() => resolve(countries), time);
+    return new EmberPromise(function(resolve) {
+      later(() => resolve(countries), time);
     });
   },
 });
