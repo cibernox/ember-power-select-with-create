@@ -1,6 +1,8 @@
+import { Promise as EmberPromise } from 'rsvp';
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import { typeInSearch, clickTrigger } from '../../helpers/ember-power-select';
 import { findAll, click } from 'ember-native-dom-helpers';
 
@@ -8,7 +10,7 @@ moduleForComponent('power-select-multiple-with-create', 'Integration | Component
   integration: true,
 
   beforeEach: function() {
-    this.set('countries', Ember.A([
+    this.set('countries', A([
       { name: 'United States',  code: 'US', population: 321853000 },
       { name: 'Spain',          code: 'ES', population: 46439864 },
       { name: 'Portugal',       code: 'PT', population: 10374822 },
@@ -96,14 +98,14 @@ test('it calls oncreate correctly in multiple mode', function(assert) {
   `);
 
   clickTrigger();
-  Ember.run(() => typeInSearch('Foo Bar'));
+  run(() => typeInSearch('Foo Bar'));
   click(findAll('.ember-power-select-option')[0]);
 });
 
 test('it supports async search function', function(assert) {
   this.set('selectedCountries', []);
   this.on('searchCountries', () => {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new EmberPromise((resolve) => {
       resolve([{name: 'Foo'}, {name: 'Bar'}]);
     });
   });
