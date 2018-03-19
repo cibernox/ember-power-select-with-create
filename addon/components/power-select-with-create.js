@@ -67,11 +67,11 @@ export default Ember.Component.extend({
     });
   },
 
-  selectOrCreate(selection, select) {
+  selectOrCreate(selection, select, e) {
     if (selection && selection.__isSuggestion__) {
-      this.get('oncreate')(selection.__value__, select);
+      this.get('oncreate')(selection.__value__, select, e);
     } else {
-      this.get('onchange')(selection, select);
+      this.get('onchange')(selection, select, e);
     }
   },
 
