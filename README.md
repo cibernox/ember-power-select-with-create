@@ -122,5 +122,21 @@ This component will receive the suggestedOption itself as `option` and the curre
 <!-- {{/suggested-option}} -->
 ```
 
+#### Make creation option always visible
+
+By default, ember-power-select completely recomputes dropdown options when it is done searching upon user input, which makes the creation option disappear. If you need to override this and make sure the creation option stays visible at all times, use the `alwaysShowCreate` option:
+
+```hbs
+{{#power-select-with-create
+    options=countries
+    searchField="name"
+    selected=selectedCountry
+    oncreate=(action "createCountry")
+    alwaysShowCreate=true
+}}
+  {{country.name}}
+{{/power-select-with-create}}
+```
+
 ### Demo
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
