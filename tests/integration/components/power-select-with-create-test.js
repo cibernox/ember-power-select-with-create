@@ -1,6 +1,7 @@
 import { Promise } from 'rsvp';
 import ArrayProxy from '@ember/array/proxy';
 import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -382,6 +383,51 @@ module('Integration | Component | power select with create', function(hooks) {
     assert.dom(options[2]).hasText('Add "can"...');
     assert.dom(options[0]).hasText('Foo');
     assert.dom(options[1]).hasText('Bar');
+  });
+
+  test('it supports async search function with ember-data-models', async function(assert) {
+    let store = this.owner.lookup('service:store');
+    let portugal = run(() => store.createRecord('country', {
+      code: 'pt',
+      name: 'Portugal',
+      population: 10000
+    }));
+    let spain = run(() => store.createRecord('country', {
+      code: 'es',
+      name: 'Spain',
+      population: 20000
+    }));
+    this.set('selectedCountries', []);
+    this.actions.searchCountries = () => {
+      return new Promise((resolve) => {
+        resolve([portugal, spain]);
+      });
+    };
+
+    this.actions.createCountry = (countryName) => {
+      let newCountry = run(() => store.createRecord({ name: countryName, code: 'XX', population: 'unknown'}));
+      this.get('selectedCountries').pushObject(newCountry);
+    };
+
+    await render(hbs`
+      {{#power-select-multiple-with-create
+          search=(action "searchCountries")
+          selected=selectedCountries
+          onchange=(action (mut selectedCountries))
+          searchField='name'
+          oncreate=(action "createCountry") as |country|
+      }}
+        {{country.name}}
+      {{/power-select-multiple-with-create}}
+    `);
+
+    await clickTrigger();
+    await typeInSearch('Foo');
+    const options = findAll('.ember-power-select-option');
+    assert.equal(options.length, 3);
+    assert.dom(options[0]).hasText('Add "Foo"...');
+    assert.dom(options[1]).hasText('Portugal');
+    assert.dom(options[2]).hasText('Spain');
   });
 
 
