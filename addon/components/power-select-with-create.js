@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { assert } from '@ember/debug';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
+import RSVP, { resolve } from 'rsvp';
 import layout from '../templates/components/power-select-with-create';
 import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-utils';
-const { computed, get, RSVP } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   layout: layout,
   matcher: defaultMatcher,
@@ -13,17 +16,17 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    Ember.assert('{{power-select-with-create}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
+    assert('{{power-select-with-create}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
   },
 
   // CPs
   optionsArray: computed('options.[]', function() {
     let options = this.get('options');
-    if (!options) { return Ember.A(); }
+    if (!options) { return A(); }
     if (options.then) {
-      return options.then(value => Ember.A(value).toArray());
+      return options.then(value => A(value).toArray());
     } else {
-      return Ember.A(options).toArray();
+      return A(options).toArray();
     }
   }),
 
@@ -51,7 +54,7 @@ export default Ember.Component.extend({
 
       let searchAction = this.get('search');
       if (searchAction) {
-        return Ember.RSVP.resolve(searchAction(term, select)).then((results) =>  {
+        return resolve(searchAction(term, select)).then((results) =>  {
           if (results.toArray) {
             results = results.toArray();
           }
@@ -60,7 +63,7 @@ export default Ember.Component.extend({
         });
       }
 
-      newOptions = this.filter(Ember.A(newOptions), term);
+      newOptions = this.filter(A(newOptions), term);
       this.addCreateOption(term, newOptions);
 
       return newOptions;
