@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-power-select-with-create',
+  name: require('./package').name,
 
-  contentFor: function(type, config) {
+  contentFor(type, config) {
     var emberPowerSelect = this.addons.filter(function(addon) {
       return addon.name === 'ember-power-select';
     })[0]

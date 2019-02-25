@@ -7,7 +7,7 @@
     selected=selectedCountry
     allowClear=true
     onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country term|
+    oncreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -21,7 +21,7 @@
     searchField="name"
     selected=selectedCountries
     onchange=(action (mut selectedCountries))
-    oncreate=(action "createCountry") as |country term|
+    oncreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-multiple-with-create}}
@@ -37,7 +37,7 @@
     allowClear=true
     onchange=(action (mut selectedCountry))
     oncreate=(action "createCountry")
-    buildSuggestion=capitalizeSuggestion as |country term|
+    buildSuggestion=capitalizeSuggestion as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -51,7 +51,7 @@
     selected=selectedCountry
     allowClear=true
     onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country term|
+    oncreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -64,7 +64,7 @@
     selected=selectedCountry
     allowClear=true
     onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country term|
+    oncreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
