@@ -30,6 +30,7 @@ export default Controller.extend({
       this.set('selectedCountry', newCountry);
       this.get('selectedCountries').push(newCountry);
     },
+
     searchCountries(term) {
       return new Promise((resolve, reject) => {
         this.createSlowPromise(2000).then((countries) => {
@@ -39,6 +40,7 @@ export default Controller.extend({
         }, reject);
       });
     },
+
     hideCreateOptionOnSameName(term) {
       let existingOption = this.get('countries').findBy('name', term);
       return !existingOption;

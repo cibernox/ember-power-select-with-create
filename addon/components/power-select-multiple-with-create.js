@@ -5,15 +5,17 @@ export default PowerSelectWithCreate.extend({
   layout,
   powerSelectComponentName: 'power-select-multiple',
 
-  selectOrCreate(selection, select) {
-    let suggestion = selection.filter((option) => {
-      return option.__isSuggestion__;
-    })[0];
+  actions: {
+    selectOrCreate(selection, select) {
+      let suggestion = selection.filter((option) => {
+        return option.__isSuggestion__;
+      })[0];
 
-    if (suggestion) {
-      this.get('oncreate')(suggestion.__value__, select);
-    } else {
-      this.get('onchange')(selection, select);
+      if (suggestion) {
+        this.onCreate(suggestion.__value__, select);
+      } else {
+        this.onChange(selection, select);
+      }
     }
-  },
+  }
 });
