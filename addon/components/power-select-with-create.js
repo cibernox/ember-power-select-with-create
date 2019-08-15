@@ -12,6 +12,7 @@ export default Component.extend({
   matcher: defaultMatcher,
   suggestedOptionComponent: 'power-select-with-create/suggested-option',
   powerSelectComponentName: 'power-select',
+  lastSearchTerm: null,
 
   // Lifecycle hooks
   init() {
@@ -46,6 +47,7 @@ export default Component.extend({
   },
 
   searchAndSuggest(term, select) {
+    this.set('lastSearchTerm', term);
     return RSVP.resolve(this.get('optionsArray')).then(newOptions => {
 
       if (term.length === 0) {
@@ -103,5 +105,25 @@ export default Component.extend({
       return buildSuggestion(term);
     }
     return `Add "${term}"...`;
-  }
+  },
+
+  optionsChanged: Ember.observer('optionsArray', function() {
+    if (!this.get('alwaysShowCreate') || !this.get('lastSearchTerm')) {
+      return;
+    }
+
+    this.addCreateOption(this.get('lastSearchTerm'), this.get('optionsArray'));
+  }),
+
+  selectedChanged: Ember.observer('selected', function() {
+    if (!this.get('alwaysShowCreate')) {
+      return;
+    }
+
+    this.set('lastSearchTerm', null);
+
+    const options = this.get('options');
+    this.set('options', null);
+    this.set('options', options);
+  })
 });
