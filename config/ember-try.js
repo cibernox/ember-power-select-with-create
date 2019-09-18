@@ -4,20 +4,13 @@ const getChannelURL = require('ember-source-channel-url');
 
 module.exports = async function() {
   return {
+    useYarn: true,
     scenarios: [
       {
-        name: 'ember-lts-3.4',
+        name: 'ember-3.11',
         npm: {
           devDependencies: {
-            'ember-source': '~3.4.0'
-          }
-        }
-      },
-      {
-        name: 'ember-lts-3.8',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.8.0'
+            'ember-source': '~3.11.0'
           }
         }
       },
