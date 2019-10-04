@@ -11,9 +11,9 @@ export default PowerSelectWithCreate.extend({
     })[0];
 
     if (suggestion) {
-      this.get('oncreate')(suggestion.__value__, select);
+      this.get('onCreate')(suggestion.__value__, select);
     } else {
-      this.get('onchange')(selection, select);
+      this.get('onChange')(selection, select);
     }
   },
 });

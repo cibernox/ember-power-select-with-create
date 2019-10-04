@@ -1,64 +1,59 @@
-{{#component powerSelectComponentName
-  afterOptionsComponent=afterOptionsComponent
-  allowClear=allowClear
-  ariaDescribedBy=ariaDescribedBy
-  ariaInvalid=ariaInvalid
-  ariaLabel=ariaLabel
-  ariaLabelledBy=ariaLabelledBy
-  beforeOptionsComponent=beforeOptionsComponent
-  buildSelection=buildSelection
-  calculatePosition=calculatePosition
-  class=class
-  closeOnSelect=closeOnSelect
-  defaultHighlighted=defaultHighlighted
-  destination=destination
-  dir=dir
-  disabled=disabled
-  dropdownClass=dropdownClass
-  extra=extra
-  groupComponent=groupComponent
-  highlightOnHover=highlightOnHover
-  horizontalPosition=horizontalPosition
-  initiallyOpened=initiallyOpened
-  loadingMessage=loadingMessage
-  matchTriggerWidth=matchTriggerWidth
-  matcher=matcher
-  noMatchesMessage=noMatchesMessage
-  onblur=onblur
-  onchange=(action selectOrCreate)
-  onclose=onclose
-  onfocus=onfocus
-  oninput=oninput
-  onkeydown=onkeydown
-  onopen=onopen
-  options=optionsArray
-  optionsComponent=optionsComponent
-  placeholder=placeholder
-  placeholderComponent=placeholderComponent
-  preventScroll=preventScroll
-  registerAPI=registerAPI
-  renderInPlace=renderInPlace
-  scrollTo=scrollTo
-  search=(action searchAndSuggest)
-  searchEnabled=searchEnabled
-  searchField=searchField
-  searchMessage=searchMessage
-  searchMessageComponent=searchMessageComponent
-  searchPlaceholder=searchPlaceholder
-  selected=selected
-  selectedItemComponent=selectedItemComponent
-  tabindex=tabindex
-  triggerClass=triggerClass
-  triggerComponent=triggerComponent
-  triggerId=triggerId
-  triggerRole=triggerRole
-  typeAheadMatcher=typeAheadMatcher
-  verticalPosition=verticalPosition
-  as |option term|
-}}
-  {{#if option.__isSuggestion__}}
-    {{component suggestedOptionComponent option=option term=term}}
-  {{else}}
-    {{yield option term}}
-  {{/if}}
-{{/component}}
+{{#let (component this.powerSelectComponentName) as |PowerSelectComponent|}}
+  <PowerSelectComponent
+    @afterOptionsComponent={{@afterOptionsComponent}}
+    @allowClear={{@allowClear}}
+    @beforeOptionsComponent={{@beforeOptionsComponent}}
+    @buildSelection={{@buildSelection}}
+    @calculatePosition={{@calculatePosition}}
+    @closeOnSelect={{@closeOnSelect}}
+    @defaultHighlighted={{@defaultHighlighted}}
+    @destination={{@destination}}
+    @dir={{@dir}}
+    @disabled={{@disabled}}
+    @dropdownClass={{@dropdownClass}}
+    @extra={{@extra}}
+    @groupComponent={{@groupComponent}}
+    @highlightOnHover={{@highlightOnHover}}
+    @horizontalPosition={{@horizontalPosition}}
+    @initiallyOpened={{@initiallyOpened}}
+    @loadingMessage={{@loadingMessage}}
+    @matchTriggerWidth={{@matchTriggerWidth}}
+    @matcher={{@matcher}}
+    @noMatchesMessage={{@noMatchesMessage}}
+    @onBlur={{@onBlur}}
+    @onChange={{action this.selectOrCreate}}
+    @onClose={{@onClose}}
+    @onFocus={{@onFocus}}
+    @onInput={{@onInput}}
+    @onKeydown={{@onKeydown}}
+    @onOpen={{@onOpen}}
+    @options={{this.optionsArray}}
+    @optionsComponent={{@optionsComponent}}
+    @placeholder={{@placeholder}}
+    @placeholderComponent={{@placeholderComponent}}
+    @preventScroll={{@preventScroll}}
+    @registerAPI={{@registerAPI}}
+    @renderInPlace={{@renderInPlace}}
+    @scrollTo={{@scrollTo}}
+    @search={{action this.searchAndSuggest}}
+    @searchEnabled={{@searchEnabled}}
+    @searchField={{@searchField}}
+    @searchMessage={{@searchMessage}}
+    @searchMessageComponent={{@searchMessageComponent}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @selected={{@selected}}
+    @selectedItemComponent={{@selectedItemComponent}}
+    @triggerClass={{@triggerClass}}
+    @triggerComponent={{@triggerComponent}}
+    @triggerId={{@triggerId}}
+    @triggerRole={{@triggerRole}}
+    @typeAheadMatcher={{@typeAheadMatcher}}
+    @verticalPosition={{@verticalPosition}}
+    ...attributes as |option term|>
+    {{#if option.__isSuggestion__}}
+      {{component this.suggestedOptionComponent option=option term=term}}
+    {{else}}
+      {{yield option term}}
+    {{/if}}
+  </PowerSelectComponent>
+{{/let}}

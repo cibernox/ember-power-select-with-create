@@ -17,8 +17,8 @@ Version 0.2.X requires EPS 1.0.0-beta.14 or greater.
 {{#power-select-with-create
     options=countries
     selected=selectedCountry
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country term|
+    onChange=(action (mut selectedCountry))
+    onCreate=(action "createCountry") as |country term|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -38,7 +38,7 @@ If you return `true`, the create option will be shown. If you return `false`, it
     options=countries
     searchField="name"
     selected=selectedCountry
-    oncreate=(action "createCountry")
+    onCreate=(action "createCountry")
     showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
 }}
   {{country.name}}
@@ -64,7 +64,7 @@ You can provide `showCreatePosition` property to control the position(bottom|top
     options=countries
     searchField="name"
     selected=selectedCountry
-    oncreate=(action "createCountry")
+    onCreate=(action "createCountry")
     showCreatePosition='bottom'
     showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
 }}
@@ -81,7 +81,7 @@ You can provide the `buildSuggestion` action to control the label of the create 
     options=countries
     searchField="name"
     selected=selectedCountry
-    oncreate=(action "createCountry")
+    onCreate=(action "createCountry")
     buildSuggestion=(action "customSuggestion")
 }}
   {{country.name}}
@@ -107,7 +107,7 @@ This component will receive the suggestedOption itself as `option` and the curre
     options=countries
     searchField="name"
     selected=selectedCountry
-    oncreate=(action "createCountry")
+    onCreate=(action "createCountry")
     suggestedOptionComponent="suggested-option"
 }}
   {{country.name}}

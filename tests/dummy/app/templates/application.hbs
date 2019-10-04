@@ -6,8 +6,8 @@
     searchField="name"
     selected=selectedCountry
     allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country|
+    onChange=(action (mut selectedCountry))
+    onCreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -20,8 +20,8 @@
     options=countries
     searchField="name"
     selected=selectedCountries
-    onchange=(action (mut selectedCountries))
-    oncreate=(action "createCountry") as |country|
+    onChange=(action (mut selectedCountries))
+    onCreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-multiple-with-create}}
@@ -35,8 +35,8 @@
     searchField="name"
     selected=selectedCountry
     allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry")
+    onChange=(action (mut selectedCountry))
+    onCreate=(action "createCountry")
     buildSuggestion=capitalizeSuggestion as |country|
 }}
   {{country.name}}
@@ -50,8 +50,8 @@
     searchField="name"
     selected=selectedCountry
     allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country|
+    onChange=(action (mut selectedCountry))
+    onCreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -63,8 +63,8 @@
     search=(action "searchCountries")
     selected=selectedCountry
     allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country|
+    onChange=(action (mut selectedCountry))
+    onCreate=(action "createCountry") as |country|
 }}
   {{country.name}}
 {{/power-select-with-create}}
@@ -77,8 +77,8 @@
     searchField="name"
     selected=selectedCountry
     allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry")
+    onChange=(action (mut selectedCountry))
+    onCreate=(action "createCountry")
     showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
 }}
   {{country.name}}

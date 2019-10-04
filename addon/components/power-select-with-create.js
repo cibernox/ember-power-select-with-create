@@ -16,7 +16,7 @@ export default Component.extend({
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    assert('{{power-select-with-create}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
+    assert('{{power-select-with-create}} requires an `onCreate` function', this.get('onCreate') && typeof this.get('onCreate') === 'function');
   },
 
   // CPs
@@ -72,9 +72,9 @@ export default Component.extend({
 
   selectOrCreate(selection, select, e) {
     if (selection && selection.__isSuggestion__) {
-      this.get('oncreate')(selection.__value__, select, e);
+      this.get('onCreate')(selection.__value__, select, e);
     } else {
-      this.get('onchange')(selection, select, e);
+      this.get('onChange')(selection, select, e);
     }
   },
 

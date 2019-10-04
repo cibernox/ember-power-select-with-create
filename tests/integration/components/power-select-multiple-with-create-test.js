@@ -41,8 +41,8 @@ module('Integration | Component | power select with create', function(hooks) {
       {{#power-select-multiple-with-create
           options=countries
           selected=selectedCountries
-          onchange=(action (mut selectedCountries))
-          oncreate=(action "createCountry") as |country|
+          onChange=(action (mut selectedCountries))
+          onCreate=(action "createCountry") as |country|
       }}
         {{country.name}}
       {{/power-select-multiple-with-create}}
@@ -53,7 +53,7 @@ module('Integration | Component | power select with create', function(hooks) {
     assert.ok(selectedOptions[0].textContent.trim().indexOf(initialSelection[0].name) !== -1);
   });
 
-  test('it passes an array to onchange in multiple mode', async function(assert) {
+  test('it passes an array to onChange in multiple mode', async function(assert) {
     assert.expect(4);
 
     this.set('selectedCountries', []);
@@ -66,8 +66,8 @@ module('Integration | Component | power select with create', function(hooks) {
       {{#power-select-multiple-with-create
           options=countries
           selected=selectedCountries
-          onchange=(action "selectCountries")
-          oncreate=(action "createCountry") as |country|
+          onChange=(action "selectCountries")
+          onCreate=(action "createCountry") as |country|
       }}
         {{country.name}}
       {{/power-select-multiple-with-create}}
@@ -84,7 +84,7 @@ module('Integration | Component | power select with create', function(hooks) {
     assert.equal(this.get('selectedCountries.length'), 2);
   });
 
-  test('it calls oncreate correctly in multiple mode', async function(assert) {
+  test('it calls onCreate correctly in multiple mode', async function(assert) {
     assert.expect(1);
 
     this.set('selectedCountries', []);
@@ -95,8 +95,9 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-multiple-with-create
           options=countries
+          searchEnabled=true
           selected=selectedCountries
-          oncreate=(action "createCountry") as |country|
+          onCreate=(action "createCountry") as |country|
       }}
         {{country.name}}
       {{/power-select-multiple-with-create}}
@@ -104,6 +105,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await clickTrigger();
     await typeInSearch('Foo Bar');
+
     await click(findAll('.ember-power-select-option')[0]);
   });
 
@@ -118,9 +120,10 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-multiple-with-create
           search=(action "searchCountries")
+          searchEnabled=true
           selected=selectedCountries
-          onchange=(action (mut selectedCountries))
-          oncreate=(action "createCountry") as |country|
+          onChange=(action (mut selectedCountries))
+          onCreate=(action "createCountry") as |country|
       }}
         {{country.name}}
       {{/power-select-multiple-with-create}}
