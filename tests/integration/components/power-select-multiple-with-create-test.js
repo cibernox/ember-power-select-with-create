@@ -95,7 +95,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-multiple-with-create
           options=countries
-          searchEnabled=true
           selected=selectedCountries
           onCreate=(action "createCountry") as |country|
       }}
@@ -120,7 +119,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-multiple-with-create
           search=(action "searchCountries")
-          searchEnabled=true
           selected=selectedCountries
           onChange=(action (mut selectedCountries))
           onCreate=(action "createCountry") as |country|

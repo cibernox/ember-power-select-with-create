@@ -39,7 +39,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           options=countries
-          searchEnabled=true
           onCreate=(action "createCountry")
           renderInPlace=true as |country|
       }}
@@ -61,7 +60,6 @@ module('Integration | Component | power select with create', function(hooks) {
           options=countries
           onCreate=(action "createCountry")
           showCreatePosition="bottom"
-          searchEnabled=true
           searchField="name"
           renderInPlace=true as |country|
       }}
@@ -86,7 +84,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           options=countries
-          searchEnabled=true
           onCreate=(action "createCountry")
           buildSuggestion=(action "customSuggestion")
           renderInPlace=true as |country|
@@ -114,7 +111,6 @@ module('Integration | Component | power select with create', function(hooks) {
           options=countries
           onCreate=(action "createCountry")
           buildSuggestion=(action "customSuggestion")
-          searchEnabled=true
           searchField='name'
           showCreatePosition="bottom"
           renderInPlace=true as |country|
@@ -140,7 +136,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           options=countries
-          searchEnabled=true
           onCreate=(action "createCountry")
           renderInPlace=true as |country|
       }}
@@ -167,7 +162,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           search=(action "customSearch")
-          searchEnabled=true
           onCreate=(action "createCountry")
           renderInPlace=true as |country|
       }}
@@ -201,7 +195,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           search=(action "customSearch")
-          searchEnabled=true
           onCreate=(action "createCountry")
           renderInPlace=true as |country|
       }}
@@ -232,7 +225,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           options=countries
-          searchEnabled=true
           searchField="name"
           onCreate=(action "createCountry")
           showCreateWhen=(action "shouldShowCreate")
@@ -266,7 +258,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           options=countries
-          searchEnabled=true
           searchField="name"
           onCreate=(action "createCountry")
           showCreateWhen=(action "shouldShowCreate")
@@ -298,7 +289,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           search=(action "searchCountries")
-          searchEnabled=true
           onChange=(action (mut selectedCountries))
           onCreate=(action "createCountry")
           showCreateWhen=(action "shouldShowCreate")
@@ -332,7 +322,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           search=(action "searchCountries")
-          searchEnabled=true
           selected=selectedCountries
           onChange=(action (mut selectedCountries))
           onCreate=(action "createCountry")
@@ -374,7 +363,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-with-create
           search=(action "searchCountries")
-          searchEnabled=true
           selected=selectedCountries
           onChange=(action (mut selectedCountries))
           onCreate=(action "createCountry")
@@ -424,7 +412,6 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       {{#power-select-multiple-with-create
           search=(action "searchCountries")
-          searchEnabled=true
           selected=selectedCountries
           onChange=(action (mut selectedCountries))
           searchField='name'
