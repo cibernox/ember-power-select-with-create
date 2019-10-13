@@ -1,85 +1,85 @@
 <h2 id="title">Welcome to Ember</h2>
 
 <h3>Default behaviour</h3>
-{{#power-select-with-create
-    options=countries
-    searchField="name"
-    selected=selectedCountry
-    allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country|
-}}
+<PowerSelectWithCreate
+  @options={{countries}}
+  @searchField="name"
+  @selected={{selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{action (mut selectedCountry)}}
+  @onCreate={{action "createCountry"}} as |country|
+>
   {{country.name}}
-{{/power-select-with-create}}
+</PowerSelectWithCreate>
 
 <br>
 <br>
 <br>
 <h3>Multiple selections via <code>power-select-multiple-with-create</code></h3>
-{{#power-select-multiple-with-create
-    options=countries
-    searchField="name"
-    selected=selectedCountries
-    onchange=(action (mut selectedCountries))
-    oncreate=(action "createCountry") as |country|
-}}
+<PowerSelectMultipleWithCreate
+  @options={{countries}}
+  @searchField="name"
+  @selected={{selectedCountries}}
+  @onChange={{action (mut selectedCountries)}}
+  @onCreate={{action "createCountry"}} as |country|
+>
   {{country.name}}
-{{/power-select-multiple-with-create}}
-
+</PowerSelectMultipleWithCreate>
 <br>
 <br>
 <br>
 <h3>With custom Add message</h3>
-{{#power-select-with-create
-    options=countries
-    searchField="name"
-    selected=selectedCountry
-    allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry")
-    buildSuggestion=capitalizeSuggestion as |country|
-}}
+<PowerSelectWithCreate
+  @options={{countries}}
+  @searchField="name"
+  @selected={{selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{action (mut selectedCountry)}}
+  @onCreate={{action "createCountry"}}
+  @buildSuggestion={{capitalizeSuggestion}} as |country|
+>
   {{country.name}}
-{{/power-select-with-create}}
+</PowerSelectWithCreate>
+
 <br>
 <br>
 <br>
 <h3>With options being a slow promise</h3>
-{{#power-select-with-create
-    options=slowPromise
-    searchField="name"
-    selected=selectedCountry
-    allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country|
-}}
+<PowerSelectWithCreate
+  @options={{slowPromise}}
+  @searchField="name"
+  @selected={{selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{action (mut selectedCountry)}}
+  @onCreate={{action "createCountry"}} as |country|
+>
   {{country.name}}
-{{/power-select-with-create}}
+</PowerSelectWithCreate>
 <br>
 <br>
 <br>
 <h3>With async search</h3>
-{{#power-select-with-create
-    search=(action "searchCountries")
-    selected=selectedCountry
-    allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry") as |country|
-}}
+<PowerSelectWithCreate
+  @search={{action "searchCountries"}}
+  @selected={{selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{action (mut selectedCountry)}}
+  @onCreate={{action "createCountry"}} as |country|
+>
   {{country.name}}
-{{/power-select-with-create}}
+</PowerSelectWithCreate>
 <br>
 <br>
 <br>
 <h3>With callback to hide/show create option</h3>
-{{#power-select-with-create
-    options=countries
-    searchField="name"
-    selected=selectedCountry
-    allowClear=true
-    onchange=(action (mut selectedCountry))
-    oncreate=(action "createCountry")
-    showCreateWhen=(action "hideCreateOptionOnSameName") as |country|
-}}
+<PowerSelectWithCreate
+  @options={{countries}}
+  @searchField="name"
+  @selected={{selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{action (mut selectedCountry)}}
+  @onCreate={{action "createCountry"}}
+  @showCreateWhen={{action "hideCreateOptionOnSameName"}} as |country|
+>
   {{country.name}}
-{{/power-select-with-create}}
+</PowerSelectWithCreate>

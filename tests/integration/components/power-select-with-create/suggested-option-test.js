@@ -16,7 +16,9 @@ module('Integration | Component | power select with create/suggested option', fu
 
     this.set('term', term);
     this.set('option', option);
-    await render(hbs`{{power-select-with-create/suggested-option option=option term=term}}`);
+    await render(hbs`
+      <PowerSelectWithCreate::SuggestedOption @option={{option}} @term={{term}} />
+    `);
 
     assert.dom(this.element).hasText(`Add "${term}"...`);
   });

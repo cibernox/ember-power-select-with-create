@@ -12,11 +12,12 @@ export default Component.extend({
   matcher: defaultMatcher,
   suggestedOptionComponent: 'power-select-with-create/suggested-option',
   powerSelectComponentName: 'power-select',
+  searchEnabled: true,
 
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    assert('{{power-select-with-create}} requires an `oncreate` function', this.get('oncreate') && typeof this.get('oncreate') === 'function');
+    assert('<PowerSelectWithCreate> requires an `onCreate` function', this.onCreate && typeof this.onCreate === 'function');
   },
 
   // CPs
@@ -45,44 +46,46 @@ export default Component.extend({
     }
   },
 
-  searchAndSuggest(term, select) {
-    return RSVP.resolve(this.get('optionsArray')).then(newOptions => {
+  actions: {
+    searchAndSuggest(term, select) {
+      return RSVP.resolve(this.get('optionsArray')).then(newOptions => {
 
-      if (term.length === 0) {
+        if (term.length === 0) {
+          return newOptions;
+        }
+
+        let searchAction = this.get('search');
+        if (searchAction) {
+          return resolve(searchAction(term, select)).then((results) =>  {
+            if (results.toArray) {
+              results = results.toArray();
+            }
+            this.addCreateOption(term, results);
+            return results;
+          });
+        }
+
+        newOptions = this.filter(A(newOptions), term);
+        this.addCreateOption(term, newOptions);
+
         return newOptions;
+      });
+    },
+
+    selectOrCreate(selection, select, e) {
+      if (selection && selection.__isSuggestion__) {
+        this.onCreate(selection.__value__, select, e);
+      } else {
+        this.onChange(selection, select, e);
       }
-
-      let searchAction = this.get('search');
-      if (searchAction) {
-        return resolve(searchAction(term, select)).then((results) =>  {
-          if (results.toArray) {
-            results = results.toArray();
-          }
-          this.addCreateOption(term, results);
-          return results;
-        });
-      }
-
-      newOptions = this.filter(A(newOptions), term);
-      this.addCreateOption(term, newOptions);
-
-      return newOptions;
-    });
-  },
-
-  selectOrCreate(selection, select, e) {
-    if (selection && selection.__isSuggestion__) {
-      this.get('oncreate')(selection.__value__, select, e);
-    } else {
-      this.get('onchange')(selection, select, e);
-    }
+    },
   },
 
   // Methods
   filter(options, searchText) {
     let matcher;
-    if (this.get('searchField')) {
-      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
+    if (this.searchField) {
+      matcher = (option, text) => this.matcher(get(option, this.searchField), text);
     } else {
       matcher = (option, text) => this.matcher(option, text);
     }
@@ -98,10 +101,10 @@ export default Component.extend({
   },
 
   buildSuggestionLabel(term) {
-    let buildSuggestion = this.get('buildSuggestion');
-    if (buildSuggestion) {
-      return buildSuggestion(term);
+    if (this.buildSuggestion) {
+      return this.buildSuggestion(term);
     }
+
     return `Add "${term}"...`;
   }
 });
