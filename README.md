@@ -23,7 +23,7 @@ Please also refer to [Ember Power Select documentation](https://github.com/ciber
   @onChange={{action (mut selectedCountry)}}
   @onCreate={{action "createCountry"}}
   as |country|
-}}
+>
   {{country.name}}
 </PowerSelectWithCreate>
 ```
@@ -76,7 +76,7 @@ You can provide `showCreatePosition` property to control the position(bottom|top
   @showCreatePosition="bottom"
   @showCreateWhen={{action "hideCreateOptionOnSameName"}}
   as |country|
-}}
+>
   {{country.name}}
 </PowerSelectWithCreate>
 ```
@@ -92,7 +92,7 @@ You can provide the `buildSuggestion` action to control the label of the create 
   @selected={{selectedCountry}}
   @onCreate={{action "createCountry"}}
   @buildSuggestion={{action "customSuggestion"}}
-}}
+>
   {{country.name}}
 </PowerSelectWithCreate>
 ```
@@ -122,7 +122,7 @@ This component will receive the suggestedOption itself as `option` and the curre
   @selected={{selectedCountry}}
   @onCreate={{action "createCountry"}}
   @suggestedOptionComponent="suggested-option"
-}}
+>
   {{country.name}}
 </PowerSelectWithCreate>
 ```
