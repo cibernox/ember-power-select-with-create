@@ -10,7 +10,7 @@ ember install ember-power-select-with-create
 
 ### Compatibility
 
-* Ember Power Select v3 or above
+* Ember Power Select v4 or above
 
 Please also refer to [Ember Power Select documentation](https://github.com/cibernox/ember-power-select#ember-power-select) for it's compatibility notes.
 
