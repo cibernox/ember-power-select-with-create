@@ -4,10 +4,8 @@ import { assert } from '@ember/debug';
 import { action, get } from '@ember/object';
 import RSVP, { resolve } from 'rsvp';
 import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-utils';
-import { setComponentTemplate } from '@ember/component';
-import layout from '../templates/components/power-select-with-create';
 
-class PowerSelectWithCreate extends Component {
+export default class PowerSelectWithCreate extends Component {
   matcher = defaultMatcher;
   suggestedOptionComponent = 'power-select-with-create/suggested-option';
   powerSelectComponentName = 'power-select';
@@ -104,5 +102,3 @@ class PowerSelectWithCreate extends Component {
     return `Add "${term}"...`;
   }
 }
-
-export default setComponentTemplate(layout, PowerSelectWithCreate);

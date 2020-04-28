@@ -1,9 +1,6 @@
 import PowerSelectWithCreate from './power-select-with-create';
 import { action } from '@ember/object';
-import { setComponentTemplate } from '@ember/component';
-import layout from '../templates/components/power-select-with-create';
-
-class PowerSelectMultipleWithCreate extends PowerSelectWithCreate {
+export default class PowerSelectMultipleWithCreate extends PowerSelectWithCreate {
   powerSelectComponentName = 'power-select-multiple';
 
   @action
@@ -19,5 +16,3 @@ class PowerSelectMultipleWithCreate extends PowerSelectWithCreate {
     }
   }
 }
-
-export default setComponentTemplate(layout, PowerSelectMultipleWithCreate);
