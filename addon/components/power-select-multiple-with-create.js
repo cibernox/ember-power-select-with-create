@@ -1,5 +1,6 @@
 import PowerSelectWithCreate from './power-select-with-create';
 import { action } from '@ember/object';
+
 export default class PowerSelectMultipleWithCreate extends PowerSelectWithCreate {
   powerSelectComponentName = 'power-select-multiple';
 
