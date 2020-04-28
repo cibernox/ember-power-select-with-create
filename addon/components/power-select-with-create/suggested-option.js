@@ -1,7 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { setComponentTemplate } from '@ember/component';
 import layout from '../../templates/components/power-select-with-create/suggested-option';
 
-export default Component.extend({
-  tagName: '',
-  layout
-});
+class PowerSelectWithCreateSuggestedOption extends Component {}
+
+export default setComponentTemplate(layout, PowerSelectWithCreateSuggestedOption);

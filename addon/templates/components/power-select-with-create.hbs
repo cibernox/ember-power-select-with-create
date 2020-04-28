@@ -6,7 +6,7 @@
     @ariaInvalid={{@ariaInvalid}}
     @ariaLabel={{@ariaLabel}}
     @ariaLabelledBy={{@ariaLabelledBy}}
-    @beforeOptionsComponent={{this.beforeOptionsComponent}}
+    @beforeOptionsComponent={{@beforeOptionsComponent}}
     @buildSelection={{@buildSelection}}
     @calculatePosition={{@calculatePosition}}
     @class={{@class}}
@@ -26,7 +26,7 @@
     @matcher={{this.matcher}}
     @noMatchesMessage={{@noMatchesMessage}}
     @onBlur={{@onBlur}}
-    @onChange={{action "selectOrCreate"}}
+    @onChange={{this.selectOrCreate}}
     @onClose={{@onClose}}
     @onFocus={{@onFocus}}
     @onInput={{@onInput}}
@@ -40,7 +40,7 @@
     @registerAPI={{@registerAPI}}
     @renderInPlace={{@renderInPlace}}
     @scrollTo={{@scrollTo}}
-    @search={{action "searchAndSuggest"}}
+    @search={{this.searchAndSuggest}}
     @searchEnabled={{this.searchEnabled}}
     @searchField={{@searchField}}
     @searchMessage={{@searchMessage}}
@@ -50,7 +50,7 @@
     @selectedItemComponent={{@selectedItemComponent}}
     @tabindex={{@tabindex}}
     @triggerClass={{@triggerClass}}
-    @triggerComponent={{this.triggerComponent}}
+    @triggerComponent={{@triggerComponent}}
     @triggerId={{@triggerId}}
     @triggerRole={{@triggerRole}}
     @typeAheadMatcher={{@typeAheadMatcher}}

@@ -2,11 +2,11 @@
 
 <h3>Default behaviour</h3>
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
+  @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{action "createCountry"}} as |country|
 >
   {{country.name}}
@@ -17,10 +17,10 @@
 <br>
 <h3>Multiple selections via <code>power-select-multiple-with-create</code></h3>
 <PowerSelectMultipleWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountries}}
-  @onChange={{action (mut selectedCountries)}}
+  @selected={{this.selectedCountries}}
+  @onChange={{fn (mut this.selectedCountries)}}
   @onCreate={{action "createCountry"}} as |country|
 >
   {{country.name}}
@@ -30,13 +30,13 @@
 <br>
 <h3>With custom Add message</h3>
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
+  @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{action "createCountry"}}
-  @buildSuggestion={{capitalizeSuggestion}} as |country|
+  @buildSuggestion={{this.capitalizeSuggestion}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -46,11 +46,11 @@
 <br>
 <h3>With options being a slow promise</h3>
 <PowerSelectWithCreate
-  @options={{slowPromise}}
+  @options={{this.slowPromise}}
   @searchField="name"
-  @selected={{selectedCountry}}
+  @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{action "createCountry"}} as |country|
 >
   {{country.name}}
@@ -61,9 +61,9 @@
 <h3>With async search</h3>
 <PowerSelectWithCreate
   @search={{action "searchCountries"}}
-  @selected={{selectedCountry}}
+  @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{action "createCountry"}} as |country|
 >
   {{country.name}}
@@ -73,11 +73,11 @@
 <br>
 <h3>With callback to hide/show create option</h3>
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
+  @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{action "createCountry"}}
   @showCreateWhen={{action "hideCreateOptionOnSameName"}} as |country|
 >

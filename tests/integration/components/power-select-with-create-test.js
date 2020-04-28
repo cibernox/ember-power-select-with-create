@@ -233,7 +233,7 @@ module('Integration | Component | power select with create', function(hooks) {
         {{country.name}}
       </PowerSelectWithCreate>
     `);
-
+ 
     await clickTrigger();
     await typeInSearch('can');
     assert.dom('.ember-power-select-option').exists({ count: 1 });
@@ -241,6 +241,10 @@ module('Integration | Component | power select with create', function(hooks) {
 
     this.set('show', true);
 
+    // Close and reopen dropdown
+    await clickTrigger();
+    await clickTrigger();
+    
     await typeInSearch('can');
     assert.dom('.ember-power-select-option').exists({ count: 2 });
   });

@@ -1,21 +1,23 @@
 import PowerSelectWithCreate from './power-select-with-create';
+import { action } from '@ember/object';
+import { setComponentTemplate } from '@ember/component';
 import layout from '../templates/components/power-select-with-create';
 
-export default PowerSelectWithCreate.extend({
-  layout,
-  powerSelectComponentName: 'power-select-multiple',
+class PowerSelectMultipleWithCreate extends PowerSelectWithCreate {
+  powerSelectComponentName = 'power-select-multiple';
 
-  actions: {
-    selectOrCreate(selection, select) {
-      let suggestion = selection.filter((option) => {
-        return option.__isSuggestion__;
-      })[0];
+  @action
+  selectOrCreate(selection, select) {
+    let suggestion = selection.filter((option) => {
+      return option.__isSuggestion__;
+    })[0];
 
-      if (suggestion) {
-        this.onCreate(suggestion.__value__, select);
-      } else {
-        this.onChange(selection, select);
-      }
+    if (suggestion) {
+      this.args.onCreate(suggestion.__value__, select);
+    } else {
+      this.args.onChange(selection, select);
     }
   }
-});
+}
+
+export default setComponentTemplate(layout, PowerSelectMultipleWithCreate);
