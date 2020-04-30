@@ -19,11 +19,10 @@ Please also refer to [Ember Power Select documentation](https://github.com/ciber
 
 ```hbs
 <PowerSelectWithCreate
-  @options={{countries}}
-  @selected={{selectedCountry}}
-  @onChange={{action (mut selectedCountry)}}
-  @onCreate={{action "createCountry"}}
-  as |country|
+  @options={{this.countries}}
+  @selected={{this.selectedCountry}}
+  @onChange={{fn (mut selectedCountry)}}
+  @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -40,12 +39,11 @@ If you return `true`, the create option will be shown. If you return `false`, it
 
 ```hbs
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
-  @onCreate={{action "createCountry"}}
-  @showCreateWhen={{action "hideCreateOptionOnSameName"}}
-  as |country|
+  @selected={{this.selectedCountry}}
+  @onCreate={{this.createCountry}}
+  @showCreateWhen={{this.hideCreateOptionOnSameName}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -70,13 +68,12 @@ You can provide `showCreatePosition` property to control the position(bottom|top
 
 ```hbs
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
-  @onCreate={{action "createCountry"}}
+  @selected={{this.selectedCountry}}
+  @onCreate={{this.createCountry}}
   @showCreatePosition="bottom"
-  @showCreateWhen={{action "hideCreateOptionOnSameName"}}
-  as |country|
+  @showCreateWhen={{this.hideCreateOptionOnSameName}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -88,11 +85,11 @@ You can provide the `buildSuggestion` action to control the label of the create 
 
 ```hbs
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
-  @onCreate={{action "createCountry"}}
-  @buildSuggestion={{action "customSuggestion"}}
+  @selected={{this.selectedCountry}}
+  @onCreate={{this.createCountry}}
+  @buildSuggestion={{this.customSuggestion}}
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -100,10 +97,8 @@ You can provide the `buildSuggestion` action to control the label of the create 
 
 ```js
 import Component from '@ember/component';
-import { action } from '@ember/object';
 
 export default class MyComponent extends Component {
-  @action
   customSuggestion(term) {
     return `Create ${term}`;
   }
@@ -118,10 +113,10 @@ This component will receive the suggestedOption itself as `option` and the curre
 
 ```hbs
 <PowerSelectWithCreate
-  @options={{countries}}
+  @options={{this.countries}}
   @searchField="name"
-  @selected={{selectedCountry}}
-  @onCreate={{action "createCountry"}}
+  @selected={{this.selectedCountry}}
+  @onCreate={{this.createCountry}}
   @suggestedOptionComponent="suggested-option"
 >
   {{country.name}}
@@ -137,5 +132,7 @@ This component will receive the suggestedOption itself as `option` and the curre
 ```
 
 ### Demo
+
+Not currently working...
 
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
