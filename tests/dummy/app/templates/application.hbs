@@ -7,7 +7,7 @@
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
   @onChange={{fn (mut this.selectedCountry)}}
-  @onCreate={{action "createCountry"}} as |country|
+  @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -21,7 +21,7 @@
   @searchField="name"
   @selected={{this.selectedCountries}}
   @onChange={{fn (mut this.selectedCountries)}}
-  @onCreate={{action "createCountry"}} as |country|
+  @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
 </PowerSelectMultipleWithCreate>
@@ -35,7 +35,7 @@
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
   @onChange={{fn (mut this.selectedCountry)}}
-  @onCreate={{action "createCountry"}}
+  @onCreate={{this.createCountry}}
   @buildSuggestion={{this.capitalizeSuggestion}} as |country|
 >
   {{country.name}}
@@ -51,7 +51,7 @@
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
   @onChange={{fn (mut this.selectedCountry)}}
-  @onCreate={{action "createCountry"}} as |country|
+  @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -60,11 +60,11 @@
 <br>
 <h3>With async search</h3>
 <PowerSelectWithCreate
-  @search={{action "searchCountries"}}
+  @search={{this.searchCountries}}
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
   @onChange={{fn (mut this.selectedCountry)}}
-  @onCreate={{action "createCountry"}} as |country|
+  @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
@@ -78,8 +78,8 @@
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
   @onChange={{fn (mut this.selectedCountry)}}
-  @onCreate={{action "createCountry"}}
-  @showCreateWhen={{action "hideCreateOptionOnSameName"}} as |country|
+  @onCreate={{this.createCountry}}
+  @showCreateWhen={{this.hideCreateOptionOnSameName}} as |country|
 >
   {{country.name}}
 </PowerSelectWithCreate>
