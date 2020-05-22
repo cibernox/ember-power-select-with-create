@@ -4,7 +4,7 @@ import { A } from '@ember/array';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from "@ember/test-helpers";
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { findAll, click } from 'ember-native-dom-helpers';
@@ -38,7 +38,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @onCreate={{action "createCountry"}}
         @renderInPlace={{true}} as |country|
       >
@@ -57,7 +57,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @onCreate={{action "createCountry"}}
         @showCreatePosition="bottom"
         @searchField="name"
@@ -83,7 +83,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @onCreate={{action "createCountry"}}
         @buildSuggestion={{action "customSuggestion"}}
         @renderInPlace={{true}} as |country|
@@ -108,7 +108,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @onCreate={{action "createCountry"}}
         @buildSuggestion={{action "customSuggestion"}}
         @searchField="name"
@@ -135,7 +135,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @onCreate={{action "createCountry"}}
         @renderInPlace={{true}} as |country|
       >
@@ -213,21 +213,21 @@ module('Integration | Component | power select with create', function(hooks) {
   });
 
   test('it lets the user decide if the create option should be shown', async function(assert) {
-    assert.expect(5);
+    assert.expect(3);
 
     this.set('countries', [{name: 'Canada'}]);
     this.set('show', false);
-    this.actions.shouldShowCreate = (term) => {
-      assert.equal(term, 'can');
+    this.createCountry = () => {};
+    this.shouldShowCreate = () => {
       return this.get('show');
     };
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @searchField="name"
-        @onCreate={{action "createCountry"}}
-        @showCreateWhen={{action "shouldShowCreate"}}
+        @onCreate={{this.createCountry}}
+        @showCreateWhen={{this.shouldShowCreate}}
         @renderInPlace={{true}} as |country|
       >
         {{country.name}}
@@ -241,7 +241,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     this.set('show', true);
 
-    await typeInSearch('can');
+    await typeInSearch('cana');
     assert.dom('.ember-power-select-option').exists({ count: 2 });
   });
 
@@ -257,7 +257,7 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @searchField="name"
         @onCreate={{action "createCountry"}}
         @showCreateWhen={{action "shouldShowCreate"}}
@@ -321,7 +321,7 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       <PowerSelectWithCreate
         @search={{action "searchCountries"}}
-        @selected={{selectedCountries}}
+        @selected={{this.selectedCountries}}
         @onChange={{action (mut selectedCountries)}}
         @onCreate={{action "createCountry"}}
         @showCreateWhen={{action "shouldShowCreate"}}
@@ -361,7 +361,7 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       <PowerSelectWithCreate
         @search={{action "searchCountries"}}
-        @selected={{selectedCountries}}
+        @selected={{this.selectedCountries}}
         @onChange={{action (mut selectedCountries)}}
         @onCreate={{action "createCountry"}}
         @showCreateWhen={{action "shouldShowCreate"}}
@@ -409,7 +409,7 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       <PowerSelectMultipleWithCreate
         @search={{action "searchCountries"}}
-        @selected={{selectedCountries}}
+        @selected={{this.selectedCountries}}
         @onChange={{action (mut selectedCountries)}}
         @searchField="name"
         @onCreate={{action "createCountry"}} as |country|
