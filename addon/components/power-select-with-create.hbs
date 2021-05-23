@@ -26,13 +26,13 @@
     @matcher={{this.matcher}}
     @noMatchesMessage={{@noMatchesMessage}}
     @onBlur={{@onBlur}}
-    @onChange={{action "selectOrCreate"}}
+    @onChange={{this.selectOrCreate}}
     @onClose={{@onClose}}
     @onFocus={{@onFocus}}
     @onInput={{@onInput}}
     @onKeydown={{@onKeydown}}
     @onOpen={{@onOpen}}
-    @options={{this.optionsArray}}
+    @options={{@options}}
     @optionsComponent={{@optionsComponent}}
     @placeholder={{@placeholder}}
     @placeholderComponent={{@placeholderComponent}}
@@ -40,7 +40,7 @@
     @registerAPI={{@registerAPI}}
     @renderInPlace={{@renderInPlace}}
     @scrollTo={{@scrollTo}}
-    @search={{action "searchAndSuggest"}}
+    @search={{this.searchAndSuggest}}
     @searchEnabled={{this.searchEnabled}}
     @searchField={{@searchField}}
     @searchMessage={{@searchMessage}}

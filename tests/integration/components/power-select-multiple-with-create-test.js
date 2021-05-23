@@ -1,22 +1,17 @@
 import { Promise } from 'rsvp';
-import { A } from '@ember/array';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
-import { findAll, click } from 'ember-native-dom-helpers';
+import { findAll, click } from '@ember/test-helpers';
+import { set } from '@ember/object';
 
 module('Integration | Component | power select with create', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
-  });
-
-  hooks.beforeEach(function() {
-    this.set('countries', A([
+    this.countries = [
       { name: 'United States',  code: 'US', population: 321853000 },
       { name: 'Spain',          code: 'ES', population: 46439864 },
       { name: 'Portugal',       code: 'PT', population: 10374822 },
@@ -24,25 +19,26 @@ module('Integration | Component | power select with create', function(hooks) {
       { name: 'Latvia',         code: 'LV', population: 1978300 },
       { name: 'Brazil',         code: 'BR', population: 204921000 },
       { name: 'United Kingdom', code: 'GB', population: 64596752 },
-    ]));
-    this.actions.createCountry = (countryName) => {
+    ];
+
+    this.createCountry = (countryName) => {
       let newCountry = {name: countryName, code: 'XX', population: 'unknown'};
-      this.get('countries').pushObject(newCountry);
+      this.countries.push(newCountry);
     };
   });
 
   test('it displays multiple selections correctly', async function(assert) {
     assert.expect(2);
 
-    const initialSelection = [this.get('countries.firstObject')];
-    this.set('selectedCountries', initialSelection);
+    const initialSelection = [this.countries[0]];
+    this.selectedCountries = initialSelection;
 
     await render(hbs`
       <PowerSelectMultipleWithCreate
-        @options={{countries}}
+        @options={{this.countries}}
         @selected={{selectedCountries}}
         @onChange={{action (mut selectedCountries)}}
-        @onCreate={{action "createCountry"}} as |country|
+        @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
       </PowerSelectMultipleWithCreate>
@@ -56,18 +52,18 @@ module('Integration | Component | power select with create', function(hooks) {
   test('it passes an array to onChange in multiple mode', async function(assert) {
     assert.expect(4);
 
-    this.set('selectedCountries', []);
-    this.actions.selectCountries = function(countries) {
+    this.selectedCountries = [];
+    this.selectCountries = (countries) => {
       assert.ok(countries instanceof Array);
-      this.set('selectedCountries', countries);
+      set(this, "selectedCountries", countries);
     };
 
     await render(hbs`
       <PowerSelectMultipleWithCreate
-        @options={{countries}}
-        @selected={{selectedCountries}}
-        @onChange={{action "selectCountries"}}
-        @onCreate={{action "createCountry"}} as |country|
+        @options={{this.countries}}
+        @selected={{this.selectedCountries}}
+        @onChange={{this.selectCountries}}
+        @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
       </PowerSelectMultipleWithCreate>
@@ -76,27 +72,27 @@ module('Integration | Component | power select with create', function(hooks) {
     await clickTrigger();
     await click(findAll('.ember-power-select-option')[0]);
 
-    assert.equal(this.get('selectedCountries.length'), 1);
+    assert.equal(this.selectedCountries.length, 1);
 
     await clickTrigger();
     await click(findAll('.ember-power-select-option')[1]);
 
-    assert.equal(this.get('selectedCountries.length'), 2);
+    assert.equal(this.selectedCountries.length, 2);
   });
 
   test('it calls onCreate correctly in multiple mode', async function(assert) {
     assert.expect(1);
 
-    this.set('selectedCountries', []);
-    this.actions.createCountry = function(country) {
+    this.selectedCountries = [];
+    this.createCountry = (country) => {
       assert.equal(country, 'Foo Bar');
     };
 
     await render(hbs`
       <PowerSelectMultipleWithCreate
-        @options={{countries}}
-        @selected={{selectedCountries}}
-        @onCreate={{action "createCountry"}} as |country|
+        @options={{this.countries}}
+        @selected={{this.selectedCountries}}
+        @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
       </PowerSelectMultipleWithCreate>
@@ -108,8 +104,8 @@ module('Integration | Component | power select with create', function(hooks) {
   });
 
   test('it supports async search function', async function(assert) {
-    this.set('selectedCountries', []);
-    this.actions.searchCountries = () => {
+    this.selectedCountries = [];
+    this.searchCountries = () => {
       return new Promise((resolve) => {
         resolve([{name: 'Foo'}, {name: 'Bar'}]);
       });
@@ -117,10 +113,10 @@ module('Integration | Component | power select with create', function(hooks) {
 
     await render(hbs`
       <PowerSelectMultipleWithCreate
-        @search={{action "searchCountries"}}
-        @selected={{selectedCountries}}
+        @search={{this.searchCountries}}
+        @selected={{this.selectedCountries}}
         @onChange={{action (mut selectedCountries)}}
-        @onCreate={{action "createCountry"}} as |country|
+        @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
       </PowerSelectMultipleWithCreate>
@@ -134,7 +130,7 @@ module('Integration | Component | power select with create', function(hooks) {
     await typeInSearch('foo');
     await click(findAll('.ember-power-select-option')[2]);
 
-    assert.equal(this.get('selectedCountries')[0].name, 'Foo');
-    assert.equal(this.get('selectedCountries')[1].name, 'Bar');
+    assert.equal(this.selectedCountries[0].name, 'Foo');
+    assert.equal(this.selectedCountries[1].name, 'Bar');
   });
 });

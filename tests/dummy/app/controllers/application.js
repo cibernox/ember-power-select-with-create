@@ -1,6 +1,8 @@
 import { later } from '@ember/runloop';
 import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 const countries = [
   { name: 'United States',  code: 'US', population: 321853000 },
@@ -12,49 +14,56 @@ const countries = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
-export default Controller.extend({
-  countries,
-  slowPromise: null,
+export default class ApplicationController extends Controller {
+  @tracked
+  countries = [];
+  slowPromise = null;
 
-  init() {
-    this._super(...arguments);
-    this.set('slowPromise', this.createSlowPromise());
-    this.set('selectedCountries', []);
-  },
+  @tracked
+  selectedCountry;
 
-  // Actions
-  actions: {
-    createCountry(countryName) {
-      let newCountry = { name: countryName, code: 'XX', population: 'unknown' };
-      this.get('countries').pushObject(newCountry);
-      this.set('selectedCountry', newCountry);
-      this.get('selectedCountries').push(newCountry);
-    },
+  @tracked
+  selectedCountries = [];
 
-    searchCountries(term) {
-      return new Promise((resolve, reject) => {
-        this.createSlowPromise(2000).then((countries) => {
-          resolve(countries.filter((country) => {
-            return country.name.toLowerCase().match(term.toLowerCase());
-          }));
-        }, reject);
-      });
-    },
+  constructor() {
+    super(...arguments);
+    this.slowPromise = this.createSlowPromise();
+    this.selectedCountries = [];
+  }
 
-    hideCreateOptionOnSameName(term) {
-      let existingOption = this.get('countries').findBy('name', term);
-      return !existingOption;
-    },
-  },
+  @action
+  createCountry(countryName) {
+    let newCountry = { name: countryName, code: 'XX', population: 'unknown' };
+    this.countries = [...this.countries, newCountry];
+    this.selectedCountry = newCountry;
+    this.selectedCountries = [...this.selectedCountries, newCountry];
+  }
+
+  @action
+  searchCountries(term) {
+    return new Promise((resolve, reject) => {
+      this.createSlowPromise(2000).then((countries) => {
+        resolve(countries.filter((country) => {
+          return country.name.toLowerCase().match(term.toLowerCase());
+        }));
+      }, reject);
+    });
+  }
+
+  @action
+  hideCreateOptionOnSameName(term) {
+    let existingOption = this.countries.find(country => country.name === term);
+    return !existingOption;
+  }
 
   // Methods
   capitalizeSuggestion(term) {
     return `Hey! Perhaps you want to create ${term.toUpperCase()}??`;
-  },
+  }
 
   createSlowPromise(time = 5000) {
     return new Promise(function(resolve) {
       later(() => resolve(countries), time);
     });
-  },
-});
+  }
+}
