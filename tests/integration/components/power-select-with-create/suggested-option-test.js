@@ -14,10 +14,10 @@ module('Integration | Component | power select with create/suggested option', fu
       text: `Add "${term}"...`
     };
 
-    this.set('term', term);
-    this.set('option', option);
+    this.term = term;
+    this.option = option;
     await render(hbs`
-      <PowerSelectWithCreate::SuggestedOption @option={{option}} @term={{term}} />
+      <PowerSelectWithCreate::SuggestedOption @option={{this.option}} @term={{this.term}} />
     `);
 
     assert.dom(this.element).hasText(`Add "${term}"...`);
