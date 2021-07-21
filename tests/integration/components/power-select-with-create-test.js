@@ -1,4 +1,5 @@
 import { Promise } from 'rsvp';
+import Component from '@ember/component';
 import ArrayProxy from '@ember/array/proxy';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
@@ -420,5 +421,33 @@ module('Integration | Component | power select with create', function(hooks) {
     assert.dom(options[0]).hasText('Add "Foo"...');
     assert.dom(options[1]).hasText('Portugal');
     assert.dom(options[2]).hasText('Spain');
+  });
+
+  test('selected option can be customized using triggerComponent', async function(assert) {
+    assert.expect(3);
+
+    this.owner.register('component:selected-country', class extends Component {
+      layout = hbs`
+        <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
+        {{select.selected.name}}
+      `
+    });
+
+    this.country = this.countries[1]; // Spain
+
+    await render(hbs`
+      <PowerSelectWithCreate
+        @selected={{country}}
+        @options={{this.countries}}
+        @triggerComponent="selected-country"
+        @onCreate={{this.createCountry}} as |country|
+      >
+        {{country.name}}
+      </PowerSelectWithCreate>
+    `);
+
+    assert.dom('.ember-power-select-status-icon').doesNotExist('The provided trigger component is not rendered');
+    assert.dom('.ember-power-select-trigger .icon-flag').exists('The custom flag appears.');
+    assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
   });
 });
