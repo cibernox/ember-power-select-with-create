@@ -7,7 +7,7 @@ import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-ut
 
 export default class PowerSelectWithCreateComponent extends Component {
   matcher = defaultMatcher;
-  suggestedOptionComponent ='power-select-with-create/suggested-option';
+  suggestedOptionComponent = 'power-select-with-create/suggested-option';
   powerSelectComponentName = 'power-select';
 
   @tracked
