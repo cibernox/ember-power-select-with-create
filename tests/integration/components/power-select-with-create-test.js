@@ -451,8 +451,7 @@ module('Integration | Component | power select with create', function(hooks) {
     assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
   });
 
-
-  test('it accepts a suggestedOptionComponent', async function(assert) {
+  test('it accepts a suggestedOptionComponent argument', async function(assert) {
     assert.expect(1);
 
     await render(hbs`
