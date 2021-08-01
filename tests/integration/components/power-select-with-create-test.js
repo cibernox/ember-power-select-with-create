@@ -450,4 +450,25 @@ module('Integration | Component | power select with create', function(hooks) {
     assert.dom('.ember-power-select-trigger .icon-flag').exists('The custom flag appears.');
     assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
   });
+
+
+  test('it accepts a suggestedOptionComponent', async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <PowerSelectWithCreate
+        @options={{this.countries}}
+        @onCreate={{this.createCountry}}
+        @suggestedOptionComponent="custom-suggested-option"
+        @renderInPlace={{true}} as |country|
+      >
+        {{country.name}}
+      </PowerSelectWithCreate>
+    `);
+
+    await clickTrigger();
+    await typeInSearch('Foo Bar');
+
+    assert.dom('.ember-power-select-option').hasText('Custom Component Foo Bar');
+  });
 });
