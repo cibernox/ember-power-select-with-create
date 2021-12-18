@@ -17,6 +17,10 @@ export default class PowerSelectWithCreateComponent extends Component {
   constructor() {
     super(...arguments);
     assert('<PowerSelectWithCreate> requires an `onCreate` function', this.args.onCreate && typeof this.args.onCreate === 'function');
+
+    if (this.args.suggestedOptionComponent) {
+      this.suggestedOptionComponent = this.args.suggestedOptionComponent;
+    }
   }
 
   shouldShowCreateOption(term, options) {
