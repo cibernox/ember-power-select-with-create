@@ -134,7 +134,3 @@ This component will receive the suggestedOption itself as `option` and the curre
 </span>
 <!-- </SuggestedOption> -->
 ```
-
-### Demo
-
-[https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)
