@@ -1,17 +1,32 @@
 import { assert } from '@ember/debug';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { get, action } from '@ember/object';
 import RSVP, { resolve } from 'rsvp';
 import { filterOptions, defaultMatcher } from 'ember-power-select/utils/group-utils';
 
 export default class PowerSelectWithCreateComponent extends Component {
-  matcher = defaultMatcher;
-  suggestedOptionComponent = 'power-select-with-create/suggested-option';
   powerSelectComponentName = 'power-select';
 
-  @tracked
-  searchEnabled = true;
+  get suggestedOptionComponentWithFallback() {
+    if (typeof this.args.suggestedOptionComponent !== 'undefined') {
+      return this.args.suggestedOptionComponent;
+    }
+    return 'power-select-with-create/suggested-option';
+  }
+
+  get searchEnabledWithFallback() {
+    if (typeof this.args.searchEnabled !== 'undefined') {
+      return this.args.searchEnabled;
+    }
+    return true;
+  }
+
+  get matcherWithFallback() {
+    if (typeof this.args.matcher !== 'undefined') {
+      return this.args.matcher;
+    }
+    return defaultMatcher;
+  }
 
   // Lifecycle hooks
   constructor() {

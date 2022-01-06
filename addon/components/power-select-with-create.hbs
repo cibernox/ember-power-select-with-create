@@ -6,7 +6,7 @@
     @ariaInvalid={{@ariaInvalid}}
     @ariaLabel={{@ariaLabel}}
     @ariaLabelledBy={{@ariaLabelledBy}}
-    @beforeOptionsComponent={{this.beforeOptionsComponent}}
+    @beforeOptionsComponent={{@beforeOptionsComponent}}
     @buildSelection={{@buildSelection}}
     @calculatePosition={{@calculatePosition}}
     @class={{@class}}
@@ -23,7 +23,7 @@
     @initiallyOpened={{@initiallyOpened}}
     @loadingMessage={{@loadingMessage}}
     @matchTriggerWidth={{@matchTriggerWidth}}
-    @matcher={{this.matcher}}
+    @matcher={{this.matcherWithFallback}}
     @noMatchesMessage={{@noMatchesMessage}}
     @onBlur={{@onBlur}}
     @onChange={{this.selectOrCreate}}
@@ -41,7 +41,7 @@
     @renderInPlace={{@renderInPlace}}
     @scrollTo={{@scrollTo}}
     @search={{this.searchAndSuggest}}
-    @searchEnabled={{this.searchEnabled}}
+    @searchEnabled={{this.searchEnabledWithFallback}}
     @searchField={{@searchField}}
     @searchMessage={{@searchMessage}}
     @searchMessageComponent={{@searchMessageComponent}}
@@ -59,7 +59,7 @@
     as |option term|
   >
     {{#if option.__isSuggestion__}}
-      {{component this.suggestedOptionComponent option=option term=term}}
+      {{component this.suggestedOptionComponentWithFallback option=option term=term}}
     {{else}}
       {{yield option term}}
     {{/if}}
