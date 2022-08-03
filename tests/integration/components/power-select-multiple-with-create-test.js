@@ -39,8 +39,8 @@ module('Integration | Component | power select with create', function (hooks) {
     await render(hbs`
       <PowerSelectMultipleWithCreate
         @options={{this.countries}}
-        @selected={{selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @selected={{this.selectedCountries}}
+        @onChange={{action (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
