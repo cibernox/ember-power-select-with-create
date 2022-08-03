@@ -1,20 +1,22 @@
-# Ember-power-select-with-create
+# ember-power-select-with-create
 
 Simple variation of ember-power-select that allows you to create a new entry based on the search text.
 
-### Installation
+## Installation
 
 ```sh
 ember install ember-power-select-with-create
 ```
+## Compatibility
 
-### Compatibility
-
+* Ember.js v3.24 or above
+* Ember CLI v3.24 or above
+* Node.js v14 or above
 * Ember Power Select v4 or above
 
 Please also refer to [Ember Power Select documentation](https://github.com/cibernox/ember-power-select#ember-power-select) for it's compatibility notes.
 
-### Usage
+## Usage
 
 ```hbs
 <PowerSelectWithCreate
@@ -134,7 +136,6 @@ This component will receive the suggestedOption itself as `option` and the curre
 </span>
 <!-- </SuggestedOption> -->
 ```
-
-### Demo
+## Demo
 
 [https://ember-power-select-with-create.pagefrontapp.com/](https://ember-power-select-with-create.pagefrontapp.com/)

@@ -3,31 +3,34 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
+import {
+  typeInSearch,
+  clickTrigger,
+} from 'ember-power-select/test-support/helpers';
 import { findAll, click } from '@ember/test-helpers';
 import { set } from '@ember/object';
 
-module('Integration | Component | power select with create', function(hooks) {
+module('Integration | Component | power select with create', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.countries = [
-      { name: 'United States',  code: 'US', population: 321853000 },
-      { name: 'Spain',          code: 'ES', population: 46439864 },
-      { name: 'Portugal',       code: 'PT', population: 10374822 },
-      { name: 'Russia',         code: 'RU', population: 146588880 },
-      { name: 'Latvia',         code: 'LV', population: 1978300 },
-      { name: 'Brazil',         code: 'BR', population: 204921000 },
+      { name: 'United States', code: 'US', population: 321853000 },
+      { name: 'Spain', code: 'ES', population: 46439864 },
+      { name: 'Portugal', code: 'PT', population: 10374822 },
+      { name: 'Russia', code: 'RU', population: 146588880 },
+      { name: 'Latvia', code: 'LV', population: 1978300 },
+      { name: 'Brazil', code: 'BR', population: 204921000 },
       { name: 'United Kingdom', code: 'GB', population: 64596752 },
     ];
 
     this.createCountry = (countryName) => {
-      let newCountry = {name: countryName, code: 'XX', population: 'unknown'};
+      let newCountry = { name: countryName, code: 'XX', population: 'unknown' };
       this.countries.push(newCountry);
     };
   });
 
-  test('it displays multiple selections correctly', async function(assert) {
+  test('it displays multiple selections correctly', async function (assert) {
     assert.expect(2);
 
     const initialSelection = [this.countries[0]];
@@ -36,8 +39,8 @@ module('Integration | Component | power select with create', function(hooks) {
     await render(hbs`
       <PowerSelectMultipleWithCreate
         @options={{this.countries}}
-        @selected={{selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @selected={{this.selectedCountries}}
+        @onChange={{action (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
@@ -45,17 +48,20 @@ module('Integration | Component | power select with create', function(hooks) {
     `);
 
     const selectedOptions = findAll('.ember-power-select-multiple-option');
-    assert.equal(selectedOptions.length, initialSelection.length);
-    assert.ok(selectedOptions[0].textContent.trim().indexOf(initialSelection[0].name) !== -1);
+    assert.strictEqual(selectedOptions.length, initialSelection.length);
+    assert.notStrictEqual(
+      selectedOptions[0].textContent.trim().indexOf(initialSelection[0].name),
+      -1
+    );
   });
 
-  test('it passes an array to onChange in multiple mode', async function(assert) {
+  test('it passes an array to onChange in multiple mode', async function (assert) {
     assert.expect(4);
 
     this.selectedCountries = [];
     this.selectCountries = (countries) => {
       assert.ok(countries instanceof Array);
-      set(this, "selectedCountries", countries);
+      set(this, 'selectedCountries', countries);
     };
 
     await render(hbs`
@@ -72,20 +78,20 @@ module('Integration | Component | power select with create', function(hooks) {
     await clickTrigger();
     await click(findAll('.ember-power-select-option')[0]);
 
-    assert.equal(this.selectedCountries.length, 1);
+    assert.strictEqual(this.selectedCountries.length, 1);
 
     await clickTrigger();
     await click(findAll('.ember-power-select-option')[1]);
 
-    assert.equal(this.selectedCountries.length, 2);
+    assert.strictEqual(this.selectedCountries.length, 2);
   });
 
-  test('it calls onCreate correctly in multiple mode', async function(assert) {
+  test('it calls onCreate correctly in multiple mode', async function (assert) {
     assert.expect(1);
 
     this.selectedCountries = [];
     this.createCountry = (country) => {
-      assert.equal(country, 'Foo Bar');
+      assert.strictEqual(country, 'Foo Bar');
     };
 
     await render(hbs`
@@ -103,11 +109,11 @@ module('Integration | Component | power select with create', function(hooks) {
     await click(findAll('.ember-power-select-option')[0]);
   });
 
-  test('it supports async search function', async function(assert) {
+  test('it supports async search function', async function (assert) {
     this.selectedCountries = [];
     this.searchCountries = () => {
       return new Promise((resolve) => {
-        resolve([{name: 'Foo'}, {name: 'Bar'}]);
+        resolve([{ name: 'Foo' }, { name: 'Bar' }]);
       });
     };
 
@@ -115,7 +121,7 @@ module('Integration | Component | power select with create', function(hooks) {
       <PowerSelectMultipleWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @onChange={{action (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
@@ -130,7 +136,7 @@ module('Integration | Component | power select with create', function(hooks) {
     await typeInSearch('foo');
     await click(findAll('.ember-power-select-option')[2]);
 
-    assert.equal(this.selectedCountries[0].name, 'Foo');
-    assert.equal(this.selectedCountries[1].name, 'Bar');
+    assert.strictEqual(this.selectedCountries[0].name, 'Foo');
+    assert.strictEqual(this.selectedCountries[1].name, 'Bar');
   });
 });
