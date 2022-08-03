@@ -1,4 +1,4 @@
-{{#let (component this.powerSelectComponentName) as |Select|}}
+{{#let (component (ensure-safe-component this.powerSelectComponentName)) as |Select|}}
   <Select
     @afterOptionsComponent={{@afterOptionsComponent}}
     @allowClear={{@allowClear}}
@@ -59,7 +59,7 @@
     as |option term|
   >
     {{#if option.__isSuggestion__}}
-      {{component this.suggestedOptionComponent option=option term=term}}
+      {{component (ensure-safe-component this.suggestedOptionComponent) option=option term=term}}
     {{else}}
       {{yield option term}}
     {{/if}}
