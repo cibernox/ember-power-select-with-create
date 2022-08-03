@@ -59,10 +59,14 @@ jobs:
         try-scenario:
           - ember-lts-3.16
           - ember-lts-3.20
+          - ember-lts-3.24
+          - ember-lts-3.28
           - ember-release
           - ember-beta
           - ember-canary
           - ember-classic
+          - embroider-safe
+          - embroider-optimized
 
     steps:
       - uses: actions/checkout@v3
@@ -75,14 +79,3 @@ jobs:
         run: npm ci
       - name: Run Tests
         run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
-
-  automerge:
-    needs: [test, floating, try-scenarios]
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - uses: fastify/github-action-merge-dependabot@v3.2.0
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}          
