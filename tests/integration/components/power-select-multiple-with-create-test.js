@@ -121,7 +121,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectMultipleWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @onChange={{action (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
