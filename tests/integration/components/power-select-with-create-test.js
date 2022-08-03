@@ -314,7 +314,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @onChange={{action (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}}
         @showCreateWhen={{this.shouldShowCreate}}
         @renderInPlace={{true}} as |country|
@@ -353,7 +353,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @onChange={{action (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}}
         @showCreateWhen={{this.shouldShowCreate}}
         @showCreatePosition="bottom"
@@ -411,7 +411,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectMultipleWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut selectedCountries)}}
+        @onChange={{action (mut this.selectedCountries)}}
         @searchField="name"
         @onCreate={{this.createCountry}} as |country|
       >
@@ -435,8 +435,8 @@ module('Integration | Component | power select with create', function (hooks) {
       'component:selected-country',
       class extends Component {
         layout = hbs`
-        <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
-        {{select.selected.name}}
+        <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
+        {{@select.selected.name}}
       `;
       }
     );
@@ -445,7 +445,7 @@ module('Integration | Component | power select with create', function (hooks) {
 
     await render(hbs`
       <PowerSelectWithCreate
-        @selected={{country}}
+        @selected={{this.country}}
         @options={{this.countries}}
         @triggerComponent="selected-country"
         @onCreate={{this.createCountry}} as |country|
