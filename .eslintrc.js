@@ -20,6 +20,7 @@ module.exports = {
     browser: true,
   },
   rules: {
+    'ember/no-array-prototype-extensions': 'off',
     'ember/no-classic-components': 'off',
   },
   overrides: [
