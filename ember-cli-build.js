@@ -21,5 +21,15 @@ module.exports = function (defaults) {
         package: 'qunit',
       },
     ],
+    packageRules: [
+      {
+        package: 'ember-power-select',
+        semverRange: '*',
+      },
+      {
+        package: 'ember-power-select-with-create',
+        semverRange: '*',
+      },
+    ],
   });
 };
