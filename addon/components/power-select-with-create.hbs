@@ -1,67 +1,64 @@
-{{#let (component (ensure-safe-component this.powerSelectComponentName)) as |Select|}}
-  <Select
-    @afterOptionsComponent={{@afterOptionsComponent}}
-    @allowClear={{@allowClear}}
-    @ariaDescribedBy={{@ariaDescribedBy}}
-    @ariaInvalid={{@ariaInvalid}}
-    @ariaLabel={{@ariaLabel}}
-    @ariaLabelledBy={{@ariaLabelledBy}}
-    @beforeOptionsComponent={{this.beforeOptionsComponent}}
-    @buildSelection={{@buildSelection}}
-    @calculatePosition={{@calculatePosition}}
-    @class={{@class}}
-    @closeOnSelect={{@closeOnSelect}}
-    @defaultHighlighted={{@defaultHighlighted}}
-    @destination={{@destination}}
-    @dir={{@dir}}
-    @disabled={{@disabled}}
-    @dropdownClass={{@dropdownClass}}
-    @extra={{@extra}}
-    @groupComponent={{@groupComponent}}
-    @highlightOnHover={{@highlightOnHover}}
-    @horizontalPosition={{@horizontalPosition}}
-    @initiallyOpened={{@initiallyOpened}}
-    @loadingMessage={{@loadingMessage}}
-    @matchTriggerWidth={{@matchTriggerWidth}}
-    @matcher={{this.matcher}}
-    @noMatchesMessage={{@noMatchesMessage}}
-    @onBlur={{@onBlur}}
-    @onChange={{this.selectOrCreate}}
-    @onClose={{@onClose}}
-    @onFocus={{@onFocus}}
-    @onInput={{@onInput}}
-    @onKeydown={{@onKeydown}}
-    @onOpen={{@onOpen}}
-    @options={{@options}}
-    @optionsComponent={{@optionsComponent}}
-    @placeholder={{@placeholder}}
-    @placeholderComponent={{@placeholderComponent}}
-    @preventScroll={{@preventScroll}}
-    @registerAPI={{@registerAPI}}
-    @renderInPlace={{@renderInPlace}}
-    @scrollTo={{@scrollTo}}
-    @search={{this.searchAndSuggest}}
-    @searchEnabled={{this.searchEnabled}}
-    @searchField={{@searchField}}
-    @searchMessage={{@searchMessage}}
-    @searchMessageComponent={{@searchMessageComponent}}
-    @searchPlaceholder={{@searchPlaceholder}}
-    @selected={{@selected}}
-    @selectedItemComponent={{@selectedItemComponent}}
-    @tabindex={{@tabindex}}
-    @triggerClass={{@triggerClass}}
-    @triggerComponent={{@triggerComponent}}
-    @triggerId={{@triggerId}}
-    @triggerRole={{@triggerRole}}
-    @typeAheadMatcher={{@typeAheadMatcher}}
-    @verticalPosition={{@verticalPosition}}
-    ...attributes
-    as |option term|
-  >
-    {{#if option.__isSuggestion__}}
-      {{component (ensure-safe-component this.suggestedOptionComponent) option=option term=term}}
-    {{else}}
-      {{yield option term}}
-    {{/if}}
-  </Select>
-{{/let}}
+<this.powerSelectComponent
+  @afterOptionsComponent={{@afterOptionsComponent}}
+  @allowClear={{@allowClear}}
+  @ariaDescribedBy={{@ariaDescribedBy}}
+  @ariaInvalid={{@ariaInvalid}}
+  @ariaLabel={{@ariaLabel}}
+  @ariaLabelledBy={{@ariaLabelledBy}}
+  @beforeOptionsComponent={{this.beforeOptionsComponent}}
+  @buildSelection={{@buildSelection}}
+  @calculatePosition={{@calculatePosition}}
+  @class={{@class}}
+  @closeOnSelect={{@closeOnSelect}}
+  @defaultHighlighted={{@defaultHighlighted}}
+  @destination={{@destination}}
+  @dir={{@dir}}
+  @disabled={{@disabled}}
+  @dropdownClass={{@dropdownClass}}
+  @extra={{@extra}}
+  @groupComponent={{@groupComponent}}
+  @highlightOnHover={{@highlightOnHover}}
+  @horizontalPosition={{@horizontalPosition}}
+  @initiallyOpened={{@initiallyOpened}}
+  @loadingMessage={{@loadingMessage}}
+  @matchTriggerWidth={{@matchTriggerWidth}}
+  @matcher={{this.matcher}}
+  @noMatchesMessage={{@noMatchesMessage}}
+  @onBlur={{@onBlur}}
+  @onChange={{this.selectOrCreate}}
+  @onClose={{@onClose}}
+  @onFocus={{@onFocus}}
+  @onInput={{@onInput}}
+  @onKeydown={{@onKeydown}}
+  @onOpen={{@onOpen}}
+  @options={{@options}}
+  @optionsComponent={{@optionsComponent}}
+  @placeholder={{@placeholder}}
+  @placeholderComponent={{@placeholderComponent}}
+  @preventScroll={{@preventScroll}}
+  @registerAPI={{@registerAPI}}
+  @renderInPlace={{@renderInPlace}}
+  @scrollTo={{@scrollTo}}
+  @search={{this.searchAndSuggest}}
+  @searchEnabled={{this.searchEnabled}}
+  @searchField={{@searchField}}
+  @searchMessage={{@searchMessage}}
+  @searchMessageComponent={{@searchMessageComponent}}
+  @searchPlaceholder={{@searchPlaceholder}}
+  @selected={{@selected}}
+  @selectedItemComponent={{@selectedItemComponent}}
+  @tabindex={{@tabindex}}
+  @triggerClass={{@triggerClass}}
+  @triggerComponent={{@triggerComponent}}
+  @triggerId={{@triggerId}}
+  @triggerRole={{@triggerRole}}
+  @typeAheadMatcher={{@typeAheadMatcher}}
+  @verticalPosition={{@verticalPosition}}
+  ...attributes as |option term|
+>
+  {{#if option.__isSuggestion__}}
+    <this.suggestedOptionComponent @option={{option}} @term={{term}} />
+  {{else}}
+    {{yield option term}}
+  {{/if}}
+</this.powerSelectComponent>

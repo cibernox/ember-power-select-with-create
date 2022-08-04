@@ -3,15 +3,16 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { get, action } from '@ember/object';
 import RSVP, { resolve } from 'rsvp';
+import PowerSelectComponent from 'ember-power-select/components/power-select';
 import {
   filterOptions,
   defaultMatcher,
 } from 'ember-power-select/utils/group-utils';
+import { ensureSafeComponent } from '@embroider/util';
+import SuggestedOptionComponent from './power-select-with-create/suggested-option';
 
 export default class PowerSelectWithCreateComponent extends Component {
   matcher = defaultMatcher;
-  suggestedOptionComponent = 'power-select-with-create/suggested-option';
-  powerSelectComponentName = 'power-select';
 
   @tracked
   searchEnabled = true;
@@ -19,14 +20,25 @@ export default class PowerSelectWithCreateComponent extends Component {
   // Lifecycle hooks
   constructor() {
     super(...arguments);
+
     assert(
       '<PowerSelectWithCreate> requires an `onCreate` function',
       this.args.onCreate && typeof this.args.onCreate === 'function'
     );
+  }
 
-    if (this.args.suggestedOptionComponent) {
-      this.suggestedOptionComponent = this.args.suggestedOptionComponent;
-    }
+  get powerSelectComponent() {
+    return ensureSafeComponent(
+      this.args.powerSelectComponent || PowerSelectComponent,
+      this
+    );
+  }
+
+  get suggestedOptionComponent() {
+    return ensureSafeComponent(
+      this.args.suggestedOptionComponent || SuggestedOptionComponent,
+      this
+    );
   }
 
   shouldShowCreateOption(term, options) {

@@ -113,7 +113,7 @@ export default class MyComponent extends Component {
 
 #### Pass the creation option to a component for more control
 
-Beyond building the suggestion label, you can pass the `suggestedOptionComponent` property the name of your component.
+Beyond building the suggestion label, you can pass the `suggestedOptionComponent` property, which should be a component, not a string to be embroider compatible.
 
 This component will receive the suggestedOption itself as `option` and the current `term` as `term`.
 
@@ -123,7 +123,7 @@ This component will receive the suggestedOption itself as `option` and the curre
   @searchField="name"
   @selected={{selectedCountry}}
   @onCreate={{action "createCountry"}}
-  @suggestedOptionComponent="suggested-option"
+  @suggestedOptionComponent={{component (ensure-safe-component "suggested-option")}}
 >
   {{country.name}}
 </PowerSelectWithCreate>

@@ -1,8 +1,15 @@
 import PowerSelectWithCreate from './power-select-with-create';
 import { action } from '@ember/object';
+import { ensureSafeComponent } from '@embroider/util';
+import PowerSelectMultipleComponent from 'ember-power-select/components/power-select-multiple';
 
 export default class PowerSelectMultipleWithCreate extends PowerSelectWithCreate {
-  powerSelectComponentName = 'power-select-multiple';
+  get powerSelectComponent() {
+    return ensureSafeComponent(
+      this.args.powerSelectComponent || PowerSelectMultipleComponent,
+      this
+    );
+  }
 
   @action
   selectOrCreate(selection, select) {

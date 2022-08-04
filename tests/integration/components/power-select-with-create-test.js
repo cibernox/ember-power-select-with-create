@@ -472,7 +472,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectWithCreate
         @options={{this.countries}}
         @onCreate={{this.createCountry}}
-        @suggestedOptionComponent="custom-suggested-option"
+        @suggestedOptionComponent={{component (ensure-safe-component "custom-suggested-option")}}
         @renderInPlace={{true}} as |country|
       >
         {{country.name}}
