@@ -11,6 +11,7 @@ import {
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
 import { findAll, click } from '@ember/test-helpers';
+import CustomSuggestedOptionComponent from 'dummy/components/custom-suggested-option';
 
 module('Integration | Component | power select with create', function (hooks) {
   setupRenderingTest(hooks);
@@ -468,11 +469,13 @@ module('Integration | Component | power select with create', function (hooks) {
   test('it accepts a suggestedOptionComponent argument', async function (assert) {
     assert.expect(1);
 
+    this.CustomSuggestedOptionComponent = CustomSuggestedOptionComponent;
+
     await render(hbs`
       <PowerSelectWithCreate
         @options={{this.countries}}
         @onCreate={{this.createCountry}}
-        @suggestedOptionComponent={{component (ensure-safe-component "custom-suggested-option")}}
+        @suggestedOptionComponent={{this.CustomSuggestedOptionComponent}}
         @renderInPlace={{true}} as |country|
       >
         {{country.name}}
