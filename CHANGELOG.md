@@ -1,4 +1,13 @@
 
+
+## v3.0.0 (2024-06-14)
+
+#### :boom: Breaking Change
+* [#163](https://github.com/cibernox/ember-power-select-with-create/pull/163) Update `ember-power-select` to v8, switch to v2 addon & drop ember < 3.28 ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v2.0.0 (2023-09-06)
 
 #### :boom: Breaking Change
