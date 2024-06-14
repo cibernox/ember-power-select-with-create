@@ -48,7 +48,7 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.24.7)(@ember/test-helpers@3.3.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-basic-dropdown@8.1.0)(ember-concurrency@4.0.2)(ember-source@5.9.0)
       ember-source:
-        specifier: '>= 4.0.0'
+        specifier: ^3.28.0 || >= 4.0.0
         version: 5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2)(rsvp@4.8.5)(webpack@5.92.0)
     devDependencies:
       '@babel/core':
