@@ -23,21 +23,21 @@ export default class PowerSelectWithCreateComponent extends Component {
 
     assert(
       '<PowerSelectWithCreate> requires an `onCreate` function',
-      this.args.onCreate && typeof this.args.onCreate === 'function'
+      this.args.onCreate && typeof this.args.onCreate === 'function',
     );
   }
 
   get powerSelectComponent() {
     return ensureSafeComponent(
       this.args.powerSelectComponent || PowerSelectComponent,
-      this
+      this,
     );
   }
 
   get suggestedOptionComponent() {
     return ensureSafeComponent(
       this.args.suggestedOptionComponent || SuggestedOptionComponent,
-      this
+      this,
     );
   }
 

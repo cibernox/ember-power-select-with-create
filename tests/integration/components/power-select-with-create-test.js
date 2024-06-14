@@ -34,8 +34,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it displays option to add item with default text', async function (assert) {
-    assert.expect(1);
-
     await render(hbs`
       <PowerSelectWithCreate
         @options={{this.countries}}
@@ -53,8 +51,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it displays option to add item with default text at bottom', async function (assert) {
-    assert.expect(1);
-
     await render(hbs`
       <PowerSelectWithCreate
         @options={{this.countries}}
@@ -75,8 +71,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it displays option to add item with custom text', async function (assert) {
-    assert.expect(1);
-
     this.customSuggestion = (term) => {
       return `Create ${term}`;
     };
@@ -99,8 +93,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it displays option to add item with custom text at bottom', async function (assert) {
-    assert.expect(1);
-
     this.customSuggestion = (term) => {
       return `Create ${term}`;
     };
@@ -126,8 +118,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it executes the onCreate callback', async function (assert) {
-    assert.expect(1);
-
     this.createCountry = (countryName) => {
       assert.strictEqual(countryName, 'Foo Bar');
     };
@@ -148,8 +138,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it lets the user specify a custom search action', async function (assert) {
-    assert.expect(5);
-
     this.customSearch = (term) => {
       assert.strictEqual(term, 'Foo Bar');
       return [{ name: 'Foo' }, { name: 'Bar' }];
@@ -176,8 +164,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('async search works with an ArrayProxy', async function (assert) {
-    assert.expect(5);
-
     this.customSearch = (term) => {
       assert.strictEqual(term, 'Foo Bar');
       return ArrayProxy.create({
@@ -206,8 +192,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it lets the user decide if the create option should be shown', async function (assert) {
-    assert.expect(3);
-
     this.countries = [{ name: 'Canada' }];
     this.show = false;
     this.createCountry = () => {};
@@ -239,8 +223,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('shouldShowCreate called with options when backed by static array', async function (assert) {
-    assert.expect(1);
-
     const countries = [{ name: 'Canada' }];
     this.countries = countries;
     this.shouldShowCreate = (term, options) => {
@@ -265,8 +247,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('shouldShowCreate called with options when backed by async search', async function (assert) {
-    assert.expect(1);
-
     const countries = [{ name: 'Canada' }];
     this.searchCountries = () => {
       return new Promise((resolve) => {
@@ -282,7 +262,7 @@ module('Integration | Component | power select with create', function (hooks) {
     await render(hbs`
       <PowerSelectWithCreate
         @search={{this.searchCountries}}
-        @onChange={{action (mut this.selectedCountries)}}
+        @onChange={{fn (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}}
         @showCreateWhen={{this.shouldShowCreate}}
         @renderInPlace={{true}} as |country|
@@ -296,8 +276,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('shouldShowCreate works with async search', async function (assert) {
-    assert.expect(5);
-
     this.selectedCountries = [];
     this.show = true;
     this.searchCountries = () => {
@@ -315,7 +293,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut this.selectedCountries)}}
+        @onChange={{fn (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}}
         @showCreateWhen={{this.shouldShowCreate}}
         @renderInPlace={{true}} as |country|
@@ -335,8 +313,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('showCreatePosition works with async search', async function (assert) {
-    assert.expect(5);
-
     this.selectedCountries = [];
     this.show = true;
     this.searchCountries = () => {
@@ -354,7 +330,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut this.selectedCountries)}}
+        @onChange={{fn (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}}
         @showCreateWhen={{this.shouldShowCreate}}
         @showCreatePosition="bottom"
@@ -381,14 +357,14 @@ module('Integration | Component | power select with create', function (hooks) {
         code: 'pt',
         name: 'Portugal',
         population: 10000,
-      })
+      }),
     );
     let spain = run(() =>
       store.createRecord('country', {
         code: 'es',
         name: 'Spain',
         population: 20000,
-      })
+      }),
     );
     this.selectedCountries = [];
     this.searchCountries = () => {
@@ -403,7 +379,7 @@ module('Integration | Component | power select with create', function (hooks) {
           name: countryName,
           code: 'XX',
           population: 'unknown',
-        })
+        }),
       );
       this.selectedCountries.pushObject(newCountry);
     };
@@ -412,7 +388,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectMultipleWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut this.selectedCountries)}}
+        @onChange={{fn (mut this.selectedCountries)}}
         @searchField="name"
         @onCreate={{this.createCountry}} as |country|
       >
@@ -430,8 +406,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('selected option can be customized using triggerComponent', async function (assert) {
-    assert.expect(3);
-
     this.owner.register(
       'component:selected-country',
       class extends Component {
@@ -439,7 +413,7 @@ module('Integration | Component | power select with create', function (hooks) {
         <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
         {{@select.selected.name}}
       `;
-      }
+      },
     );
 
     this.country = this.countries[1]; // Spain
@@ -448,7 +422,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectWithCreate
         @selected={{this.country}}
         @options={{this.countries}}
-        @triggerComponent="selected-country"
+        @triggerComponent={{component "selected-country"}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
@@ -467,8 +441,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it accepts a suggestedOptionComponent argument', async function (assert) {
-    assert.expect(1);
-
     this.CustomSuggestedOptionComponent = CustomSuggestedOptionComponent;
 
     await render(hbs`

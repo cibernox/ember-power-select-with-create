@@ -4,7 +4,7 @@
   @searchField="name"
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut this.selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
@@ -18,7 +18,7 @@
   @options={{this.countries}}
   @searchField="name"
   @selected={{this.selectedCountries}}
-  @onChange={{action (mut this.selectedCountries)}}
+  @onChange={{fn (mut this.selectedCountries)}}
   @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
@@ -32,7 +32,7 @@
   @searchField="name"
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut this.selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{this.createCountry}}
   @buildSuggestion={{this.capitalizeSuggestion}} as |country|
 >
@@ -48,7 +48,7 @@
   @searchField="name"
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut this.selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
@@ -61,7 +61,7 @@
   @search={{this.searchCountries}}
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut this.selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{this.createCountry}} as |country|
 >
   {{country.name}}
@@ -75,7 +75,7 @@
   @searchField="name"
   @selected={{this.selectedCountry}}
   @allowClear={{true}}
-  @onChange={{action (mut this.selectedCountry)}}
+  @onChange={{fn (mut this.selectedCountry)}}
   @onCreate={{this.createCountry}}
   @showCreateWhen={{this.hideCreateOptionOnSameName}} as |country|
 >

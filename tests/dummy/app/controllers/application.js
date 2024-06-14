@@ -46,7 +46,7 @@ export default class ApplicationController extends Controller {
         resolve(
           countries.filter((country) => {
             return country.name.toLowerCase().match(term.toLowerCase());
-          })
+          }),
         );
       }, reject);
     });
@@ -55,7 +55,7 @@ export default class ApplicationController extends Controller {
   @action
   hideCreateOptionOnSameName(term) {
     let existingOption = this.countries.find(
-      (country) => country.name === term
+      (country) => country.name === term,
     );
     return !existingOption;
   }

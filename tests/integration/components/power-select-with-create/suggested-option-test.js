@@ -24,5 +24,5 @@ module(
 
       assert.dom(this.element).hasText(`Add "${term}"...`);
     });
-  }
+  },
 );

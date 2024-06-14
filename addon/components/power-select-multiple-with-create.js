@@ -7,7 +7,7 @@ export default class PowerSelectMultipleWithCreate extends PowerSelectWithCreate
   get powerSelectComponent() {
     return ensureSafeComponent(
       this.args.powerSelectComponent || PowerSelectMultipleComponent,
-      this
+      this,
     );
   }
 

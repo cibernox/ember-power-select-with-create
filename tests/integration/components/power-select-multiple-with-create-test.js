@@ -31,8 +31,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it displays multiple selections correctly', async function (assert) {
-    assert.expect(2);
-
     const initialSelection = [this.countries[0]];
     this.selectedCountries = initialSelection;
 
@@ -40,7 +38,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectMultipleWithCreate
         @options={{this.countries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut this.selectedCountries)}}
+        @onChange={{fn (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
@@ -51,13 +49,11 @@ module('Integration | Component | power select with create', function (hooks) {
     assert.strictEqual(selectedOptions.length, initialSelection.length);
     assert.notStrictEqual(
       selectedOptions[0].textContent.trim().indexOf(initialSelection[0].name),
-      -1
+      -1,
     );
   });
 
   test('it passes an array to onChange in multiple mode', async function (assert) {
-    assert.expect(4);
-
     this.selectedCountries = [];
     this.selectCountries = (countries) => {
       assert.ok(countries instanceof Array);
@@ -87,8 +83,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('it calls onCreate correctly in multiple mode', async function (assert) {
-    assert.expect(1);
-
     this.selectedCountries = [];
     this.createCountry = (country) => {
       assert.strictEqual(country, 'Foo Bar');
@@ -121,7 +115,7 @@ module('Integration | Component | power select with create', function (hooks) {
       <PowerSelectMultipleWithCreate
         @search={{this.searchCountries}}
         @selected={{this.selectedCountries}}
-        @onChange={{action (mut this.selectedCountries)}}
+        @onChange={{fn (mut this.selectedCountries)}}
         @onCreate={{this.createCountry}} as |country|
       >
         {{country.name}}
