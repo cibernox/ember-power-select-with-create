@@ -1,4 +1,9 @@
 
+## v2.0.0 (2023-09-06)
+
+#### :boom: Breaking Change
+* [#155](https://github.com/cibernox/ember-power-select-with-create/pull/139) feat: upgrade ember power select version ([@gorzas](https://github.com/Gorzas))
+
 ## v1.0.0 (2022-08-05)
 
 #### :boom: Breaking Change
