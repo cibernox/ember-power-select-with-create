@@ -9,10 +9,9 @@ ember install ember-power-select-with-create
 ```
 ## Compatibility
 
-* Ember.js v3.24 or above
-* Ember CLI v3.24 or above
-* Node.js v14 or above
-* Ember Power Select v4 or above
+* Ember.js v3.28 or above
+* Ember CLI v3.28 or above
+* Ember Power Select v8 or above
 
 Please also refer to [Ember Power Select documentation](https://github.com/cibernox/ember-power-select#ember-power-select) for it's compatibility notes.
 

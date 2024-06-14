@@ -1,0 +1,85 @@
+﻿<h3>Default behaviour</h3>
+<PowerSelectWithCreate
+  @options={{this.countries}}
+  @searchField="name"
+  @selected={{this.selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{fn (mut this.selectedCountry)}}
+  @onCreate={{this.createCountry}} as |country|
+>
+  {{country.name}}
+</PowerSelectWithCreate>
+
+<br>
+<br>
+<br>
+<h3>Multiple selections via <code>power-select-multiple-with-create</code></h3>
+<PowerSelectMultipleWithCreate
+  @options={{this.countries}}
+  @searchField="name"
+  @selected={{this.selectedCountries}}
+  @onChange={{fn (mut this.selectedCountries)}}
+  @onCreate={{this.createCountry}} as |country|
+>
+  {{country.name}}
+</PowerSelectMultipleWithCreate>
+<br>
+<br>
+<br>
+<h3>With custom Add message</h3>
+<PowerSelectWithCreate
+  @options={{this.countries}}
+  @searchField="name"
+  @selected={{this.selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{fn (mut this.selectedCountry)}}
+  @onCreate={{this.createCountry}}
+  @buildSuggestion={{this.capitalizeSuggestion}} as |country|
+>
+  {{country.name}}
+</PowerSelectWithCreate>
+
+<br>
+<br>
+<br>
+<h3>With options being a slow promise</h3>
+<PowerSelectWithCreate
+  @options={{this.slowPromise}}
+  @searchField="name"
+  @selected={{this.selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{fn (mut this.selectedCountry)}}
+  @onCreate={{this.createCountry}} as |country|
+>
+  {{country.name}}
+</PowerSelectWithCreate>
+<br>
+<br>
+<br>
+<h3>With async search</h3>
+<PowerSelectWithCreate
+  @search={{this.searchCountries}}
+  @selected={{this.selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{fn (mut this.selectedCountry)}}
+  @onCreate={{this.createCountry}} as |country|
+>
+  {{country.name}}
+</PowerSelectWithCreate>
+<br>
+<br>
+<br>
+<h3>With callback to hide/show create option</h3>
+<PowerSelectWithCreate
+  @options={{this.countries}}
+  @searchField="name"
+  @selected={{this.selectedCountry}}
+  @allowClear={{true}}
+  @onChange={{fn (mut this.selectedCountry)}}
+  @onCreate={{this.createCountry}}
+  @showCreateWhen={{this.hideCreateOptionOnSameName}} as |country|
+>
+  {{country.name}}
+</PowerSelectWithCreate>
+
+<BasicDropdownWormhole />

@@ -1,0 +1,83 @@
+{
+  "name": "ember-power-select-with-create",
+  "version": "2.0.0",
+  "description": "Ember Power Select addon that allows creation of items.",
+  "keywords": [
+    "ember-addon"
+  ],
+  "repository": "https://github.com/cibernox/ember-power-select-with-create",
+  "license": "MIT",
+  "author": {
+    "name": "Miguel Camba",
+    "email": "miguel.camba@gmail.com"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./addon-main.js": "./addon-main.cjs"
+  },
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "concurrently 'pnpm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'pnpm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "prepack": "pnpm run build",
+    "start": "rollup --config --watch",
+    "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
+    "prepare": "pnpm run build"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.8.9",
+    "@embroider/util": "^1.13.1",
+    "decorator-transforms": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.24.7",
+    "@babel/runtime": "^7.24.7",
+    "@embroider/addon-dev": "^4.3.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-plugin-ember-template-compilation": "^2.2.5",
+    "concurrently": "^8.2.2",
+    "ember-template-lint": "^6.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-ember": "^12.1.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^17.9.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.3.2",
+    "prettier-plugin-ember-template-tag": "^2.0.2",
+    "rollup": "^4.18.0",
+    "rollup-plugin-copy": "^3.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/power-select-multiple-with-create.js": "./dist/_app_/components/power-select-multiple-with-create.js",
+      "./components/power-select-with-create.js": "./dist/_app_/components/power-select-with-create.js",
+      "./components/power-select-with-create/suggested-option.js": "./dist/_app_/components/power-select-with-create/suggested-option.js"
+    }
+  },
+  "peerDependencies": {
+    "ember-basic-dropdown": "^8.1.0",
+    "ember-power-select": "^8.2.0",
+    "ember-source": "^3.28.0 || >= 4.0.0"
+  }
+}
