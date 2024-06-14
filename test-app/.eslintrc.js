@@ -23,7 +23,6 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'ember/no-classic-components': 'off',
     'ember/no-runloop': 'off',
   },
   overrides: [

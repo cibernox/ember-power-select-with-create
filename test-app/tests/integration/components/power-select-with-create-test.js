@@ -1,5 +1,4 @@
 import { Promise } from 'rsvp';
-import Component from '@ember/component';
 import ArrayProxy from '@ember/array/proxy';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
@@ -406,16 +405,6 @@ module('Integration | Component | power select with create', function (hooks) {
   });
 
   test('selected option can be customized using triggerComponent', async function (assert) {
-    this.owner.register(
-      'component:selected-country',
-      class extends Component {
-        layout = hbs`
-        <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
-        {{@select.selected.name}}
-      `;
-      },
-    );
-
     this.country = this.countries[1]; // Spain
 
     await render(hbs`

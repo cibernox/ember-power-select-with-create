@@ -36,9 +36,8 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.9",
-    "decorator-transforms": "^2.0.0",
-    "@babel/core": "^7.24.7",
-    "@embroider/util": "^1.13.1"
+    "@embroider/util": "^1.13.1",
+    "decorator-transforms": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

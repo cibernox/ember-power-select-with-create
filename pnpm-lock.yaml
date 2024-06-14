@@ -32,9 +32,6 @@ importers:
 
   ember-power-select-with-create:
     dependencies:
-      '@babel/core':
-        specifier: ^7.24.7
-        version: 7.24.7
       '@embroider/addon-shim':
         specifier: ^1.8.9
         version: 1.8.9
@@ -54,6 +51,9 @@ importers:
         specifier: '>= 4.0.0'
         version: 5.9.0(@babel/core@7.24.7)(@glimmer/component@1.1.2)(rsvp@4.8.5)(webpack@5.92.0)
     devDependencies:
+      '@babel/core':
+        specifier: ^7.24.7
+        version: 7.24.7
       '@babel/eslint-parser':
         specifier: ^7.24.7
         version: 7.24.7(@babel/core@7.24.7)(eslint@8.57.0)
