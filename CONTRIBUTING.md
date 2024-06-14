@@ -4,22 +4,28 @@
 
 - `git clone <repository-url>`
 - `cd ember-power-select-with-create`
-- `npm install`
+- `pnpm install`
 
 ## Linting
 
-- `npm run lint`
-- `npm run lint:fix`
+- `pnpm lint`
+- `pnpm lint:fix`
+
+## Building the addon
+
+- `cd ember-power-select-with-create`
+- `pnpm build`
 
 ## Running tests
 
-- `npm run test` – Runs the test suite on the current Ember version
-- `npm run test:ember -- --server` – Runs the test suite in "watch mode"
-- `npm run test:ember-compatibility` – Runs the test suite against multiple Ember versions
+- `cd test-app`
+- `pnpm test` – Runs the test suite on the current Ember version
+- `pnpm test:watch` – Runs the test suite in "watch mode"
 
-## Running the dummy application
+## Running the test application
 
-- `npm run start`
-- Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+- `cd test-app`
+- `pnpm start`
+- Visit the test application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/).
