@@ -37,29 +37,29 @@
     "prepare": "pnpm run build"
   },
   "dependencies": {
-    "@embroider/addon-shim": "^1.8.9",
-    "decorator-transforms": "^2.2.2"
+    "@embroider/addon-shim": "^1.10.0",
+    "decorator-transforms": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/eslint-parser": "^7.25.1",
-    "@babel/runtime": "^7.25.6",
+    "@babel/core": "^7.27.1",
+    "@babel/eslint-parser": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
     "@embroider/addon-dev": "^7.1.0",
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.26.0",
     "@rollup/plugin-babel": "^6.0.4",
     "babel-plugin-ember-template-compilation": "^2.2.5",
-    "concurrently": "^9.0.1",
-    "ember-source": "^5.4.0",
-    "ember-template-lint": "^6.0.0",
-    "eslint": "^9.17.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-ember": "^12.3.3",
+    "concurrently": "^9.1.2",
+    "ember-source": "^6.4.0",
+    "ember-template-lint": "^7.7.0",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-ember": "^12.5.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.15.1",
-    "globals": "^15.14.0",
-    "prettier": "^3.4.2",
-    "prettier-plugin-ember-template-tag": "^2.0.4",
-    "rollup": "^4.22.5",
+    "eslint-plugin-n": "^17.18.0",
+    "globals": "^16.1.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-ember-template-tag": "^2.0.5",
+    "rollup": "^4.40.2",
     "rollup-plugin-copy": "^3.5.0"
   },
   "ember": {
@@ -76,7 +76,7 @@
     }
   },
   "peerDependencies": {
-    "ember-basic-dropdown": "^8.1.0",
-    "ember-power-select": "^8.2.0"
+    "ember-basic-dropdown": "^8.6.1",
+    "ember-power-select": "^8.7.1"
   }
 }
