@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "projectName": "ember-power-select",
+  "projectName": "ember-power-select-with-create",
   "packages": [
     {
       "name": "@embroider/addon-blueprint",
-      "version": "2.16.0",
+      "version": "4.1.2",
       "blueprints": [
         {
           "name": "@embroider/addon-blueprint",
