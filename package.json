@@ -11,24 +11,20 @@
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "prepare": "pnpm build",
-    "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefixColors auto",
     "start:addon": "pnpm --filter ember-power-select-with-create start --no-watch.clearScreen",
     "start:test-app": "pnpm --filter test-app start",
     "test": "pnpm --filter '*' test",
     "test:ember": "pnpm --filter '*' test:ember"
   },
+  "packageManager": "pnpm@10.0.0",
   "devDependencies": {
     "@release-it-plugins/lerna-changelog": "^7.0.0",
     "@release-it-plugins/workspaces": "^4.2.0",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.1.2",
     "prettier": "^3.3.2",
     "prettier-plugin-ember-template-tag": "^2.0.2",
     "release-it": "^17.3.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/eslint": "^7.0.0"
-    }
   },
   "workspaces": [
     "ember-power-select-with-create",
