@@ -1,0 +1,1 @@
+{"version":3,"file":"suggested-option.js","sources":["../../../src/components/power-select-with-create/suggested-option.js"],"sourcesContent":["import templateOnly from '@ember/component/template-only';\nexport default templateOnly();\n"],"names":["setComponentTemplate","TEMPLATE","templateOnly"],"mappings":";;;;;;AACA,+BAAAA,oBAAA,CAAAC,QAAA,EAAeC,YAAY,EAAE,CAAA;;;;"}

@@ -1,0 +1,86 @@
+{
+  "name": "ember-power-select-with-create",
+  "version": "3.0.1",
+  "description": "Ember Power Select addon that allows creation of items.",
+  "keywords": [
+    "ember-addon"
+  ],
+  "repository": "https://github.com/cibernox/ember-power-select-with-create",
+  "license": "MIT",
+  "author": {
+    "name": "Miguel Camba",
+    "email": "miguel.camba@gmail.com"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./addon-main.js": "./addon-main.cjs"
+  },
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "start": "rollup --config --watch",
+    "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
+    "prepare": "pnpm run build"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.10.0",
+    "@embroider/util": "^1.13.2",
+    "decorator-transforms": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/eslint-parser": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
+    "@embroider/addon-dev": "^7.1.0",
+    "@eslint/js": "^9.26.0",
+    "@glimmer/component": "^2.0.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-plugin-ember-template-compilation": "^2.2.5",
+    "concurrently": "^9.1.2",
+    "ember-basic-dropdown": "^8.6.1",
+    "ember-power-select": "^8.7.1",
+    "ember-source": "^6.4.0",
+    "ember-template-lint": "^7.7.0",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-ember": "^12.5.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.18.0",
+    "globals": "^16.1.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-ember-template-tag": "^2.0.5",
+    "rollup": "^4.40.2",
+    "rollup-plugin-copy": "^3.5.0"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/power-select-multiple-with-create.js": "./dist/_app_/components/power-select-multiple-with-create.js",
+      "./components/power-select-with-create.js": "./dist/_app_/components/power-select-with-create.js",
+      "./components/power-select-with-create/suggested-option.js": "./dist/_app_/components/power-select-with-create/suggested-option.js"
+    }
+  },
+  "peerDependencies": {
+    "@glimmer/component": "^1.1.2 || ^2.0.0",
+    "ember-basic-dropdown": "^8.6.1",
+    "ember-power-select": "^8.7.1"
+  }
+}
