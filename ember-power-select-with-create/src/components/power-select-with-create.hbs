@@ -55,7 +55,8 @@
   @triggerRole={{@triggerRole}}
   @typeAheadMatcher={{@typeAheadMatcher}}
   @verticalPosition={{@verticalPosition}}
-  ...attributes as |option term|
+  ...attributes
+  as |option term|
 >
   {{#if option.__isSuggestion__}}
     <this.suggestedOptionComponent @option={{option}} @term={{term}} />
