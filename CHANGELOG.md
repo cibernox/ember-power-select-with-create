@@ -1,5 +1,14 @@
 
 
+
+## v3.0.1 (2025-05-13)
+
+#### :bug: Bug Fix
+* [#168](https://github.com/cibernox/ember-power-select-with-create/pull/168) Remove ember-source as peerDep & update dependencies ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v3.0.0 (2024-06-14)
 
 #### :boom: Breaking Change
