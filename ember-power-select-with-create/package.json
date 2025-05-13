@@ -51,6 +51,8 @@
     "@rollup/plugin-babel": "^6.0.4",
     "babel-plugin-ember-template-compilation": "^2.2.5",
     "concurrently": "^9.1.2",
+    "ember-basic-dropdown": "^8.6.1",
+    "ember-power-select": "^8.7.1",
     "ember-source": "^6.4.0",
     "ember-template-lint": "^7.7.0",
     "eslint": "^9.26.0",

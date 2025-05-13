@@ -66,6 +66,12 @@ importers:
       concurrently:
         specifier: ^9.1.2
         version: 9.1.2
+      ember-basic-dropdown:
+        specifier: ^8.6.1
+        version: 8.6.1(@babel/core@7.27.1)(@ember/string@4.0.1)(@ember/test-helpers@5.2.2(@babel/core@7.27.1))(@glimmer/component@2.0.0)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+      ember-power-select:
+        specifier: ^8.7.1
+        version: 8.7.1(@babel/core@7.27.1)(@ember/test-helpers@5.2.2(@babel/core@7.27.1))(@glimmer/component@2.0.0)(ember-basic-dropdown@8.6.1(@babel/core@7.27.1)(@ember/string@4.0.1)(@ember/test-helpers@5.2.2(@babel/core@7.27.1))(@glimmer/component@2.0.0)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))(ember-concurrency@4.0.4(@babel/core@7.27.1))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-source:
         specifier: ^6.4.0
         version: 6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
