@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.10.0",
+    "@embroider/util": "^1.13.2",
     "decorator-transforms": "^2.3.0"
   },
   "devDependencies": {

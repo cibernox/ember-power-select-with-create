@@ -32,6 +32,9 @@ importers:
       '@embroider/addon-shim':
         specifier: ^1.10.0
         version: 1.10.0
+      '@embroider/util':
+        specifier: ^1.13.2
+        version: 1.13.2(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       decorator-transforms:
         specifier: ^2.3.0
         version: 2.3.0(@babel/core@7.27.1)
