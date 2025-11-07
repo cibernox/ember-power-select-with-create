@@ -1,6 +1,15 @@
 
 
 
+
+## v3.1.0 (2025-11-07)
+
+#### :rocket: Enhancement
+* [#170](https://github.com/cibernox/ember-power-select-with-create/pull/170) Add option to pass `@multiple` in `power-select-with-create` ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v3.0.1 (2025-05-13)
 
 #### :bug: Bug Fix
