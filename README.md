@@ -29,7 +29,7 @@ Please also refer to [Ember Power Select documentation](https://github.com/ciber
 </PowerSelectWithCreate>
 ```
 
-If you want to be able to select multiple options, use the `<PowerSelectMultipleWithCreate>` component instead. It has the same API as the normal `<PowerSelectWithCreate>`.
+If you want to be able to select multiple options, use the `<PowerSelectWithCreate>` component with parameter `@multiple={{true}}`.
 
 For more options please refer to the [Ember Power Select docs](http://www.ember-power-select.com/docs).
 

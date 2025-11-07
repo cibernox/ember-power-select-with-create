@@ -83,6 +83,20 @@ export default class PowerSelectWithCreateComponent extends Component {
 
   @action
   selectOrCreate(selection, select, e) {
+    if (this.args.multiple) {
+      let suggestion = selection.filter((option) => {
+        return option.__isSuggestion__;
+      })[0];
+
+      if (suggestion) {
+        this.args.onCreate(suggestion.__value__, select);
+      } else {
+        this.args.onChange(selection, select);
+      }
+
+      return;
+    }
+
     if (selection && selection.__isSuggestion__) {
       this.args.onCreate(selection.__value__, select, e);
     } else {

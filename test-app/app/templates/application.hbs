@@ -26,6 +26,20 @@
 <br>
 <br>
 <br>
+<h3>Multiple selections via <code>power-select-with-create</code> &amp; <code>@multiple={{true}}</code></h3>
+<PowerSelectWithCreate
+  @multiple={{true}}
+  @options={{this.countries}}
+  @searchField="name"
+  @selected={{this.selectedCountries}}
+  @onChange={{fn (mut this.selectedCountries)}}
+  @onCreate={{this.createCountry}} as |country|
+>
+  {{country.name}}
+</PowerSelectWithCreate>
+<br>
+<br>
+<br>
 <h3>With custom Add message</h3>
 <PowerSelectWithCreate
   @options={{this.countries}}
